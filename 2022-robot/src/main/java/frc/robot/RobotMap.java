@@ -27,6 +27,7 @@ public class RobotMap {
 
         public static final int POV = 0; // untested
     }*/
+    
     public static class Shooter {
         public static final int PRIMARY = 1;
         public static final int SECONDARY = 2;

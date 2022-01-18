@@ -72,10 +72,9 @@ public class Shooter {
         // kFF = 0.190;
         // kIa = 2;
 
+        // Distance; Power
         // 17; 0.58
-
         // 20; 0.6
-
         // 25; 0.8
 
         pid.setP(SmartDashboard.getNumber("kP", kP));
