@@ -1,7 +1,7 @@
 package frc.robot;
 
 public class RobotMap {
-    public static class Controllers {
+    /*public static class Controllers {
         public static final int DRIVER_PORT = 0;
         public static final int OPERATOR_PORT = 1;
 
@@ -26,4 +26,11 @@ public class RobotMap {
         public static final int RT = 3;
 
         public static final int POV = 0; // untested
+    }*/
+    public static class Shooter {
+        public static final int PRIMARY = 1;
+        public static final int SECONDARY = 2;
+        public static final boolean PRIMARY_IS_INVERTED = true;
+        public static final boolean SECONDARY_IS_OPPOSITE = true;
+    }
 }
