@@ -32,7 +32,9 @@ public class Shooter {
 
     private double kP, kD, kFF, kI, kIa;
 
-    private Shooter() {
+    private double setpoint;
+
+    public Shooter() {
         primary = new CANSparkMax(RobotMap.Shooter.PRIMARY, MotorType.kBrushless);
         secondary = new CANSparkMax(RobotMap.Shooter.SECONDARY, MotorType.kBrushless);
         
@@ -116,12 +118,14 @@ public class Shooter {
      * Checks whether the shooter is within a range of its target RPM.
      * @return is shooter at target
      */
+    /*
     public boolean atTarget() {
         return Helper.tolerance(
             primary.getEncoder().getVelocity(),
             this.setpoint,
             0.01);
     }
+    */
 
     /**
      * Manually sets the speed of the motors.
