@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.subsystems.Shooter;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -44,10 +45,12 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     OI.initSD();
+    
   }
 
   @Override
   public void testPeriodic() {
+    OI.init();
     OI.updateSDTesting();
   }
 }

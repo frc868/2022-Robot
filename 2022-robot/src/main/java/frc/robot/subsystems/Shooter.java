@@ -6,9 +6,9 @@
 /*----------------------------------------------------------------------------*/
 package frc.robot.subsystems;
 
-import com.revrobotics.CANPIDController;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,7 +28,7 @@ public class Shooter {
     private CANSparkMax primary;
     private CANSparkMax secondary;
 
-    private CANPIDController pid;
+    private SparkMaxPIDController pid;
 
     private double kP, kD, kFF, kI, kIa;
 
@@ -153,9 +153,9 @@ public class Shooter {
      * @param rpm the RPM to run the shooter at
      * @author hrl
      */
-    public void shootUntilClear(double rpm) {
+    /*public void shootUntilClear(double rpm) {
         Robot.hopper.forward(this.atTarget());
         this.setpoint = rpm;
         this.update();
-    }
+    }*/
 }

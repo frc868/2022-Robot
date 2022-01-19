@@ -1,5 +1,6 @@
 package frc.robot;
 
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import frc.robot.helpers.ControllerWrapper;
 
@@ -15,10 +16,10 @@ public class OI {
     //public static ControllerWrapper driver = new ControllerWrapper(RobotMap.Controllers.DRIVER_PORT, true);
     //public static ControllerWrapper operator = new ControllerWrapper(RobotMap.Controllers.OPERATOR_PORT, true);
 
-    /*public static void init() {
+    public static void init() {
         initSD();
-        Robot.shooter.init();
-    }*/
+        Shooter.init();
+    }
 
     /*public static void update() {
 
@@ -185,9 +186,9 @@ public class OI {
         // SmartDashboard.putBoolean("Top Sensor", Robot.hopper.getTopLimit());
 
         SmartDashboard.putBoolean("Shooter running?", Robot.shooter.getRPM() > 0);
-        SmartDashboard.putBoolean("At target", Robot.shooter.atTarget());
+        //SmartDashboard.putBoolean("At target", Robot.shooter.atTarget());
 
-        SmartDashboard.putBoolean("Alt Mode", operator.isAltMode());
+        //SmartDashboard.putBoolean("Alt Mode", operator.isAltMode());
 
         SmartDashboard.putNumber("Shooter RPM", Robot.shooter.getRPM());
 
