@@ -13,12 +13,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
 
+    public static Shooter shooter = new Shooter();
+
     //public static ControllerWrapper driver = new ControllerWrapper(RobotMap.Controllers.DRIVER_PORT, true);
     //public static ControllerWrapper operator = new ControllerWrapper(RobotMap.Controllers.OPERATOR_PORT, true);
 
     public static void init() {
         initSD();
-        Shooter.init();
+        shooter.init();
     }
 
     /*public static void update() {
@@ -185,12 +187,12 @@ public class OI {
         // SmartDashboard.putBoolean("Mid Sensor", Robot.hopper.getMidLimit());
         // SmartDashboard.putBoolean("Top Sensor", Robot.hopper.getTopLimit());
 
-        SmartDashboard.putBoolean("Shooter running?", Robot.shooter.getRPM() > 0);
+        SmartDashboard.putBoolean("Shooter running?", shooter.getRPM() > 0);
         //SmartDashboard.putBoolean("At target", Robot.shooter.atTarget());
 
         //SmartDashboard.putBoolean("Alt Mode", operator.isAltMode());
 
-        SmartDashboard.putNumber("Shooter RPM", Robot.shooter.getRPM());
+        SmartDashboard.putNumber("Shooter RPM", shooter.getRPM());
 
     }
 
@@ -221,10 +223,10 @@ public class OI {
         // SmartDashboard.putBoolean("Turret left", Robot.turret.getLeftLimit());
         // SmartDashboard.putBoolean("Turret right", Robot.turret.getRightLimit());
 
-        SmartDashboard.putNumber("Turret Speed", Robot.turret.getSpeed());
+        //SmartDashboard.putNumber("Turret Speed", Robot.turret.getSpeed());
         // SmartDashboard.putNumber("Turret position", Robot.turret.getCompEncPosition());
         // SmartDashboard.putNumber("Limelight X Pos", Robot.camera.getPosition());
-        SmartDashboard.putNumber("Calculated RPM", Robot.camera.getCalculatedRPM());
+        //SmartDashboard.putNumber("Calculated RPM", Robot.camera.getCalculatedRPM());
 
         // SmartDashboard.putNumber("CL_Winch", Robot.climber.getWinchPosition());
         // SmartDashboard.putNumber("CL_Arm", Robot.climber.getArmPosition());
