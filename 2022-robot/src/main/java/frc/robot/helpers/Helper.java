@@ -62,9 +62,9 @@ public class Helper {
      * @return the "deadzoned" version of the input value
      * @author hrl
      */
-    public static double deadzone(double value, ControllerWrapper controller) {
+    /*public static double deadzone(double value, ControllerWrapper controller) {
         return deadzone(value, controller.getDeadzone());
-    }
+    }*/
 
     /**
      * Takes the value and returns the value to the third power

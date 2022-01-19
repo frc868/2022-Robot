@@ -1,7 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.helpers.ControllerWrapper;
+//import frc.robot.helpers.ControllerWrapper;
 
 /**
  * The class in which we map our driver/operator input to specific tasks on the
@@ -12,15 +12,15 @@ import frc.robot.helpers.ControllerWrapper;
  */
 public class OI {
 
-    public static ControllerWrapper driver = new ControllerWrapper(RobotMap.Controllers.DRIVER_PORT, true);
-    public static ControllerWrapper operator = new ControllerWrapper(RobotMap.Controllers.OPERATOR_PORT, true);
+    //public static ControllerWrapper driver = new ControllerWrapper(RobotMap.Controllers.DRIVER_PORT, true);
+    //public static ControllerWrapper operator = new ControllerWrapper(RobotMap.Controllers.OPERATOR_PORT, true);
 
-    public static void init() {
+    /*public static void init() {
         initSD();
         Robot.shooter.init();
-    }
+    }*/
 
-    public static void update() {
+    /*public static void update() {
 
         // GENERAL CONTROLS/CONTROL METHODS
         if (driver.isAltMode()) {
@@ -176,7 +176,7 @@ public class OI {
 
         // updateSD();
         updateSDTesting();
-    }
+    }*/
 
     public static void initSD() {
         // SmartDashboard.putBoolean("Bot Left Sensor", Robot.hopper.getBotLeftSensor());
@@ -196,7 +196,7 @@ public class OI {
     /**
      * Used for updating the SmartDashboard during the match.
      */
-    public static void updateSD() {
+    /*public static void updateSD() {
         // SmartDashboard.putBoolean("Bot Left Sensor", Robot.hopper.getBotLeftSensor());
         // SmartDashboard.putBoolean("Bot Right Sensor", Robot.hopper.getBotRightSensor());
         // SmartDashboard.putBoolean("Mid Sensor", Robot.hopper.getMidLimit());
@@ -209,7 +209,7 @@ public class OI {
 
         SmartDashboard.putNumber("Shooter RPM", Robot.shooter.getRPM());
 
-    }
+    }*/
 
     /**
      * Used for updating the SmartDashboard during testing/troubleshooting.

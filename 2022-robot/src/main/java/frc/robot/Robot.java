@@ -42,8 +42,12 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   @Override
-  public void testInit() {}
+  public void testInit() {
+    OI.initSD();
+  }
 
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    OI.updateSDTesting();
+  }
 }
