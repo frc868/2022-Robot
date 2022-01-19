@@ -12,9 +12,9 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
+//import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.helpers.Helper;
+//import frc.robot.helpers.Helper;
 
 /**
  * The shooter subsystem consists of the two-neo shooter mounted on the robot's
@@ -34,14 +34,14 @@ public class Shooter {
 
     private double setpoint;
 
-    public Shooter() {
+    private Shooter() {
         primary = new CANSparkMax(RobotMap.Shooter.PRIMARY, MotorType.kBrushless);
         secondary = new CANSparkMax(RobotMap.Shooter.SECONDARY, MotorType.kBrushless);
         
         primary.restoreFactoryDefaults();
         secondary.restoreFactoryDefaults();
 
-        primary.setInverted(RobotMap.Shooter.PRIMARY_IS_INVERTED);
+        //primary.setInverted(RobotMap.Shooter.PRIMARY_IS_INVERTED);
         secondary.follow(primary, RobotMap.Shooter.SECONDARY_IS_OPPOSITE);
         
         pid = primary.getPIDController();
@@ -62,18 +62,6 @@ public class Shooter {
      * Sets the PID gains and setpoint for the PID controller.
      */
     public void init() {
-        // kP = 0.3/1000;
-        // kI = 0.00001/1000;
-        // kD = 0.03/1000;
-        // kFF = 0.190/1000;
-        // kIa = 2;
-
-        // kP = 0.3;
-        // kI = 0.00001;
-        // kD = 0.03;
-        // kFF = 0.190;
-        // kIa = 2;
-
         // Distance; Power
         // 17; 0.58
         // 20; 0.6

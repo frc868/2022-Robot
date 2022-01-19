@@ -14,6 +14,7 @@ import frc.robot.subsystems.Shooter;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static Shooter shooter = Shooter.getInstance();
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -34,7 +35,10 @@ public class Robot extends TimedRobot {
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    OI.init();
+    shooter.setSpeed(0.1);
+  }
 
   @Override
   public void disabledInit() {}
