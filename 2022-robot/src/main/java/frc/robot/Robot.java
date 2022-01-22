@@ -1,39 +1,50 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.auton.AutonChooser;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Gyro;
 
-/**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
- * project.
- */
+
+
+
 public class Robot extends TimedRobot {
-  /**
-   * This function is run when the robot is first started up and should be used for any
-   * initialization code.
-   */
+  public static boolean isCompBot = true;
+  public static Drivetrain drivetrain = Drivetrain.getInstance();
+  public static Gyro gyro = Gyro.getInstance();
+  public static AutonChooser autonChooser = AutonChooser.getInstance();
+
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+    gyro.calibrate();
+  }
 
   @Override
   public void robotPeriodic() {}
 
   @Override
-  public void autonomousInit() {}
+  public void autonomousInit() {
+    drivetrain.reset();
+    gyro.reset();
+    
+    autonChooser.resetSelectedPath();
+  }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    autonChooser.runSelectedPath();
+    //drivetrain.turnToAngle(45);
+    //System.out.println(gyro.getAngle());
+  }
+
 
   @Override
   public void teleopInit() {}
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    OI.updateOI();
+  }
 
   @Override
   public void disabledInit() {}
