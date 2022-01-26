@@ -4,15 +4,15 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-public class Camera {
+public class Limelight {
     private static NetworkTable table;
-    public static Camera instance;
+    public static Limelight instance;
 
-    private Camera() {
+    public Limelight() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
-    public static Camera getInstance(){
+    public static Limelight getInstance(){
         if(instance == null){
             instance = new Camera();
         }
