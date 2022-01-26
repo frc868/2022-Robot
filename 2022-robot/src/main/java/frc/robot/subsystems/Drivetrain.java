@@ -6,12 +6,14 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.OI;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 
 public class Drivetrain {
     private CANSparkMax r_primary, r_secondary, r_teritary, l_primary, l_secondary, l_teritary;
     public static Drivetrain instance;
+    
    
     private Gyro gyro = Gyro.getInstance();
     private PIDController pid;
@@ -104,12 +106,16 @@ public class Drivetrain {
         double x = OI.driver.getRX();
         y = -speed * y;
         x = -speed * x;
-        setSpeed(y-x,y+x);
+        setSpeed(y+x,y-x);
     }
 
     public void reset(){
         resetRightPosition();
         resetLeftPosition();
+    }
+
+    public void stop(){
+        setSpeed(0);
     }
 
     //**********************AUTON STUFF**************************/
@@ -125,10 +131,15 @@ public class Drivetrain {
     }
 
     public void turnToAngle(double target){
-        double calcSpeed = pid.calculate(gyro.getYaw(), target);
-        setRightSpeed(calcSpeed);
-        setLeftSpeed(-calcSpeed);
+        double distanceToTarget = Math.abs(target) - Math.abs(gyro.getAngle());
+        double calcSpeed = Math.atan(distanceToTarget) / 15;
+        if(target < 0){
+            calcSpeed = calcSpeed * -1;
+        }
+        turnRight(calcSpeed);
+        
     }
+
 
     public void driveArc(double targetLeft, double targetRight, double leftMaxSpeed, double rightMaxSpeed, double smoothnessFactor){
         double distanceToLeftTarget = Math.abs(targetLeft) - Math.abs(l_primary.getEncoder().getPosition());
@@ -152,7 +163,8 @@ public class Drivetrain {
     }
     
     public void driveLeftArc(double target, double maxSpeed, double constantSpeed, double smoothnessFactor){
-        double calcRightAdd = Math.log(target + 1) / Math.log(smoothnessFactor);
+        double distanceToLeftTarget = Math.abs(target) - Math.abs(r_primary.getEncoder().getPosition());
+        double calcRightAdd = Math.log(distanceToLeftTarget + 1) / Math.log(smoothnessFactor);
         double calcLeftSpeed = constantSpeed;
         double calcRightSpeed = (maxSpeed * calcRightAdd) + constantSpeed;
         setRightSpeed(calcRightSpeed);
@@ -160,10 +172,19 @@ public class Drivetrain {
     }
 
     public void driveRightArc(double target, double maxSpeed, double constantSpeed, double smoothnessFactor){
-        double calcLeftAdd = Math.log(target + 1) / Math.log(smoothnessFactor);
+        double distanceToRightTarget = Math.abs(target) - Math.abs(l_primary.getEncoder().getPosition());
+        double calcLeftAdd = Math.log(distanceToRightTarget + 1) / Math.log(smoothnessFactor);
         double calcRightSpeed = constantSpeed;
         double calcLeftSpeed = (maxSpeed * calcLeftAdd) + constantSpeed;
         setRightSpeed(calcRightSpeed);
         setLeftSpeed(calcLeftSpeed);
     }
+
+    public void turnToLimelight(){
+        double calcSpeed = pid.calculate(Robot.camera.getTx(), 0);
+        setLeftSpeed(calcSpeed);
+        setRightSpeed(-calcSpeed);
+    }
+
+    
 }

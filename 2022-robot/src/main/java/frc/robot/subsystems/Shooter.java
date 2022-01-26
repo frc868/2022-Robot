@@ -19,6 +19,7 @@ public class Shooter {
         s_primary.setInverted(RobotMap.Shooter.IS_INVERTED);
         s_secondary.follow(s_primary, true);
 
+
         kP = 0.0008;
         kI = 0.0023;
         kD = 0.000045;

@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.auton.AutonChooser;
+import frc.robot.auton.Camera;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Gyro;
 
@@ -13,6 +14,7 @@ public class Robot extends TimedRobot {
   public static Drivetrain drivetrain = Drivetrain.getInstance();
   public static Gyro gyro = Gyro.getInstance();
   public static AutonChooser autonChooser = AutonChooser.getInstance();
+  public static Camera camera = Camera.getInstance();
 
   @Override
   public void robotInit() {
@@ -32,9 +34,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    autonChooser.runSelectedPath();
+    drivetrain.turnToLimelight();
+    //System.out.println(camera.getTx());
+    //autonChooser.runSelectedPath();
     //drivetrain.turnToAngle(45);
-    //System.out.println(gyro.getAngle());
+    System.out.println(camera.getTa());
   }
 
 

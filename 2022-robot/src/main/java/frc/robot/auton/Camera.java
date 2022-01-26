@@ -6,11 +6,18 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class Camera {
     private static NetworkTable table;
+    public static Camera instance;
 
-    public Camera() {
+    private Camera() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
+    public static Camera getInstance(){
+        if(instance == null){
+            instance = new Camera();
+        }
+        return instance;
+    }
     public double getTx() {
         NetworkTableEntry tx = table.getEntry("tx");
         return tx.getDouble(0.0);
