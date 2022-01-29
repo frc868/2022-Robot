@@ -13,11 +13,19 @@ public class Intake {
     private DoubleSolenoid upDowner; 
     public static Intake instance;
 
+
     private Intake(){
         intake = new CANSparkMax(RobotMap.Intake.INTAKE, MotorType.kBrushless); //TODO: think they using 550, make sure to check
         intake.setInverted(RobotMap.Intake.IS_INVERTED);
 
         upDowner = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Intake.UPDOWNER1, RobotMap.Intake.UPDOWNER2); //TODO: assuming we using the rev pneumatics hub and a double solenoid
+    }
+
+    public static Intake getInstance(){
+        if(instance == null){
+            instance = new Intake();
+        }
+        return instance;
     }
 
     public void setDown(){
@@ -35,4 +43,6 @@ public class Intake {
     public void reset(){
         upDowner.set(Value.kReverse);
     }
+
+    
 }

@@ -5,6 +5,9 @@ import frc.robot.Robot;
 import frc.robot.auton.AutonPath;
 
 public class FirstPath extends AutonPath{
+    //Drive forward 40.44 in
+    //Shoot balls
+    //Turn
     private State currentState = State.toFirstBall;
     private enum State{
         toFirstBall{

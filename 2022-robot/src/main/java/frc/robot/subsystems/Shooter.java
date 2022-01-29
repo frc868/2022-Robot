@@ -1,15 +1,20 @@
 package frc.robot.subsystems;
 
+import java.util.Timer;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Shooter {
     private CANSparkMax s_primary, s_secondary;
     private PIDController pid;
     private double kP, kI, kD;
+    private double vI = 0;
+    private double vF = 0;
     public static Shooter instance;
 
     private Shooter(){
@@ -24,6 +29,13 @@ public class Shooter {
         kI = 0.0023;
         kD = 0.000045;
         pid = new PIDController(kP, kI, kD);
+    }
+
+    public static Shooter getInstance(){
+        if(instance == null){
+            instance = new Shooter();
+        }
+        return instance;
     }
 
     public double getRPM(){
@@ -46,5 +58,15 @@ public class Shooter {
     public boolean onTarget(){
         pid.setTolerance(30);
         return pid.atSetpoint();
+    }
+
+    //theory code
+    public void ballIsShoot(){
+        vI = vF;
+        vF = s_primary.getEncoder().getVelocity();
+        double acceleration = (vF - vI) / 0.02;
+        if(acceleration < -5){
+            Robot.
+        }
     }
 }

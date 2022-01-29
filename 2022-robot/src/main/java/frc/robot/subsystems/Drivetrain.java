@@ -176,12 +176,21 @@ public class Drivetrain {
         double calcLeftAdd = Math.log(distanceToRightTarget + 1) / Math.log(smoothnessFactor);
         double calcRightSpeed = constantSpeed;
         double calcLeftSpeed = (maxSpeed * calcLeftAdd) + constantSpeed;
-        setRightSpeed(calcRightSpeed);
-        setLeftSpeed(calcLeftSpeed);
+        
+        if(distanceToRightTarget > 0){
+            setRightSpeed(calcRightSpeed);
+             setLeftSpeed(calcLeftSpeed);
+        }
     }
 
     public void turnToLimelight(){
-        double calcSpeed = pid.calculate(Robot.camera.getTx(), 0);
+        double calcSpeed = pid.calculate(Robot.limelight.getTx(), 0);
+        setLeftSpeed(calcSpeed);
+        setRightSpeed(-calcSpeed);
+    }
+
+    public void turnToBall(){
+        double calcSpeed = pid.calculate(Robot.astra.getTx(), 0);
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
     }

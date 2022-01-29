@@ -76,4 +76,5 @@ public class Helper {
     public static double desensitize(double value) {
         return Math.pow(value, 3);
     } 
+
 }

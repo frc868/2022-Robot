@@ -8,13 +8,13 @@ public class Limelight {
     private static NetworkTable table;
     public static Limelight instance;
 
-    public Limelight() {
+    private Limelight() {
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
     public static Limelight getInstance(){
         if(instance == null){
-            instance = new Camera();
+            instance = new Limelight();
         }
         return instance;
     }

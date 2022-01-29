@@ -7,6 +7,7 @@ import frc.robot.RobotMap;
 
 public class Hopper {
     private CANSparkMax hopper;
+    public int ballCount = 1;
     public static Hopper instance;
 
     private Hopper(){
@@ -29,7 +30,15 @@ public class Hopper {
         hopper.set(speed);
     }
 
-    public void ballsInHopper(){ //TODO: Is void now but should return the number of balls in hopper
+    public void addBall(){
+        ballCount = ballCount + 1;
+    }
 
+    public void subBall(){
+        ballCount = ballCount - 1;
+    }
+
+    public double ballsInHopper(){
+        return ballCount;
     }
 }
