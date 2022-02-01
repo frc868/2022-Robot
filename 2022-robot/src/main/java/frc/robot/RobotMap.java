@@ -73,6 +73,11 @@ public class RobotMap {
         public static final int POV = 0; // untested
     }
     public static class PID_CONSTANTS{
+        public static class PRAC_BOT{
 
+        }
+        public static class COMP_BOT{
+            
+        }
     }
 }

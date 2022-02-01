@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
+import frc.robot.sensors.Gyro;
 
 
 public class Drivetrain {
@@ -140,7 +141,6 @@ public class Drivetrain {
         
     }
 
-
     public void driveArc(double targetLeft, double targetRight, double leftMaxSpeed, double rightMaxSpeed, double smoothnessFactor){
         double distanceToLeftTarget = Math.abs(targetLeft) - Math.abs(l_primary.getEncoder().getPosition());
         double distanceToRightTarget = Math.abs(targetRight) - Math.abs(r_primary.getEncoder().getPosition());
@@ -195,7 +195,6 @@ public class Drivetrain {
         else{
             stop();
         }
-
     }
 
     public void turnToLimelight(){
@@ -209,6 +208,5 @@ public class Drivetrain {
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
     }
-
-    
+  
 }
