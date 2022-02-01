@@ -11,10 +11,8 @@ public class OI {
         }
         return instance;
     }
+    
     public static void updateOI(){
-       // Robot.drivetrain.setLeftSpeed(driver.getLY());
-        //obot.drivetrain.setRightSpeed(driver.getLY());
         Robot.drivetrain.arcadeDrive(0.5);
-        //Robot.drivetrain.turnLeft(driver.getRX());
     }
 }

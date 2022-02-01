@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.Timer;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -79,6 +77,15 @@ public class Shooter {
             Robot.hopper.subBall();
             loweredSpeed = false;
             gainedSpeed = false;
+        }
+    }
+
+    public void shootLogic(double targetRPM){
+        if(Robot.hopper.ballCount > 0){
+            shoot(targetRPM);
+            if(onTarget()){
+                Robot.hopper.setSpeed(0.1);
+            }
         }
     }
 }

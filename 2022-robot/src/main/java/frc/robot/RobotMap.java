@@ -32,6 +32,12 @@ public class RobotMap {
     public static class Climber{
         public static final int C_PRIMARY = 8;
         public static final int C_SECONDARY = 9;
+        public static final int UPDOWNER11 = 5;
+        public static final int UPDOWNER12 = 6;
+        public static final int UPDOWNER21 = 7;
+        public static final int UPDOWNER22 = 8;
+        public static final int SINGLE1 = 9;
+        public static final int SINGLE2 = 10;
         public static final boolean IS_INVERTED = false;
     }
     public static class Shooter{
@@ -65,5 +71,8 @@ public class RobotMap {
         public static final int RT = 3;
 
         public static final int POV = 0; // untested
+    }
+    public static class PID_CONSTANTS{
+
     }
 }
