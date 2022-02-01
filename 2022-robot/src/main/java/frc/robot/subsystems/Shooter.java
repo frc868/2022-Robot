@@ -17,6 +17,10 @@ public class Shooter {
     private double vF = 0;
     public static Shooter instance;
 
+    //theory
+    private boolean loweredSpeed = false;
+    private boolean gainedSpeed = false;
+
     private Shooter(){
         s_primary = new CANSparkMax(RobotMap.Shooter.S_PRIMARY, MotorType.kBrushless);
         s_secondary = new CANSparkMax(RobotMap.Shooter.S_SECONDARY, MotorType.kBrushless);
@@ -66,7 +70,15 @@ public class Shooter {
         vF = s_primary.getEncoder().getVelocity();
         double acceleration = (vF - vI) / 0.02;
         if(acceleration < -5){
-            Robot.
+            loweredSpeed = true;
+        }
+        if(acceleration > 5){
+            gainedSpeed = true;
+        }
+        if(loweredSpeed && gainedSpeed){
+            Robot.hopper.subBall();
+            loweredSpeed = false;
+            gainedSpeed = false;
         }
     }
 }

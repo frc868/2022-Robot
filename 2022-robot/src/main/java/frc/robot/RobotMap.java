@@ -24,8 +24,10 @@ public class RobotMap {
     public static class Intake{
         public static final int INTAKE = 10;
         public static final boolean IS_INVERTED = false;
-        public static final int UPDOWNER1 = 1;
-        public static final int UPDOWNER2 = 2;
+        public static final int UPDOWNER11 = 1;
+        public static final int UPDOWNER12 = 2;
+        public static final int UPDOWNER21 = 3;
+        public static final int UPDOWNER22 = 4;
     }
     public static class Climber{
         public static final int C_PRIMARY = 8;

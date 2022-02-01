@@ -167,8 +167,16 @@ public class Drivetrain {
         double calcRightAdd = Math.log(distanceToLeftTarget + 1) / Math.log(smoothnessFactor);
         double calcLeftSpeed = constantSpeed;
         double calcRightSpeed = (maxSpeed * calcRightAdd) + constantSpeed;
-        setRightSpeed(calcRightSpeed);
-        setLeftSpeed(calcLeftSpeed);
+        if(target < 0){
+            calcRightSpeed = calcRightSpeed * -1;
+        }
+        if(distanceToLeftTarget > 0){
+            setRightSpeed(calcRightSpeed);
+            setLeftSpeed(calcLeftSpeed);
+        }
+        else{
+            stop();
+        }
     }
 
     public void driveRightArc(double target, double maxSpeed, double constantSpeed, double smoothnessFactor){
@@ -176,11 +184,18 @@ public class Drivetrain {
         double calcLeftAdd = Math.log(distanceToRightTarget + 1) / Math.log(smoothnessFactor);
         double calcRightSpeed = constantSpeed;
         double calcLeftSpeed = (maxSpeed * calcLeftAdd) + constantSpeed;
-        
+
+        if(target < 0){
+            calcRightSpeed = calcRightSpeed * -1;
+        }
         if(distanceToRightTarget > 0){
             setRightSpeed(calcRightSpeed);
-             setLeftSpeed(calcLeftSpeed);
+            setLeftSpeed(calcLeftSpeed);
         }
+        else{
+            stop();
+        }
+
     }
 
     public void turnToLimelight(){
