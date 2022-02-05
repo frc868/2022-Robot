@@ -25,7 +25,7 @@ public class RobotMap {
     }
     public static class Intake{
         public static final int I_PRIMARY = 10;
-        public static final int I_SECONDARY = 13;
+        public static final int I_SECONDARY = 11;
         public static final boolean IS_INVERTED = false;
         public static final int UPDOWNER11 = 1;
         public static final int UPDOWNER12 = 2;
@@ -44,8 +44,8 @@ public class RobotMap {
         public static final boolean IS_INVERTED = false;
     }
     public static class Shooter{
-        public static final int S_PRIMARY = 11;
-        public static final int S_SECONDARY = 12;
+        public static final int S_PRIMARY = 12;
+        public static final int S_SECONDARY = 13;
         public static final boolean IS_INVERTED = false;
     }
     public static class Controllers {

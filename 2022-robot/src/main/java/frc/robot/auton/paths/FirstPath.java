@@ -24,6 +24,7 @@ public class FirstPath extends AutonPath{
             @Override
             public void run(){
                 Robot.drivetrain.driveStraight(AutonMap.FirstPath.FIRST_TARGET_DISTANCE, 0.5, 30);
+                Robot.intake.run();
             }
             @Override
             public State nextState(){
@@ -31,19 +32,6 @@ public class FirstPath extends AutonPath{
                     return this;
                 }
                 Robot.drivetrain.reset();
-                return intakeFirstBall;
-            }
-        },
-        intakeFirstBall{
-            @Override
-            public void run(){
-                Robot.intake.run();
-            }
-            @Override
-            public State nextState(){
-                if(Robot.hopper.ballsInHopper() != 2){
-                    return this;
-                }
                 return turnToGoal;
             }
         },
@@ -91,23 +79,11 @@ public class FirstPath extends AutonPath{
             @Override
             public void run(){
                 Robot.drivetrain.driveStraight(AutonMap.FirstPath.SECOND_TARGET_DISTANCE, 0.5, 50);
-            }
-            @Override
-            public State nextState(){
-                if(Robot.drivetrain.getRightPosition() < AutonMap.FirstPath.SECOND_TARGET_DISTANCE){
-                    return this;
-                }
-                return intakeSecondBall;
-            }
-        },
-        intakeSecondBall{
-            @Override
-            public void run(){
                 Robot.intake.run();
             }
             @Override
             public State nextState(){
-                if(Robot.hopper.ballsInHopper() != 1){
+                if(Robot.drivetrain.getRightPosition() < AutonMap.FirstPath.SECOND_TARGET_DISTANCE){
                     return this;
                 }
                 return toSecondShootPosition;

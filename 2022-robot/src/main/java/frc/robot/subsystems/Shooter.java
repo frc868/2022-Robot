@@ -4,6 +4,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -13,15 +14,22 @@ public class Shooter {
     private double kP, kI, kD;
     private double vI = 0;
     private double vF = 0;
+    private DigitalInput irsensor_shooter;
     public static Shooter instance;
 
     //theory
     private boolean loweredSpeed = false;
     private boolean gainedSpeed = false;
 
+     //ir sensor logic
+     private boolean previous = false;
+     private boolean toggle = false;
+
     private Shooter(){
         s_primary = new CANSparkMax(RobotMap.Shooter.S_PRIMARY, MotorType.kBrushless);
         s_secondary = new CANSparkMax(RobotMap.Shooter.S_SECONDARY, MotorType.kBrushless);
+        irsensor_shooter = new DigitalInput(2);
+
 
         s_primary.setInverted(RobotMap.Shooter.IS_INVERTED);
         s_secondary.follow(s_primary, true);
@@ -70,14 +78,14 @@ public class Shooter {
     }
 
     //theory code
-    public void ballIsShoot(){
+    public void ballIsShoot(double bounds){
         vI = vF;
         vF = s_primary.getEncoder().getVelocity();
         double acceleration = (vF - vI) / 0.02;
-        if(acceleration < -5){
+        if(acceleration < -bounds){
             loweredSpeed = true;
         }
-        if(acceleration > 5){
+        if(acceleration > bounds){
             gainedSpeed = true;
         }
         if(loweredSpeed && gainedSpeed){
@@ -96,8 +104,25 @@ public class Shooter {
             }
             else{
                 Robot.hopper.setForward();
-                Robot.hopper.run();
+                Robot.hopper.stop();
             }
+        }
+    }
+
+    public boolean getCurrent(){
+        return irsensor_shooter.get();
+    }
+
+    public void addBall(){
+        if (getCurrent() && previous) { 
+            toggle = !toggle;
+        }
+
+        previous = getCurrent();
+
+        if (toggle) {
+            Robot.hopper.subBall();
+            toggle = !toggle;
         }
     }
 }

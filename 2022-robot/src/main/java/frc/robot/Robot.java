@@ -42,11 +42,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    drivetrain.driveLeftArc(50, 0.4, 0.2, 60);
     //System.out.println(camera.getTx());
-    //autonChooser.runSelectedPath();
-    //drivetrain.turnToAngle(45);
-    System.out.println(astra.getTx());
+    autonChooser.runSelectedPath();
+ 
   }
 
 

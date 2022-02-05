@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -15,16 +16,22 @@ public class Intake {
     private DoubleSolenoid upDowner_2;
     private double vI = 0;
     private double vF = 0;
+    private DigitalInput irsensor_intake;
     public static Intake instance;
 
     //theory
     private boolean loweredSpeed = false;
     private boolean gainedSpeed = false;
 
+    //ir sensor logic
+    private boolean previous = false;
+    private boolean toggle = false;
+
 
     private Intake(){
         i_primary = new CANSparkMax(RobotMap.Intake.I_PRIMARY, MotorType.kBrushless); //TODO: think they using 550, make sure to check
         i_secondary = new CANSparkMax(RobotMap.Intake.I_SECONDARY, MotorType.kBrushless);
+        irsensor_intake = new DigitalInput(1);
 
         i_secondary.follow(i_primary, true);
         i_primary.setInverted(RobotMap.Intake.IS_INVERTED);
@@ -62,14 +69,14 @@ public class Intake {
 
     //Theory code. Theory is that when the ball is taken in by the intake the graph of the RPM vs. Time graph will have a drop in it which can tell use whether or not a ball is added
     //Uses IVT to know when a ball is added
-    public void addBall(){
+    public void addBall(double bounds){
         vI = vF;
         vF = i_primary.getEncoder().getVelocity();
         double acceleration = (vF - vI) / 0.02;
-        if(acceleration < -5){
+        if(acceleration < -bounds){
             loweredSpeed = true;
         }
-        if(acceleration > 5){
+        if(acceleration > bounds){
             gainedSpeed = true;
         }
         if(loweredSpeed && gainedSpeed){
@@ -82,5 +89,23 @@ public class Intake {
     public void run(){
         i_primary.set(0.1);
     }
+
+    public boolean getCurrent(){
+        return irsensor_intake.get();
+    }
+
+    public void addBall(){
+        if (getCurrent() && previous) { 
+            toggle = !toggle;
+        }
+
+        previous = getCurrent();
+
+        if (toggle) {
+            Robot.hopper.addBall();
+            toggle = !toggle;
+        }
+    }
+
     
 }
