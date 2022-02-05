@@ -10,7 +10,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Intake {
-    private CANSparkMax intake;
+    private CANSparkMax i_primary, i_secondary;
     private DoubleSolenoid upDowner_1; 
     private DoubleSolenoid upDowner_2;
     private double vI = 0;
@@ -23,8 +23,11 @@ public class Intake {
 
 
     private Intake(){
-        intake = new CANSparkMax(RobotMap.Intake.INTAKE, MotorType.kBrushless); //TODO: think they using 550, make sure to check
-        intake.setInverted(RobotMap.Intake.IS_INVERTED);
+        i_primary = new CANSparkMax(RobotMap.Intake.I_PRIMARY, MotorType.kBrushless); //TODO: think they using 550, make sure to check
+        i_secondary = new CANSparkMax(RobotMap.Intake.I_SECONDARY, MotorType.kBrushless);
+
+        i_secondary.follow(i_primary, true);
+        i_primary.setInverted(RobotMap.Intake.IS_INVERTED);
 
         upDowner_1 = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Intake.UPDOWNER11, RobotMap.Intake.UPDOWNER12); //TODO: assuming we using the rev pneumatics hub and a double solenoid
         upDowner_2 = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Intake.UPDOWNER21, RobotMap.Intake.UPDOWNER22);
@@ -61,7 +64,7 @@ public class Intake {
     //Uses IVT to know when a ball is added
     public void addBall(){
         vI = vF;
-        vF = intake.getEncoder().getVelocity();
+        vF = i_primary.getEncoder().getVelocity();
         double acceleration = (vF - vI) / 0.02;
         if(acceleration < -5){
             loweredSpeed = true;
@@ -74,6 +77,10 @@ public class Intake {
             loweredSpeed = false;
             gainedSpeed = false;
         }
+    }
+    
+    public void run(){
+        i_primary.set(0.1);
     }
     
 }

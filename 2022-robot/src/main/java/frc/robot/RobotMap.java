@@ -20,9 +20,12 @@ public class RobotMap {
     public static class Hopper{
         public static final int HOPPER = 7;
         public static final boolean IS_INVERTED = false;
+        public static final int FIRST = 11;
+        public static final int SECOND = 12;
     }
     public static class Intake{
-        public static final int INTAKE = 10;
+        public static final int I_PRIMARY = 10;
+        public static final int I_SECONDARY = 13;
         public static final boolean IS_INVERTED = false;
         public static final int UPDOWNER11 = 1;
         public static final int UPDOWNER12 = 2;
@@ -77,7 +80,7 @@ public class RobotMap {
 
         }
         public static class COMP_BOT{
-            
+
         }
     }
 }

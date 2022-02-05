@@ -2,6 +2,7 @@ package frc.robot.auton.paths;
 
 
 import frc.robot.Robot;
+import frc.robot.auton.AutonMap;
 import frc.robot.auton.AutonPath;
 
 public class FirstPath extends AutonPath{
@@ -10,78 +11,146 @@ public class FirstPath extends AutonPath{
     //Turn
     private State currentState = State.toFirstBall;
     private enum State{
+        setIntakeDown{
+            @Override
+            public void run(){
+                Robot.intake.toggle();
+            }
+            public State nextState(){
+                return toFirstBall;
+            }
+        },
         toFirstBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(30, 0.5, 30);
+                Robot.drivetrain.driveStraight(AutonMap.FirstPath.FIRST_TARGET_DISTANCE, 0.5, 30);
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.getRightPosition() < 30){
+                if(Robot.drivetrain.getRightPosition() < AutonMap.FirstPath.FIRST_TARGET_DISTANCE){
                     return this;
                 }
                 Robot.drivetrain.reset();
-                return turnToSecondBall;
+                return intakeFirstBall;
             }
         },
-        turnToSecondBall{
-            @Override 
-            public void run(){
-                Robot.drivetrain.turnToAngle(37.5);
-            }
-            public State nextState(){
-                if(Robot.gyro.distanceTo(37.5) > 3){
-                    return this;
-                }
-                Robot.gyro.reset();
-                return toSecondBall;
-            }
-
-        },
-        toSecondBall{
+        intakeFirstBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(50, 0.5, 50);
+                Robot.intake.run();
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.getRightPosition() < 50){
+                if(Robot.hopper.ballsInHopper() != 2){
                     return this;
                 }
-                Robot.drivetrain.reset();
-                return toFirstBallPosition;
-            }
-        },
-        toFirstBallPosition{
-            @Override
-            public void run(){
-                Robot.drivetrain.driveStraight(-50, 0.5, 50);
-            }
-            @Override
-            public State nextState(){
-                if(Robot.drivetrain.getRightPosition() < 50){
-                    return this;
-                }
-                Robot.drivetrain.reset();
                 return turnToGoal;
             }
-
-
         },
         turnToGoal{
             @Override
             public void run(){
-                Robot.drivetrain.turnToAngle(-37.5);
+                Robot.drivetrain.turnToLimelight();
             }
             @Override
             public State nextState(){
-                if(Robot.gyro.distanceTo(-37.5) > 0){
+                if(Robot.drivetrain.atTarget() != true){
                     return this;
                 }
-                Robot.gyro.reset();
+                return shootBalls;
+            }
+        },
+        shootBalls{
+            @Override
+            public void run(){
+                Robot.shooter.shootLogic(AutonMap.FirstPath.FIRST_RPM);
+            }
+            @Override
+            public State nextState(){
+                if(Robot.hopper.ballsInHopper() != 0){
+                    return this;
+                }
+                return turnToSecondBall;
+            }
+        },
+        turnToSecondBall{
+            @Override
+            public void run(){
+                Robot.drivetrain.turnToBall();
+            }
+            @Override
+            public State nextState(){
+                if(Robot.drivetrain.atTarget() != true){
+                    return this;
+                }
+                Robot.drivetrain.reset();
+                return toSecondBall;
+            }
+        },
+        toSecondBall{
+            @Override
+            public void run(){
+                Robot.drivetrain.driveStraight(AutonMap.FirstPath.SECOND_TARGET_DISTANCE, 0.5, 50);
+            }
+            @Override
+            public State nextState(){
+                if(Robot.drivetrain.getRightPosition() < AutonMap.FirstPath.SECOND_TARGET_DISTANCE){
+                    return this;
+                }
+                return intakeSecondBall;
+            }
+        },
+        intakeSecondBall{
+            @Override
+            public void run(){
+                Robot.intake.run();
+            }
+            @Override
+            public State nextState(){
+                if(Robot.hopper.ballsInHopper() != 1){
+                    return this;
+                }
+                return toSecondShootPosition;
+            }
+        },
+        toSecondShootPosition{
+            @Override
+            public void run(){
+                Robot.drivetrain.driveStraight(AutonMap.FirstPath.RETURN_SECOND_TARGET_DISTANCE, 0.5, 50);
+            }
+            @Override
+            public State nextState(){
+                if(Robot.drivetrain.getRightPosition() > AutonMap.FirstPath.RETURN_SECOND_TARGET_DISTANCE){
+                    return this;
+                }
+                return turnToGoalSecond;
+            }
+        },
+        turnToGoalSecond{
+            @Override
+            public void run(){
+                Robot.drivetrain.turnToLimelight();
+            }
+            @Override
+            public State nextState(){
+                if(Robot.drivetrain.atTarget() != true){
+                    return this;
+                }
+                return shootBall;
+            }
+        },
+        shootBall{
+            @Override
+            public void run(){
+                Robot.shooter.shootLogic(AutonMap.FirstPath.FIRST_RPM);
+            }
+            @Override
+            public State nextState(){
+                if(Robot.hopper.ballsInHopper() != 0){
+                    return this;
+                }
                 return Done;
             }
-
         },
         Done{
             @Override

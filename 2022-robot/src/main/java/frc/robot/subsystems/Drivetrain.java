@@ -208,5 +208,10 @@ public class Drivetrain {
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
     }
+
+    public boolean atTarget(){
+        pid.setTolerance(0.5);
+        return pid.atSetpoint();
+    }
   
 }

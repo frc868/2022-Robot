@@ -1,4 +1,4 @@
-package frc.robot.auton;
+package frc.robot.auton.cameras;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;

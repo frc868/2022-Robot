@@ -84,7 +84,12 @@ public class Shooter {
         if(Robot.hopper.ballCount > 0){
             shoot(targetRPM);
             if(onTarget()){
-                Robot.hopper.setSpeed(0.1);
+                Robot.hopper.setBack();
+                Robot.hopper.run();
+            }
+            else{
+                Robot.hopper.setForward();
+                Robot.hopper.run();
             }
         }
     }

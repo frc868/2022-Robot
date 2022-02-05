@@ -1,11 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.auton.Astra;
 import frc.robot.auton.AutonChooser;
-import frc.robot.auton.Limelight;
+import frc.robot.auton.cameras.Astra;
+import frc.robot.auton.cameras.Limelight;
+import frc.robot.sensors.Gyro;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
