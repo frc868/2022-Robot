@@ -27,9 +27,16 @@ public class Shooter {
         s_secondary.follow(s_primary, true);
 
 
-        kP = 0.0008;
-        kI = 0.0023;
-        kD = 0.000045;
+        if(Robot.isCompBot){
+            kP = RobotMap.PID_CONSTANTS.COMP_BOT.SHOOTER_CONSTANTS.KP;
+            kI = RobotMap.PID_CONSTANTS.COMP_BOT.SHOOTER_CONSTANTS.KI;
+            kD = RobotMap.PID_CONSTANTS.COMP_BOT.SHOOTER_CONSTANTS.KD;
+        }
+        else{
+            kP = RobotMap.PID_CONSTANTS.PRAC_BOT.SHOOTER_CONSTANTS.KP;
+            kI = RobotMap.PID_CONSTANTS.PRAC_BOT.SHOOTER_CONSTANTS.KI;
+            kD = RobotMap.PID_CONSTANTS.PRAC_BOT.SHOOTER_CONSTANTS.KD;
+        }
         pid = new PIDController(kP, kI, kD);
     }
 

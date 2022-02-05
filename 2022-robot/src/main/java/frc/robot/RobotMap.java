@@ -77,10 +77,28 @@ public class RobotMap {
     }
     public static class PID_CONSTANTS{
         public static class PRAC_BOT{
-
+            public static class SHOOTER_CONSTANTS{
+                public static final double KP = 0.0008;
+                public static final double KI = 0.0023;
+                public static final double KD = 0.000045;
+            }
+            public static class DRIVETRAIN_CONSTANTS{
+                public static final double KP = 0.0005;
+                public static final double KI = 0.0;
+                public static final double KD = 0.0;
+            }
         }
         public static class COMP_BOT{
-
+            public static class SHOOTER_CONSTANTS{
+                public static final double KP = 0.0008;
+                public static final double KI = 0.0023;
+                public static final double KD = 0.000045;
+            }
+            public static class DRIVETRAIN_CONSTANTS{
+                public static final double KP = 0.0005;
+                public static final double KI = 0.0;
+                public static final double KD = 0.0;
+            }
         }
     }
 }

@@ -39,9 +39,16 @@ public class Drivetrain {
         l_teritary = new CANSparkMax(RobotMap.Drivetrain.L_TERTIARY, MotorType.kBrushless);
         l_teritary.setInverted(RobotMap.Drivetrain.LEFT_IS_INVERTED);
 
-        kP = 0.005;
-        kD = 0.0;
-        kI = 0.0;
+        if(Robot.isCompBot){
+            kP = RobotMap.PID_CONSTANTS.COMP_BOT.DRIVETRAIN_CONSTANTS.KP;
+            kI = RobotMap.PID_CONSTANTS.COMP_BOT.DRIVETRAIN_CONSTANTS.KI;
+            kD = RobotMap.PID_CONSTANTS.COMP_BOT.DRIVETRAIN_CONSTANTS.KD;
+        }
+        else{
+            kP = RobotMap.PID_CONSTANTS.PRAC_BOT.DRIVETRAIN_CONSTANTS.KP;
+            kI = RobotMap.PID_CONSTANTS.PRAC_BOT.DRIVETRAIN_CONSTANTS.KI;
+            kD = RobotMap.PID_CONSTANTS.PRAC_BOT.DRIVETRAIN_CONSTANTS.KD;
+        }
 
         pid = new PIDController(kP, kI, kD);
         
