@@ -139,12 +139,9 @@ public class Drivetrain {
     }
 
     public void turnToAngle(double target){
-        double distanceToTarget = Math.abs(target) - Math.abs(gyro.getAngle());
-        double calcSpeed = Math.atan(distanceToTarget) / 15;
-        if(target < 0){
-            calcSpeed = calcSpeed * -1;
-        }
-        turnRight(calcSpeed);
+        double calcSpeed = pid.calculate(Robot.gyro.getAngle(), target);
+        setRightSpeed(-calcSpeed);
+        setLeftSpeed(calcSpeed);
         
     }
 

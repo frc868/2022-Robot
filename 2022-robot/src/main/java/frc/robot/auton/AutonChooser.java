@@ -3,6 +3,7 @@ package frc.robot.auton;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auton.paths.FirstPath;
+import frc.robot.auton.paths.FirstPathNoCamera;
 
 public class AutonChooser {
     private static AutonChooser instance;
@@ -11,7 +12,7 @@ public class AutonChooser {
 
     private AutonChooser() {
         this.addPath("FirstPath", new FirstPath());
-
+        this.addPath("FirstPathNoCamera", new FirstPathNoCamera());
         chooser.setDefaultOption("FirstPath", new FirstPath());
     }
 
