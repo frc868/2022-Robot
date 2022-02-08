@@ -95,7 +95,7 @@ public class Intake {
     }
 
     public void addBall(){
-        if (getCurrent() && previous) { 
+        if (getCurrent() && !previous) { 
             toggle = !toggle;
         }
 

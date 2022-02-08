@@ -113,8 +113,8 @@ public class Shooter {
         return irsensor_shooter.get();
     }
 
-    public void addBall(){
-        if (getCurrent() && previous) { 
+    public void subBall(){
+        if (!getCurrent() && previous) { 
             toggle = !toggle;
         }
 
