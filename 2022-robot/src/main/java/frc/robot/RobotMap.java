@@ -77,7 +77,7 @@ public class RobotMap {
     }
     public static class PID_CONSTANTS {
         public static class PRAC_BOT {
-            public static class SHOOTER_CONSTANTS{
+            public static class SHOOTER_CONSTANTS {
                 public static final double KP = 0.0008;
                 public static final double KI = 0.0023;
                 public static final double KD = 0.000045;
