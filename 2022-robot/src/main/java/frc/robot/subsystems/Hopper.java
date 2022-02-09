@@ -14,7 +14,7 @@ public class Hopper {
     public int ballCount = 1;
     public static Hopper instance;
 
-    private Hopper(){
+    private Hopper() {
         hopper = new CANSparkMax(RobotMap.Hopper.HOPPER, MotorType.kBrushless); //TODO:Pretty sure its a 550 but need to check
         hopper.setInverted(RobotMap.Hopper.IS_INVERTED);
 
@@ -22,44 +22,44 @@ public class Hopper {
         second = new Solenoid(PneumaticsModuleType.REVPH, RobotMap.Hopper.SECOND);
     }
 
-    public static Hopper getInstance(){
-        if(instance == null){
+    public static Hopper getInstance() {
+        if (instance == null) {
             instance = new Hopper();
         }
         return instance;
     }
 
-    public void run(){
+    public void run() {
         hopper.set(0.1);
     }
 
-    public void setSpeed(double speed){
+    public void setSpeed(double speed) {
         hopper.set(speed);
     }
 
-    public void addBall(){
+    public void addBall() {
         ballCount = ballCount + 1;
     }
 
-    public void subBall(){
+    public void subBall() {
         ballCount = ballCount - 1;
     }
 
-    public double ballsInHopper(){
+    public double ballsInHopper() {
         return ballCount;
     }
 
-    public void setForward(){
+    public void setForward() {
         first.set(true);
         second.set(true);
     }
 
-    public void setBack(){
+    public void setBack() {
         first.set(false);
         second.set(false);
     }
 
-    public void stop(){
+    public void stop() {
         setSpeed(0);
     }
     

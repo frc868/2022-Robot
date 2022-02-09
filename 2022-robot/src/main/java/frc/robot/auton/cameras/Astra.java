@@ -13,8 +13,8 @@ public class Astra {
         table = NetworkTableInstance.getDefault().getTable("FRCVision");
     }
 
-    public static Astra getInstance(){
-        if(instance == null){
+    public static Astra getInstance() {
+        if (instance == null) {
             instance = new Astra();
         }
         return instance;

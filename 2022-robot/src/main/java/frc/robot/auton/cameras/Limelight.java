@@ -12,8 +12,8 @@ public class Limelight {
         table = NetworkTableInstance.getDefault().getTable("limelight");
     }
 
-    public static Limelight getInstance(){
-        if(instance == null){
+    public static Limelight getInstance() {
+        if (instance == null) {
             instance = new Limelight();
         }
         return instance;
