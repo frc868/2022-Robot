@@ -6,9 +6,9 @@ The mDNS addresses (`<hostname>.local`) _can_ be used, but they are apparently u
 
 All IP addresses start with `10.8.68`.
 
-| Device       | Hostname      | mDNS address            | IP address                               |
-| ------------ | ------------- | ----------------------- | ---------------------------------------- |
-| Radio        | TBD           | N/A                     | `10.8.68.1`                              |
-| roboRIO      | TBD           | `roborio-868-frc.local` | `10.8.68.2`                              |
-| Raspberry Pi | `raspberrypi` | `raspberrypi.local`     | `10.8.68.150`                            |
-| Limelight    | `limelight`   | `limelight.local`       | `10.8.68.151` (previously `10.8.68.151`) |
+| Device       | Hostname      | mDNS address            | IP address                              |
+| ------------ | ------------- | ----------------------- | --------------------------------------- |
+| Radio        | TBD           | N/A                     | `10.8.68.1`                             |
+| roboRIO      | TBD           | `roborio-868-frc.local` | `10.8.68.2`                             |
+| Raspberry Pi | `raspberrypi` | `raspberrypi.local`     | `10.8.68.150`                           |
+| Limelight    | `limelight`   | `limelight.local`       | `10.8.68.151` (previously `10.8.68.68`) |
