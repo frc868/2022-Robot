@@ -65,8 +65,7 @@ public class Astra {
      */
     public String getColor(int ball_number) {
         NetworkTableEntry ty = table.getEntry("ty");
-        String[] s = new String[1];
-        s[0] = "N";
-        return ty.getStringArray(new String[1])[0];
+        String[] s = {"N"};
+        return ty.getStringArray(s)[0];
     }
 }

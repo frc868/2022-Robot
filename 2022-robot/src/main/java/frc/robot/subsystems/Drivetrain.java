@@ -207,8 +207,9 @@ public class Drivetrain {
         setRightSpeed(-calcSpeed);
     }
 
-    public void turnToBall() {
-        double calcSpeed = pid.calculate(Robot.astra.getTx(), 0);
+    public void turnToClosestBall() {
+        // Balls are sorted by distance
+        double calcSpeed = pid.calculate(Robot.astra.getTx(0), 0); 
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
     }
