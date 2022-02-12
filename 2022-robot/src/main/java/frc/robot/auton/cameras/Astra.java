@@ -20,20 +20,53 @@ public class Astra {
         return instance;
     }
 
-    public double getTx() {
+    /**
+     * Get the x offset from a specified ball in degrees.
+     * Balls are sorted by distance (0 is the closest)
+     * @param ball_number ball to provide information for
+     * @return the x offset in degrees
+     * @author dr
+     */
+    public double getTx(int ball_number) {
         NetworkTableEntry tx = table.getEntry("tx");
-        double[] d = {0.0};
-        return tx.getDoubleArray(d)[0];
+        return tx.getDoubleArray(new double[1])[0];
     }
-    public double getTy() {
+
+    /**
+     * Get the y offset from a specified ball in degrees.
+     * Balls are sorted by distance (0 is the closest)
+     * @param ball_number ball to provide information for
+     * @return the y offset in degrees
+     * @author dr
+     */
+    public double getTy(int ball_number) {
         NetworkTableEntry ty = table.getEntry("ty");
-        double[] d = {0.0};
-        return ty.getDoubleArray(d)[0];
+        return ty.getDoubleArray(new double[1])[0];
     }
-    public String getColor() {
+
+    /**
+     * Get the distance from a specified ball in inches.
+     * Balls are sorted by distance (0 is the closest)
+     * @param ball_number ball to provide information for
+     * @return the distance in inches
+     * @author dr
+     */
+    public double getTd(int ball_number) {
+        NetworkTableEntry td = table.getEntry("td");
+        return td.getDoubleArray(new double[1])[0];
+    }
+
+    /**
+     * Get the color of a specified ball.
+     * Balls are sorted by distance (0 is the closest)
+     * @param ball_number ball to provide information for
+     * @return either "B" or "R" to specify ball color
+     * @author dr
+     */
+    public String getColor(int ball_number) {
         NetworkTableEntry ty = table.getEntry("ty");
         String[] s = new String[1];
         s[0] = "N";
-        return ty.getStringArray(s)[0];
+        return ty.getStringArray(new String[1])[0];
     }
 }
