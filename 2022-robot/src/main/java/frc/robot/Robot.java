@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     //System.out.println(camera.getTx());
-    autonChooser.runSelectedPath();
+    drivetrain.setSpeed(0.05);
  
   }
 

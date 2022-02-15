@@ -10,16 +10,15 @@ import frc.robot.RobotMap;
 
 public class Hopper {
     private CANSparkMax hopper;
-    private Solenoid first, second;
+    private Solenoid hopper_actuator;
     public int ballCount = 1;
     public static Hopper instance;
 
     private Hopper(){
-        hopper = new CANSparkMax(RobotMap.Hopper.HOPPER, MotorType.kBrushless); //TODO:Pretty sure its a 550 but need to check
+        hopper = new CANSparkMax(RobotMap.Hopper.HOPPER, MotorType.kBrushless); 
         hopper.setInverted(RobotMap.Hopper.IS_INVERTED);
 
-        first = new Solenoid(PneumaticsModuleType.REVPH, RobotMap.Hopper.FIRST);
-        second = new Solenoid(PneumaticsModuleType.REVPH, RobotMap.Hopper.SECOND);
+        hopper_actuator = new Solenoid(PneumaticsModuleType.REVPH, RobotMap.Hopper.HOPPER_ACTUATOR);
     }
 
     public static Hopper getInstance(){
@@ -50,13 +49,15 @@ public class Hopper {
     }
 
     public void setForward(){
-        first.set(true);
-        second.set(true);
+        hopper_actuator.set(true);
     }
 
     public void setBack(){
-        first.set(false);
-        second.set(false);
+        hopper_actuator.set(false);
+    }
+
+    public void toggle(){
+        hopper_actuator.toggle();
     }
 
     public void stop(){

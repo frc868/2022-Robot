@@ -15,8 +15,6 @@ public class Drivetrain {
     private CANSparkMax r_primary, r_secondary, r_teritary, l_primary, l_secondary, l_teritary;
     public static Drivetrain instance;
     
-   
-    private Gyro gyro = Gyro.getInstance();
     private PIDController pid;
     private double kP, kI, kD;
     private Drivetrain(){

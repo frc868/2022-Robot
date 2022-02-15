@@ -20,20 +20,16 @@ public class RobotMap {
     public static class Hopper{
         public static final int HOPPER = 7;
         public static final boolean IS_INVERTED = false;
-        public static final int FIRST = 11;
-        public static final int SECOND = 12;
+        public static final int HOPPER_ACTUATOR = 2; // TODO CHANGE
     }
     public static class Intake{
         public static final int I_PRIMARY = 10;
         public static final int I_SECONDARY = 11;
         public static final boolean IS_INVERTED = false;
-        public static final int UPDOWNER11 = 1;
-        public static final int UPDOWNER12 = 2;
-        public static final int UPDOWNER21 = 3;
-        public static final int UPDOWNER22 = 4;
+        public static final int INTAKE_ACTUATOR = 1; //TODO CHANGE
     }
     public static class Climber{
-        public static final int C_PRIMARY = 8;
+        public static final int C_PRIMARY = 12;
         public static final int C_SECONDARY = 9;
         public static final int UPDOWNER11 = 5;
         public static final int UPDOWNER12 = 6;
@@ -44,7 +40,7 @@ public class RobotMap {
         public static final boolean IS_INVERTED = false;
     }
     public static class Shooter{
-        public static final int S_PRIMARY = 12;
+        public static final int S_PRIMARY = 8;
         public static final int S_SECONDARY = 13;
         public static final boolean IS_INVERTED = false;
     }
