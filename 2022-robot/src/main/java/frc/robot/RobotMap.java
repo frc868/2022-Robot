@@ -20,7 +20,7 @@ public class RobotMap {
     public static class Hopper {
         public static final int HOPPER = 7;
         public static final boolean IS_INVERTED = false;
-        public static final int HOPPER_ACTUATOR = 2; // TODO CHANGE
+        public static final int HOPPER_ACTUATOR = 10; // TODO CHANGE
     }
     public static class Intake {
         public static final int I_PRIMARY = 10;
