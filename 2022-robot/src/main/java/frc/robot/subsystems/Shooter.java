@@ -25,7 +25,7 @@ public class Shooter {
      private boolean previous = false;
      private boolean toggle = false;
 
-    private Shooter(){
+    private Shooter() {
         s_primary = new CANSparkMax(RobotMap.Shooter.S_PRIMARY, MotorType.kBrushless);
         s_secondary = new CANSparkMax(RobotMap.Shooter.S_SECONDARY, MotorType.kBrushless);
         irsensor_shooter = new DigitalInput(2);
@@ -35,12 +35,12 @@ public class Shooter {
         s_secondary.follow(s_primary, true);
 
 
-        if(Robot.isCompBot){
+        if (Robot.isCompBot) {
             kP = RobotMap.PID_CONSTANTS.COMP_BOT.SHOOTER_CONSTANTS.KP;
             kI = RobotMap.PID_CONSTANTS.COMP_BOT.SHOOTER_CONSTANTS.KI;
             kD = RobotMap.PID_CONSTANTS.COMP_BOT.SHOOTER_CONSTANTS.KD;
         }
-        else{
+        else {
             kP = RobotMap.PID_CONSTANTS.PRAC_BOT.SHOOTER_CONSTANTS.KP;
             kI = RobotMap.PID_CONSTANTS.PRAC_BOT.SHOOTER_CONSTANTS.KI;
             kD = RobotMap.PID_CONSTANTS.PRAC_BOT.SHOOTER_CONSTANTS.KD;
@@ -48,72 +48,72 @@ public class Shooter {
         pid = new PIDController(kP, kI, kD);
     }
 
-    public static Shooter getInstance(){
-        if(instance == null){
+    public static Shooter getInstance() {
+        if (instance == null) {
             instance = new Shooter();
         }
         return instance;
     }
 
-    public double getRPM(){
+    public double getRPM() {
         return s_primary.getEncoder().getVelocity();
     }
 
-    public void setSpeed(double speed){
+    public void setSpeed(double speed) {
         s_primary.set(speed);
     }
 
-    public void stop(){
+    public void stop() {
         s_primary.set(0);
     }
 
-    public void shoot(double targetRPM){
+    public void shoot(double targetRPM) {
         double calcSpeed = pid.calculate(getRPM(), targetRPM);
         setSpeed(calcSpeed);
     }
     
-    public boolean onTarget(){
+    public boolean onTarget() {
         pid.setTolerance(30);
         return pid.atSetpoint();
     }
 
     //theory code
-    public void ballIsShoot(double bounds){
+    public void ballIsShoot(double bounds) {
         vI = vF;
         vF = s_primary.getEncoder().getVelocity();
         double acceleration = (vF - vI) / 0.02;
-        if(acceleration < -bounds){
+        if (acceleration < -bounds) {
             loweredSpeed = true;
         }
-        if(acceleration > bounds){
+        if (acceleration > bounds) {
             gainedSpeed = true;
         }
-        if(loweredSpeed && gainedSpeed){
+        if (loweredSpeed && gainedSpeed) {
             Robot.hopper.subBall();
             loweredSpeed = false;
             gainedSpeed = false;
         }
     }
 
-    public void shootLogic(double targetRPM){
-        if(Robot.hopper.ballCount > 0){
+    public void shootLogic(double targetRPM) {
+        if (Robot.hopper.ballCount > 0) {
             shoot(targetRPM);
-            if(onTarget()){
+            if (onTarget()) {
                 Robot.hopper.setBack();
                 Robot.hopper.run();
             }
-            else{
+            else {
                 Robot.hopper.setForward();
                 Robot.hopper.stop();
             }
         }
     }
 
-    public boolean getCurrent(){
+    public boolean getCurrent() {
         return irsensor_shooter.get();
     }
 
-    public void subBall(){
+    public void subBall() {
         if (!getCurrent() && previous) { 
             toggle = !toggle;
         }

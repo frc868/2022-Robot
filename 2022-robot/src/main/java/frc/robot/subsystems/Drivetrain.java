@@ -17,7 +17,7 @@ public class Drivetrain {
     
     private PIDController pid;
     private double kP, kI, kD;
-    private Drivetrain(){
+    private Drivetrain() {
         
         r_primary = new CANSparkMax(RobotMap.Drivetrain.R_PRIMARY, MotorType.kBrushless);
         r_primary.setInverted(RobotMap.Drivetrain.RIGHT_IS_INVERTED);
@@ -37,12 +37,12 @@ public class Drivetrain {
         l_teritary = new CANSparkMax(RobotMap.Drivetrain.L_TERTIARY, MotorType.kBrushless);
         l_teritary.setInverted(RobotMap.Drivetrain.LEFT_IS_INVERTED);
 
-        if(Robot.isCompBot){
+        if (Robot.isCompBot) {
             kP = RobotMap.PID_CONSTANTS.COMP_BOT.DRIVETRAIN_CONSTANTS.KP;
             kI = RobotMap.PID_CONSTANTS.COMP_BOT.DRIVETRAIN_CONSTANTS.KI;
             kD = RobotMap.PID_CONSTANTS.COMP_BOT.DRIVETRAIN_CONSTANTS.KD;
         }
-        else{
+        else {
             kP = RobotMap.PID_CONSTANTS.PRAC_BOT.DRIVETRAIN_CONSTANTS.KP;
             kI = RobotMap.PID_CONSTANTS.PRAC_BOT.DRIVETRAIN_CONSTANTS.KI;
             kD = RobotMap.PID_CONSTANTS.PRAC_BOT.DRIVETRAIN_CONSTANTS.KD;
@@ -52,62 +52,62 @@ public class Drivetrain {
         
     }
 
-    public static Drivetrain getInstance(){
-        if(instance == null){
+    public static Drivetrain getInstance() {
+        if (instance == null) {
             instance = new Drivetrain();
         }
         return instance;
     }
 
-    public void setRightSpeed(double speed){
+    public void setRightSpeed(double speed) {
         r_primary.set(speed);
         r_secondary.set(speed);
         r_teritary.set(speed);
     }
 
-    public void setLeftSpeed(double speed){
+    public void setLeftSpeed(double speed) {
         l_primary.set(speed);
         l_secondary.set(speed);
         l_teritary.set(speed);
     }
 
-    public void setSpeed(double speed){
+    public void setSpeed(double speed) {
         setLeftSpeed(speed);
         setRightSpeed(speed);
     }
 
-    public void turnRight(double speed){
+    public void turnRight(double speed) {
         setLeftSpeed(speed);
         setRightSpeed(-speed);
     }
 
-    public void turnLeft(double speed){
+    public void turnLeft(double speed) {
         setLeftSpeed(-speed);
         setRightSpeed(speed);
     }
 
-    public double getRightPosition(){
+    public double getRightPosition() {
         return r_primary.getEncoder().getPosition();
     }
 
-    public double getLeftPOsition(){
+    public double getLeftPosition() {
         return l_primary.getEncoder().getPosition();
     }
 
-    public void resetRightPosition(){
+    public void resetRightPosition() {
         r_primary.getEncoder().setPosition(0);
     }
 
-    public void resetLeftPosition(){
+    public void resetLeftPosition() {
         l_primary.getEncoder().setPosition(0);
     }
 
-    public void setSpeed(double leftSpeed, double rightSpeed){
+    public void setSpeed(double leftSpeed, double rightSpeed) {
         setLeftSpeed(leftSpeed);
         setRightSpeed(rightSpeed);
     }
 
-    public void arcadeDrive(double speed){
+    public void arcadeDrive(double speed) {
         double y = OI.driver.getLY();
         double x = OI.driver.getRX();
         y = -speed * y;
@@ -115,35 +115,35 @@ public class Drivetrain {
         setSpeed(y+x,y-x);
     }
 
-    public void reset(){
+    public void reset() {
         resetRightPosition();
         resetLeftPosition();
     }
 
-    public void stop(){
+    public void stop() {
         setSpeed(0);
     }
 
     //**********************AUTON STUFF**************************/
 
-    public void driveStraight(double target, double maxPower, double smoothnessFactor){
+    public void driveStraight(double target, double maxPower, double smoothnessFactor) {
         double distanceToTarget = Math.abs(target) - Math.abs(getRightPosition());
         double calcSpeed = Math.log(distanceToTarget + 1)/Math.log(smoothnessFactor);
         calcSpeed = calcSpeed*maxPower;
-        if(target < 0){
+        if (target < 0) {
             calcSpeed = calcSpeed * -1;
         }
         setSpeed(calcSpeed);
     }
 
-    public void turnToAngle(double target){
+    public void turnToAngle(double target) {
         double calcSpeed = pid.calculate(Robot.gyro.getAngle(), target);
         setRightSpeed(-calcSpeed);
         setLeftSpeed(calcSpeed);
         
     }
 
-    public void driveArc(double targetLeft, double targetRight, double leftMaxSpeed, double rightMaxSpeed, double smoothnessFactor){
+    public void driveArc(double targetLeft, double targetRight, double leftMaxSpeed, double rightMaxSpeed, double smoothnessFactor) {
         double distanceToLeftTarget = Math.abs(targetLeft) - Math.abs(l_primary.getEncoder().getPosition());
         double distanceToRightTarget = Math.abs(targetRight) - Math.abs(r_primary.getEncoder().getPosition());
 
@@ -153,10 +153,10 @@ public class Drivetrain {
         calcLeftSpeed = calcLeftSpeed * leftMaxSpeed;
         calcRightSpeed = calcRightSpeed * rightMaxSpeed;
 
-        if(targetLeft < 0){
+        if (targetLeft < 0) {
             calcLeftSpeed = calcLeftSpeed * -1;
         }
-        if(targetRight < 0){
+        if (targetRight < 0) {
             calcRightSpeed = calcRightSpeed * -1;
         }
 
@@ -164,54 +164,55 @@ public class Drivetrain {
         setRightSpeed(calcRightSpeed);
     }
     
-    public void driveLeftArc(double target, double maxSpeed, double constantSpeed, double smoothnessFactor){
+    public void driveLeftArc(double target, double maxSpeed, double constantSpeed, double smoothnessFactor) {
         double distanceToLeftTarget = Math.abs(target) - Math.abs(r_primary.getEncoder().getPosition());
         double calcRightAdd = Math.log(distanceToLeftTarget + 1) / Math.log(smoothnessFactor);
         double calcLeftSpeed = constantSpeed;
         double calcRightSpeed = (maxSpeed * calcRightAdd) + constantSpeed;
-        if(target < 0){
+        if (target < 0) {
             calcRightSpeed = calcRightSpeed * -1;
         }
-        if(distanceToLeftTarget > 0){
+        if (distanceToLeftTarget > 0) {
             setRightSpeed(calcRightSpeed);
             setLeftSpeed(calcLeftSpeed);
         }
-        else{
+        else {
             stop();
         }
     }
 
-    public void driveRightArc(double target, double maxSpeed, double constantSpeed, double smoothnessFactor){
+    public void driveRightArc(double target, double maxSpeed, double constantSpeed, double smoothnessFactor) {
         double distanceToRightTarget = Math.abs(target) - Math.abs(l_primary.getEncoder().getPosition());
         double calcLeftAdd = Math.log(distanceToRightTarget + 1) / Math.log(smoothnessFactor);
         double calcRightSpeed = constantSpeed;
         double calcLeftSpeed = (maxSpeed * calcLeftAdd) + constantSpeed;
 
-        if(target < 0){
+        if (target < 0) {
             calcRightSpeed = calcRightSpeed * -1;
         }
-        if(distanceToRightTarget > 0){
+        if (distanceToRightTarget > 0) {
             setRightSpeed(calcRightSpeed);
             setLeftSpeed(calcLeftSpeed);
         }
-        else{
+        else {
             stop();
         }
     }
 
-    public void turnToLimelight(){
+    public void turnToLimelight() {
         double calcSpeed = pid.calculate(Robot.limelight.getTx(), 0);
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
     }
 
-    public void turnToBall(){
-        double calcSpeed = pid.calculate(Robot.astra.getTx(), 0);
+    public void turnToClosestBall() {
+        // Balls are sorted by distance
+        double calcSpeed = pid.calculate(Robot.astra.getTx(0), 0); 
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
     }
 
-    public boolean atTarget(){
+    public boolean atTarget() {
         pid.setTolerance(0.5);
         return pid.atSetpoint();
     }

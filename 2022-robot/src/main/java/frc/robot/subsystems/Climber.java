@@ -19,7 +19,7 @@ public class Climber {
 
     //Motors: 2 550s
     //Solenoids: 2 double 2 single
-    private Climber(){
+    private Climber() {
         c_primary = new CANSparkMax(RobotMap.Climber.C_PRIMARY, MotorType.kBrushless); //TODO: pretty sure they want to use NEOS have to check
         c_secondary = new CANSparkMax(RobotMap.Climber.C_SECONDARY, MotorType.kBrushless);
 
@@ -37,14 +37,14 @@ public class Climber {
         pid = new PIDController(kP, kI, kD);
     }
 
-    public static Climber getInstance(){
-        if(instance == null){
+    public static Climber getInstance() {
+        if (instance == null) {
             instance = new Climber();
         }
         return instance;
     }
 
-    public void climb(){ //TODO:Climb logic here, prob gonna use a pid of some tupe
+    public void climb() { //TODO:Climb logic here, prob gonna use a pid of some tupe
 
     }
 }

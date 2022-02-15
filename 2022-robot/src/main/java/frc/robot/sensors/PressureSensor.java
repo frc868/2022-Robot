@@ -9,12 +9,12 @@ public class PressureSensor {
     private byte[] array = new byte[4];
     public static PressureSensor instance;
 
-    private PressureSensor(){
+    private PressureSensor() {
         pressureSensor = new I2C(I2C.Port.kOnboard, 9);
     }
 
-    public static PressureSensor getInstance(){
-        if(instance == null){
+    public static PressureSensor getInstance() {
+        if (instance == null) {
             instance = new PressureSensor();
         }
         return instance;
@@ -25,11 +25,11 @@ public class PressureSensor {
     }
 
     //Used for troubleshooting
-    public void writeValue(){
+    public void writeValue() {
         pressureSensor.write(9, 1);
     }
 
-    public double getPressure(){
+    public double getPressure() {
         long value = new BigInteger(array).longValue();
         return value;
     }

@@ -21,30 +21,30 @@ public class Hopper {
         hopper_actuator = new Solenoid(PneumaticsModuleType.REVPH, RobotMap.Hopper.HOPPER_ACTUATOR);
     }
 
-    public static Hopper getInstance(){
-        if(instance == null){
+    public static Hopper getInstance() {
+        if (instance == null) {
             instance = new Hopper();
         }
         return instance;
     }
 
-    public void run(){
+    public void run() {
         hopper.set(0.1);
     }
 
-    public void setSpeed(double speed){
+    public void setSpeed(double speed) {
         hopper.set(speed);
     }
 
-    public void addBall(){
+    public void addBall() {
         ballCount = ballCount + 1;
     }
 
-    public void subBall(){
+    public void subBall() {
         ballCount = ballCount - 1;
     }
 
-    public double ballsInHopper(){
+    public double ballsInHopper() {
         return ballCount;
     }
 
@@ -60,7 +60,7 @@ public class Hopper {
         hopper_actuator.toggle();
     }
 
-    public void stop(){
+    public void stop() {
         setSpeed(0);
     }
     

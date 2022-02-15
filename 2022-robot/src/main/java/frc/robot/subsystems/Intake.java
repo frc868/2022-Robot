@@ -28,7 +28,7 @@ public class Intake {
     private boolean toggle = false;
 
 
-    private Intake(){
+    private Intake() {
         i_primary = new CANSparkMax(RobotMap.Intake.I_PRIMARY, MotorType.kBrushless); //TODO: think they using 550, make sure to check
         i_secondary = new CANSparkMax(RobotMap.Intake.I_SECONDARY, MotorType.kBrushless);
         irsensor_intake = new DigitalInput(1);
@@ -39,8 +39,8 @@ public class Intake {
        intake_actuator = new Solenoid(PneumaticsModuleType.REVPH, RobotMap.Intake.INTAKE_ACTUATOR);
     }
 
-    public static Intake getInstance(){
-        if(instance == null){
+    public static Intake getInstance() {
+        if (instance == null) {
             instance = new Intake();
         }
         return instance;
@@ -60,32 +60,32 @@ public class Intake {
 
     //Theory code. Theory is that when the ball is taken in by the intake the graph of the RPM vs. Time graph will have a drop in it which can tell use whether or not a ball is added
     //Uses IVT to know when a ball is added
-    public void addBall(double bounds){
+    public void addBall(double bounds) {
         vI = vF;
         vF = i_primary.getEncoder().getVelocity();
         double acceleration = (vF - vI) / 0.02;
-        if(acceleration < -bounds){
+        if (acceleration < -bounds) {
             loweredSpeed = true;
         }
-        if(acceleration > bounds){
+        if (acceleration > bounds) {
             gainedSpeed = true;
         }
-        if(loweredSpeed && gainedSpeed){
+        if (loweredSpeed && gainedSpeed) {
             Robot.hopper.addBall();
             loweredSpeed = false;
             gainedSpeed = false;
         }
     }
     
-    public void run(){
+    public void run() {
         i_primary.set(0.1);
     }
 
-    public boolean getCurrent(){
+    public boolean getCurrent() {
         return irsensor_intake.get();
     }
 
-    public void addBall(){
+    public void addBall() {
         if (getCurrent() && !previous) { 
             toggle = !toggle;
         }
