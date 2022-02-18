@@ -3,6 +3,7 @@ package frc.robot.auton.cameras;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.robot.RobotMap;
 
 public class Limelight {
     private static NetworkTable table;
@@ -54,6 +55,16 @@ public class Limelight {
     public double getTa() {
         NetworkTableEntry ta = table.getEntry("ta");
         return ta.getDouble(0.0);
+    }
+
+    /**
+     * Get the distance the limelight is from the camera.
+     * @author dr
+     */
+    public double getDistance() {
+        return (RobotMap.LIMELIGHT.HUB_HEIGHT
+             - RobotMap.LIMELIGHT.LL_HEIGHT)
+         / Math.tan(RobotMap.LIMELIGHT.ANGLE + this.getTy());
     }
 
 }
