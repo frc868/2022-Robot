@@ -95,4 +95,10 @@ public class RobotMap {
             }
         }
     }
+    public static class LIMELIGHT {
+        public static final double LL_HEIGHT = 22.0;
+        public static final double HUB_HEIGHT = 104.0;
+        public static final double ANGLE = 33.0; // TODO: check on practice bot
+
+    }
 }
