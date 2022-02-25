@@ -5,6 +5,8 @@ import frc.robot.Robot;
 import frc.robot.auton.AutonMap;
 import frc.robot.auton.AutonPath;
 
+import java.sql.Driver;
+import java.util.Timer;
 //6 inch wheel diameter
 //54 inches drive
 //-24.6 degree turn
@@ -13,131 +15,102 @@ import frc.robot.auton.AutonPath;
 //-160.1 inches drive
 //-24.6 degree turn
 
+
 public class FirstPathNoCamera extends AutonPath{
     private State currentState = State.toFirstBall;
+    public static Timer time = new Timer();
     private enum State{
         setIntakeDown{
             @Override
             public void run(){
-                Robot.intake.toggle();
+                Robot.intake.setReverse();
+                
             }
             public State nextState(){
                 return toFirstBall;
             }
         },
+
         toFirstBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(AutonMap.FirstPath.FIRST_TARGET_DISTANCE, 0.5, 30);
+                Robot.drivetrain.driveStraight(-70, 0.5, 30); 
                 Robot.intake.run();
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.getRightPosition() < AutonMap.FirstPath.FIRST_TARGET_DISTANCE){
+               if(Robot.drivetrain.getRightPosition() > -70){
                     return this;
                 }
-                Robot.gyro.reset();
                 Robot.drivetrain.reset();
                 return turnToGoal;
             }
         },
+
         turnToGoal{
             @Override
             public void run(){
-                Robot.drivetrain.turnToLimelight();
+               Robot.drivetrain.turn(6.5, 0.5, 30);
+               System.out.println(Robot.drivetrain.getLeftPosition());
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.atTarget() != true){
+                if(Robot.drivetrain.getLeftPosition() < 6){
                     return this;
                 }
+                Robot.drivetrain.stop();
+                Robot.drivetrain.reset();
+                return hopperOpen;
+            }
+        },
+
+        hopperOpen{
+            @Override
+            public void run(){
+                Robot.hopper.setForward();
+            }
+            @Override
+            public State nextState(){
                 return shootBalls;
             }
         },
+
         shootBalls{
             @Override
             public void run(){
-                Robot.shooter.shootLogic(AutonMap.FirstPath.FIRST_RPM);
+                Robot.intake.stop();
+                Robot.shooter.shoot(1500);
             }
             @Override
             public State nextState(){
-                if(Robot.hopper.ballsInHopper() != 0){
+                if(!Robot.shooter.onTarget()){
                     return this;
                 }
-                return turnToSecondBall;
+                Robot.hopper.reset();
+                return shoot;
             }
         },
-        turnToSecondBall{
+
+        shoot{
             @Override
             public void run(){
-                Robot.drivetrain.turnToAngle(0);
+                Robot.shooter.shoot(1500);
+                Robot.hopper.run();
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.atTarget() != true){
-                    return this;
-                }
-                Robot.drivetrain.reset();
-                return toSecondBall;
-            }
-        },
-        toSecondBall{
-            @Override
-            public void run(){
-                Robot.drivetrain.driveStraight(AutonMap.FirstPath.SECOND_TARGET_DISTANCE, 0.5, 50);
-                Robot.intake.run();
-            }
-            @Override
-            public State nextState(){
-                if(Robot.drivetrain.getRightPosition() < AutonMap.FirstPath.SECOND_TARGET_DISTANCE){
-                    return this;
-                }
-                return toSecondShootPosition;
-            }
-        },
-        toSecondShootPosition{
-            @Override
-            public void run(){
-                Robot.drivetrain.driveStraight(AutonMap.FirstPath.RETURN_SECOND_TARGET_DISTANCE, 0.5, 50);
-            }
-            @Override
-            public State nextState(){
-                if(Robot.drivetrain.getRightPosition() > AutonMap.FirstPath.RETURN_SECOND_TARGET_DISTANCE){
-                    return this;
-                }
-                return turnToGoalSecond;
-            }
-        },
-        turnToGoalSecond{
-            @Override
-            public void run(){
-                Robot.drivetrain.turnToLimelight();
-            }
-            @Override
-            public State nextState(){
-                if(Robot.drivetrain.atTarget() != true){
-                    return this;
-                }
-                return shootBall;
-            }
-        },
-        shootBall{
-            @Override
-            public void run(){
-                Robot.shooter.shootLogic(AutonMap.FirstPath.FIRST_RPM);
-            }
-            @Override
-            public State nextState(){
-                if(Robot.hopper.ballsInHopper() != 0){
+                if(Math.abs(Robot.hopper.getDistance()) < 400){
                     return this;
                 }
                 return Done;
             }
-        },
+        },    
         Done{
             @Override
             public void run(){
                 Robot.drivetrain.setSpeed(0, 0);
+                Robot.shooter.setSpeed(0);
+                Robot.hopper.stop();
             }
             @Override
             public State nextState(){

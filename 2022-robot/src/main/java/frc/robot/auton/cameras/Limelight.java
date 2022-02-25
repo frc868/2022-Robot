@@ -56,4 +56,13 @@ public class Limelight {
         return ta.getDouble(0.0);
     }
 
+    public double getDistance(){
+        //LL = 22
+        //HH = 104
+        //Angle = 30
+        double deg = (30 + getTy());
+        double rad = deg * (Math.PI / 180.0);
+        return (104 - 22) / Math.tan(rad);
+    }
+
 }

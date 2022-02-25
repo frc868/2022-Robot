@@ -11,9 +11,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
+
 public class Intake {
-    private CANSparkMax i_primary, i_secondary;
-    private Solenoid intake_actuator; 
+    private CANSparkMax i_primary;
+    private DoubleSolenoid intake_solenoid; 
     private double vI = 0;
     private double vF = 0;
     private DigitalInput irsensor_intake;
@@ -30,13 +31,11 @@ public class Intake {
 
     private Intake() {
         i_primary = new CANSparkMax(RobotMap.Intake.I_PRIMARY, MotorType.kBrushless); //TODO: think they using 550, make sure to check
-        i_secondary = new CANSparkMax(RobotMap.Intake.I_SECONDARY, MotorType.kBrushless);
         irsensor_intake = new DigitalInput(1);
 
-        i_secondary.follow(i_primary, true);
         i_primary.setInverted(RobotMap.Intake.IS_INVERTED);
 
-       intake_actuator = new Solenoid(PneumaticsModuleType.REVPH, RobotMap.Intake.INTAKE_ACTUATOR);
+        intake_solenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Intake.INTAKE_SOLENOID_CHANNEL2, RobotMap.Intake.INTAKE_SOLENOID_CHANNEL1);
     }
 
     public static Intake getInstance() {
@@ -46,16 +45,20 @@ public class Intake {
         return instance;
     }
 
-    public void setDown(){
-        intake_actuator.set(true);
+    public void setForward(){
+        intake_solenoid.set(Value.kForward);
     }
 
-    public void setUp(){
-        intake_actuator.set(false);
+    public void setReverse(){
+        intake_solenoid.set(Value.kReverse);
     }
 
     public void toggle(){
-        intake_actuator.toggle();
+        intake_solenoid.toggle();
+    }
+
+    public void print(){
+        System.out.println(intake_solenoid.get());
     }
 
     //Theory code. Theory is that when the ball is taken in by the intake the graph of the RPM vs. Time graph will have a drop in it which can tell use whether or not a ball is added
@@ -67,7 +70,7 @@ public class Intake {
         if (acceleration < -bounds) {
             loweredSpeed = true;
         }
-        if (acceleration > bounds) {
+        if (loweredSpeed && acceleration > bounds) {
             gainedSpeed = true;
         }
         if (loweredSpeed && gainedSpeed) {
@@ -78,7 +81,11 @@ public class Intake {
     }
     
     public void run() {
-        i_primary.set(0.1);
+        i_primary.set(1);
+    }
+
+    public void stop(){
+        i_primary.set(0);
     }
 
     public boolean getCurrent() {

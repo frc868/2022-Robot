@@ -13,7 +13,7 @@ public class AutonChooser {
     private AutonChooser() {
         this.addPath("FirstPath", new FirstPath());
         this.addPath("FirstPathNoCamera", new FirstPathNoCamera());
-        chooser.setDefaultOption("FirstPath", new FirstPath());
+        chooser.setDefaultOption("FirstPathNoCamera", new FirstPathNoCamera());
     }
 
 

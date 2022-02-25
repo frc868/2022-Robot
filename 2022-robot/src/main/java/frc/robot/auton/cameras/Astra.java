@@ -29,6 +29,7 @@ public class Astra {
      */
     public double getTx(int ball_number) {
         NetworkTableEntry tx = table.getEntry("tx");
+        
         return tx.getDoubleArray(new double[1])[0];
     }
 

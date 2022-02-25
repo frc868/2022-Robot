@@ -1,6 +1,8 @@
 package frc.robot;
 
+
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auton.AutonChooser;
 import frc.robot.auton.cameras.Astra;
 import frc.robot.auton.cameras.Limelight;
@@ -36,24 +38,26 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     drivetrain.reset();
     gyro.reset();
-    
+    hopper.setReverse();
     autonChooser.resetSelectedPath();
   }
 
   @Override
   public void autonomousPeriodic() {
-    //System.out.println(camera.getTx());
-    drivetrain.setSpeed(0.05);
- 
+    autonChooser.runSelectedPath();
   }
 
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    drivetrain.reset();
+  }
 
   @Override
   public void teleopPeriodic() {
-    OI.updateOI();
+    drivetrain.turn(23, 0.1, 60);
+
+    
   }
 
   @Override
@@ -63,8 +67,14 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   @Override
-  public void testInit() {}
-
+  public void testInit() {
+    SmartDashboard.putNumber("rpm", shooter.getRPM());
+  }
+  
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    // shooter.shoot(3000);
+    drivetrain.turnToLimelight();
+    System.out.println(limelight.getDistance());
+  }
 }

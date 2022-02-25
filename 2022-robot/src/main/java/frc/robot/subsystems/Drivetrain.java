@@ -11,11 +11,15 @@ import frc.robot.RobotMap;
 import frc.robot.sensors.Gyro;
 
 
+
+//1 encoder count = 3.91 degrees of rotation
+
 public class Drivetrain {
     private CANSparkMax r_primary, r_secondary, r_teritary, l_primary, l_secondary, l_teritary;
     public static Drivetrain instance;
     
     private PIDController pid;
+    private PIDController turnPID;
     private double kP, kI, kD;
     private Drivetrain() {
         
@@ -49,6 +53,8 @@ public class Drivetrain {
         }
 
         pid = new PIDController(kP, kI, kD);
+
+        turnPID = new PIDController(0.005, 0, 0);
         
     }
 
@@ -124,6 +130,14 @@ public class Drivetrain {
         setSpeed(0);
     }
 
+    public void tankDrive(double speed){
+        double left = speed*OI.driver.getLY();
+        double right = speed*OI.driver.getRY();
+
+        setLeftSpeed(left);
+        setRightSpeed(right);
+    }
+
     //**********************AUTON STUFF**************************/
 
     public void driveStraight(double target, double maxPower, double smoothnessFactor) {
@@ -136,11 +150,14 @@ public class Drivetrain {
         setSpeed(calcSpeed);
     }
 
-    public void turnToAngle(double target) {
-        double calcSpeed = pid.calculate(Robot.gyro.getAngle(), target);
-        setRightSpeed(-calcSpeed);
-        setLeftSpeed(calcSpeed);
-        
+    public void turn(double target, double maxPower, double smoothnessFactor) {
+        double distanceToTarget = Math.abs(target) - Math.abs(getRightPosition());
+        double calcSpeed = Math.log(distanceToTarget + 1)/Math.log(smoothnessFactor);
+        calcSpeed = calcSpeed*maxPower;
+        if (target < 0) {
+            calcSpeed = calcSpeed * -1;
+        }
+        turnRight(calcSpeed);
     }
 
     public void driveArc(double targetLeft, double targetRight, double leftMaxSpeed, double rightMaxSpeed, double smoothnessFactor) {
@@ -205,12 +222,13 @@ public class Drivetrain {
         setRightSpeed(-calcSpeed);
     }
 
-    public void turnToClosestBall() {
-        // Balls are sorted by distance
-        double calcSpeed = pid.calculate(Robot.astra.getTx(0), 0); 
+    public void turnToBall(){
+        double calcSpeed = pid.calculate(Robot.astra.getTx(0), 0);
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
     }
+
+
 
     public boolean atTarget() {
         pid.setTolerance(0.5);

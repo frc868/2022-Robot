@@ -64,7 +64,7 @@ public class FirstPath extends AutonPath{
         turnToSecondBall{
             @Override
             public void run(){
-                Robot.drivetrain.turnToClosestBall();
+                //Robot.drivetrain.turnToClosestBall();
             }
             @Override
             public State nextState(){

@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 
@@ -28,10 +29,13 @@ public class Shooter {
     private Shooter() {
         s_primary = new CANSparkMax(RobotMap.Shooter.S_PRIMARY, MotorType.kBrushless);
         s_secondary = new CANSparkMax(RobotMap.Shooter.S_SECONDARY, MotorType.kBrushless);
+
+        
         irsensor_shooter = new DigitalInput(2);
 
 
         s_primary.setInverted(RobotMap.Shooter.IS_INVERTED);
+    
         s_secondary.follow(s_primary, true);
 
 
@@ -83,46 +87,37 @@ public class Shooter {
         vF = s_primary.getEncoder().getVelocity();
         double acceleration = (vF - vI) / 0.02;
         if (acceleration < -bounds) {
-            loweredSpeed = true;
-        }
-        if (acceleration > bounds) {
-            gainedSpeed = true;
-        }
-        if (loweredSpeed && gainedSpeed) {
-            Robot.hopper.subBall();
             loweredSpeed = false;
-            gainedSpeed = false;
         }
-    }
+        if(onTarget() && loweredSpeed){
+           loweredSpeed = true;
+           Robot.hopper.addBall();
+        }
+        
+     }
+
 
     public void shootLogic(double targetRPM) {
-        if (Robot.hopper.ballCount > 0) {
-            shoot(targetRPM);
-            if (onTarget()) {
-                Robot.hopper.setBack();
-                Robot.hopper.run();
-            }
-            else {
-                Robot.hopper.setForward();
-                Robot.hopper.stop();
-            }
+        shoot(targetRPM);
+        if(onTarget()){
+            Robot.hopper.setSpeed(1);
         }
+        else{
+            Robot.hopper.stop();
+        }
+
     }
 
     public boolean getCurrent() {
         return irsensor_shooter.get();
     }
 
-    public void subBall() {
-        if (!getCurrent() && previous) { 
-            toggle = !toggle;
-        }
-
-        previous = getCurrent();
-
-        if (toggle) {
-            Robot.hopper.subBall();
-            toggle = !toggle;
-        }
+    public double acceleration(){
+        vI = vF;
+        vF = s_primary.getEncoder().getVelocity();
+        double acceleration = (vF - vI) / 0.02;
+        return acceleration;
     }
+    
+
 }
