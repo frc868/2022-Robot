@@ -5,7 +5,6 @@ import frc.robot.Robot;
 import frc.robot.auton.AutonMap;
 import frc.robot.auton.AutonPath;
 
-import java.sql.Driver;
 import java.util.Timer;
 //6 inch wheel diameter
 //54 inches drive

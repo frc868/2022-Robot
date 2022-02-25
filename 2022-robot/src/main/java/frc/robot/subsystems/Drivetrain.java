@@ -8,7 +8,6 @@ import edu.wpi.first.math.controller.PIDController;
 import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
-import frc.robot.sensors.Gyro;
 
 
 

@@ -1,9 +1,6 @@
 package frc.robot;
 
-import java.time.Duration;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotMap.Shooter;
 import frc.robot.helpers.ControllerWrapper;
 
 public class OI {
