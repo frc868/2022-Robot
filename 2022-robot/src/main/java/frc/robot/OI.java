@@ -19,29 +19,42 @@ public class OI {
     
     public static void updateOI() {
         //Driver
+
         Robot.drivetrain.tankDrive(1);
         
+        driver.bLB.whenPressed(() -> Robot.intake.setForward());
+        driver.bRB.whenPressed(() -> Robot.intake.setReverse());
         
-        driver.bLB.whileHeld(() -> Robot.hopper.run());
-        driver.bLB.whenReleased(() -> Robot.hopper.stop());
-        
-        driver.bY.whenPressed(() -> Robot.intake.setForward());
-        driver.bB.whenPressed(() -> Robot.intake.setReverse());
+       driver.bA.whileHeld(() -> Robot.intake.run());
+       driver.bA.whenReleased(() -> Robot.intake.stop());
 
-        driver.bA.whenPressed(() -> Robot.hopper.setForward());
-        driver.bX.whenPressed(() -> Robot.hopper.setReverse());
-
-        driver.bRB.whileHeld(() -> Robot.intake.run());
-        driver.bRB.whenReleased(() -> Robot.intake.stop());
-
-        //Shooter logic
         driver.dN.whileHeld(() -> Robot.drivetrain.turnToLimelight());
         driver.dN.whenReleased(() -> Robot.drivetrain.stop());
 
-        
+        driver.dS.whileHeld(() -> Robot.drivetrain.goToTarget());
+        driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
-        driver.bSTART.whileHeld(() -> Robot.shooter.shoot(3000));
-        driver.bSTART.whenReleased(() -> Robot.shooter.setSpeed(0));
+        //Operator
+       
+        operator.bLB.whileHeld(() -> Robot.hopper.run());
+        operator.bLB.whenReleased(() -> Robot.hopper.stop());
+
+        operator.bX.whenPressed(() -> Robot.hopper.setReverse());
+        operator.bB.whenPressed(() -> Robot.hopper.setForward());
+
+        operator.bRB.whileHeld(() -> Robot.shooter.shoot(2000));
+        operator.bRB.whenReleased(() -> Robot.shooter.stop());
+
+        operator.bY.whenPressed(() -> Robot.climber.setForward());
+        operator.bA.whenPressed(() -> Robot.climber.setReverse());
+
+        Robot.climber.setSpeed(1 * operator.getLY());
+
+        operator.dN.whenPressed(() -> Robot.climber.setTrue());
+        operator.dS.whenPressed(() -> Robot.climber.setFalse());
+
+        
+        
         
         
     }

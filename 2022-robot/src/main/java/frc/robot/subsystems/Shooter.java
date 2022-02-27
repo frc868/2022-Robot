@@ -118,6 +118,12 @@ public class Shooter {
         double acceleration = (vF - vI) / 0.02;
         return acceleration;
     }
+
+    public double calcSpeed(){
+        double distance = Robot.limelight.getDistance();
+        double calcSpeed = 2046 * Math.pow(Math.E, 0.0264);
+        return calcSpeed;
+    }
     
 
 }

@@ -65,9 +65,9 @@ public class Limelight {
         double deg = RobotMap.LIMELIGHT.ANGLE + this.getTy();
         double rad = deg * (Math.PI / 180.0);
 
-        return (RobotMap.LIMELIGHT.HUB_HEIGHT 
+        return ((RobotMap.LIMELIGHT.HUB_HEIGHT 
          - RobotMap.LIMELIGHT.LL_HEIGHT) 
-         / Math.tan(rad);
+         / Math.tan(rad)) / 12;
     }
 
 }

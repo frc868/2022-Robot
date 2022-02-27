@@ -19,7 +19,7 @@ public class Drivetrain {
     public static Drivetrain instance;
     
     private PIDController pid;
-    private PIDController turnPID;
+    private PIDController drivePID;
     private double kP, kI, kD;
     private Drivetrain() {
         
@@ -54,7 +54,8 @@ public class Drivetrain {
 
         pid = new PIDController(kP, kI, kD);
 
-        turnPID = new PIDController(0.005, 0, 0);
+        drivePID = new PIDController(0.08, 0, 0);
+
         
     }
 
@@ -226,6 +227,11 @@ public class Drivetrain {
         double calcSpeed = pid.calculate(Robot.astra.getTx(0), 0);
         setLeftSpeed(calcSpeed);
         setRightSpeed(-calcSpeed);
+    }
+
+    public void goToTarget(){
+        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 10);
+        setSpeed(-calcSpeed);
     }
 
 

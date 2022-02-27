@@ -11,6 +11,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Climber;
 
 
 
@@ -25,6 +26,7 @@ public class Robot extends TimedRobot {
   public static Shooter shooter = Shooter.getInstance();
   public static Hopper hopper = Hopper.getInstance();
   public static Intake intake = Intake.getInstance();
+  public static Climber climber = Climber.getInstance();
 
   @Override
   public void robotInit() {
@@ -55,7 +57,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    drivetrain.turn(23, 0.1, 60);
+    OI.updateOI();
 
     
   }
@@ -74,7 +76,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     // shooter.shoot(3000);
-    drivetrain.turnToLimelight();
+    drivetrain.goToTarget();
     System.out.println(limelight.getDistance());
   }
 }
