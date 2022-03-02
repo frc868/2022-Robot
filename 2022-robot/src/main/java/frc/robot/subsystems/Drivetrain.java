@@ -218,19 +218,19 @@ public class Drivetrain {
 
     public void turnToLimelight() {
         double calcSpeed = pid.calculate(Robot.limelight.getTx(), 0);
-        setLeftSpeed(calcSpeed);
-        setRightSpeed(-calcSpeed);
+        setLeftSpeed(-calcSpeed);
+        setRightSpeed(calcSpeed);
     }
 
     public void turnToBall(){
         double calcSpeed = pid.calculate(Robot.astra.getTx(0), 0);
-        setLeftSpeed(calcSpeed);
-        setRightSpeed(-calcSpeed);
+        setLeftSpeed(-calcSpeed);
+        setRightSpeed(calcSpeed);
     }
 
     public void goToTarget(){
-        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 10);
-        setSpeed(-calcSpeed);
+        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 16);
+        setSpeed(calcSpeed);
     }
 
 

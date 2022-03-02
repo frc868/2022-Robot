@@ -11,8 +11,8 @@ public class RobotMap {
         public static final int L_PRIMARY = 4;
         public static final int L_SECONDARY = 5;
         public static final int L_TERTIARY = 6;
-        public static final boolean RIGHT_IS_INVERTED = false;
-        public static final boolean LEFT_IS_INVERTED = true;
+        public static final boolean RIGHT_IS_INVERTED = true;
+        public static final boolean LEFT_IS_INVERTED = false;
     }
     public static class Gyro {
         public static final Port GYRO = SPI.Port.kMXP;
@@ -98,8 +98,8 @@ public class RobotMap {
     }
     public static class LIMELIGHT {
         public static final double LL_HEIGHT = 22.0;
-        public static final double HUB_HEIGHT = 104.0;
-        public static final double ANGLE = 33.0; // TODO: check on practice bot
+        public static final double HUB_HEIGHT = 101.0;
+        public static final double ANGLE = 25.0; // TODO: check on practice bot
 
     }
 }

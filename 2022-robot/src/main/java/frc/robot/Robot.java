@@ -7,6 +7,7 @@ import frc.robot.auton.AutonChooser;
 import frc.robot.auton.cameras.Astra;
 import frc.robot.auton.cameras.Limelight;
 import frc.robot.sensors.Gyro;
+import frc.robot.sensors.PressureSensor;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
@@ -27,6 +28,7 @@ public class Robot extends TimedRobot {
   public static Hopper hopper = Hopper.getInstance();
   public static Intake intake = Intake.getInstance();
   public static Climber climber = Climber.getInstance();
+  public static PressureSensor pressure = PressureSensor.getInstance();
 
   @Override
   public void robotInit() {
@@ -58,7 +60,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     OI.updateOI();
-
+    OI.updateSmartDashboard();
+    System.out.println(limelight.getDistance());
+    System.out.println(limelight.getDistance());
     
   }
 
@@ -71,12 +75,12 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     SmartDashboard.putNumber("rpm", shooter.getRPM());
+    hopper.setReverse();
+    intake.setForward();
   }
   
   @Override
   public void testPeriodic() {
-    // shooter.shoot(3000);
-    drivetrain.goToTarget();
-    System.out.println(limelight.getDistance());
+    System.out.println(pressure.getPressure());
   }
 }

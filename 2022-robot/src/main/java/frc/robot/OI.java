@@ -17,38 +17,37 @@ public class OI {
     public static void updateOI() {
         //Driver
 
-        Robot.drivetrain.tankDrive(1);
+        Robot.drivetrain.tankDrive(-.75);
         
-        driver.bLB.whenPressed(() -> Robot.intake.setForward());
-        driver.bRB.whenPressed(() -> Robot.intake.setReverse());
+        driver.bA.whenPressed(() -> Robot.intake.setReverse());
+        driver.bY.whenPressed(() -> Robot.intake.setForward());
         
-       driver.bA.whileHeld(() -> Robot.intake.run());
-       driver.bA.whenReleased(() -> Robot.intake.stop());
-
-        driver.dN.whileHeld(() -> Robot.drivetrain.turnToLimelight());
-        driver.dN.whenReleased(() -> Robot.drivetrain.stop());
+       driver.bRB.whileHeld(() -> Robot.intake.run());
+       driver.bRB.whenReleased(() -> Robot.intake.stop());
 
         driver.dS.whileHeld(() -> Robot.drivetrain.goToTarget());
         driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
         //Operator
        
-        operator.bLB.whileHeld(() -> Robot.hopper.run());
-        operator.bLB.whenReleased(() -> Robot.hopper.stop());
+        operator.bRB.whileHeld(() -> Robot.hopper.run());
+        operator.bRB.whenReleased(() -> Robot.hopper.stop());
 
-        operator.bX.whenPressed(() -> Robot.hopper.setReverse());
-        operator.bB.whenPressed(() -> Robot.hopper.setForward());
+        operator.bX.whenPressed(() -> Robot.hopper.setForward());
+        operator.bB.whenPressed(() -> Robot.hopper.setReverse());
 
-        operator.bRB.whileHeld(() -> Robot.shooter.shoot(2000));
-        operator.bRB.whenReleased(() -> Robot.shooter.stop());
+        operator.bLB.whileHeld(() -> Robot.shooter.shoot(Robot.shooter.calcSpeed()));
+        operator.bLB.whenReleased(() -> Robot.shooter.stop());
 
-        operator.bY.whenPressed(() -> Robot.climber.setForward());
-        operator.bA.whenPressed(() -> Robot.climber.setReverse());
+        operator.dN.whileHeld(() -> Robot.drivetrain.turnToLimelight());
+        operator.dN.whenReleased(() -> Robot.drivetrain.stop());
+
+       
 
         Robot.climber.setSpeed(1 * operator.getLY());
 
-        operator.dN.whenPressed(() -> Robot.climber.setTrue());
-        operator.dS.whenPressed(() -> Robot.climber.setFalse());
+        operator.bY.whenPressed(() -> Robot.climber.setTrue());
+        operator.bA.whenPressed(() -> Robot.climber.setFalse());
 
         
         
@@ -57,10 +56,6 @@ public class OI {
     }
 
     public static void updateSmartDashboard() {
-        SmartDashboard.putNumber("Number of balls", Robot.hopper.ballCount);
-        SmartDashboard.putNumber("rom", Robot.shooter.getRPM());
-        SmartDashboard.putBoolean("onTarget", Robot.shooter.onTarget());
-        SmartDashboard.putNumber("acc", Robot.shooter.acceleration());
-        SmartDashboard.putNumber("distance", Robot.limelight.getDistance());
+     SmartDashboard.putNumber("rpm", Robot.shooter.getRPM());
     }
 }
