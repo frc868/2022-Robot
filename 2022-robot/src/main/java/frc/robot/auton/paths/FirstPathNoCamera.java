@@ -146,13 +146,13 @@ public class FirstPathNoCamera extends AutonPath{
         driveToSecondBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(-140, 0.5, 30);
+                Robot.drivetrain.driveStraight(-200, 0.5, 30);
                 Robot.intake.run();
                 Robot.hopper.run();
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.getRightPosition() > -140){
+                if(Robot.drivetrain.getRightPosition() > -200){
                     return this;
                 }
                 Robot.intake.stop();
