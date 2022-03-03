@@ -75,6 +75,17 @@ public class Hopper {
     public void reset(){
         hopper.getEncoder().setPosition(0);
     }
+
+    public boolean getGateKeeper(){
+        boolean returner = true;
+        if(hopper_solenoid.get() == Value.kForward){
+            returner = true;
+        }
+        if(hopper_solenoid.get() == Value.kReverse){
+            returner = false;
+        }
+        return returner;
+    }
     
     
 }

@@ -33,8 +33,8 @@ public class OI {
         operator.bRB.whileHeld(() -> Robot.hopper.run());
         operator.bRB.whenReleased(() -> Robot.hopper.stop());
 
-        operator.bX.whenPressed(() -> Robot.hopper.setForward());
-        operator.bB.whenPressed(() -> Robot.hopper.setReverse());
+        operator.bX.whenPressed(() -> Robot.hopper.setReverse());
+        operator.bB.whenPressed(() -> Robot.hopper.setForward());
 
         operator.bLB.whileHeld(() -> Robot.shooter.shoot(Robot.shooter.calcSpeed()));
         operator.bLB.whenReleased(() -> Robot.shooter.stop());
@@ -57,5 +57,7 @@ public class OI {
 
     public static void updateSmartDashboard() {
      SmartDashboard.putNumber("rpm", Robot.shooter.getRPM());
+     SmartDashboard.putBoolean("atTarget", Robot.shooter.onTarget());
+     SmartDashboard.putBoolean("gatekeeper", Robot.hopper.getGateKeeper());
     }
 }

@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    OI.updateSmartDashboard();
     gyro.calibrate();
   }
 
@@ -74,13 +75,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    SmartDashboard.putNumber("rpm", shooter.getRPM());
-    hopper.setReverse();
-    intake.setForward();
+    SmartDashboard.putNumber("pressure", pressure.getPressure());
   }
   
   @Override
   public void testPeriodic() {
+    pressure.readValue();
     System.out.println(pressure.getPressure());
   }
 }
