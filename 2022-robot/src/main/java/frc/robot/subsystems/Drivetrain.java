@@ -150,11 +150,10 @@ public class Drivetrain {
         setSpeed(calcSpeed);
     }
 
-    public void turn(double target, double maxPower, double smoothnessFactor) {
-        double distanceToTarget = Math.abs(target) - Math.abs(getRightPosition());
+    public void turntoZero(double maxPower, double smoothnessFactor){
+        double distanceToTarget = Math.abs(getRightPosition());
         double calcSpeed = Math.log(distanceToTarget + 1)/Math.log(smoothnessFactor);
-        calcSpeed = calcSpeed*maxPower;
-        if (target < 0) {
+        if(getRightPosition() > 0){
             calcSpeed = calcSpeed * -1;
         }
         turnRight(calcSpeed);
@@ -229,14 +228,14 @@ public class Drivetrain {
     }
 
     public void goToTarget(){
-        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 16);
+        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 17.5);
         setSpeed(calcSpeed);
     }
 
 
 
     public boolean atTarget() {
-        pid.setTolerance(0.5);
+        pid.setTolerance(0.20);
         return pid.atSetpoint();
     }
   

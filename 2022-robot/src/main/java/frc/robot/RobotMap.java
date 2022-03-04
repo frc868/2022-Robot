@@ -78,9 +78,9 @@ public class RobotMap {
                 public static final double KD = 0.00005;
             }
             public static class DRIVETRAIN_CONSTANTS {
-                public static final double KP = 0.022;
+                public static final double KP = 0.020;
                 public static final double KI = 0.00;
-                public static final double KD = 0.0006;
+                public static final double KD = 0.0005;
             }
         }
         public static class COMP_BOT {

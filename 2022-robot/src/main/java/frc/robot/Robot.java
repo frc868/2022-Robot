@@ -41,9 +41,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    intake.setReverse();
+    hopper.setForward();
+
     drivetrain.reset();
-    gyro.reset();
-    hopper.setReverse();
+ 
+
     autonChooser.resetSelectedPath();
   }
 
