@@ -41,9 +41,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    drivetrain.reset();
-    gyro.reset();
+    intake.setReverse();
     hopper.setReverse();
+
+    drivetrain.reset();
+ 
+
     autonChooser.resetSelectedPath();
   }
 
@@ -56,14 +59,15 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     drivetrain.reset();
+    gyro.reset();
   }
 
   @Override
   public void teleopPeriodic() {
     OI.updateOI();
     OI.updateSmartDashboard();
-    System.out.println(limelight.getDistance());
-    System.out.println(limelight.getDistance());
+   // System.out.println(limelight.getDistance());
+    System.out.println(gyro.getYaw());
     
   }
 
@@ -80,7 +84,6 @@ public class Robot extends TimedRobot {
   
   @Override
   public void testPeriodic() {
-    pressure.readValue();
-    System.out.println(pressure.getPressure());
+    
   }
 }

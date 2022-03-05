@@ -120,7 +120,7 @@ public class Shooter {
 
     public double calcSpeed(){
         double distance = Robot.limelight.getDistance();
-        double calcSpeed = 2020 * Math.pow(Math.E, 0.0264*distance);
+        double calcSpeed = 2048 * Math.pow(Math.E, 0.0264*distance) *  1.4059;
         return calcSpeed;
     }
     

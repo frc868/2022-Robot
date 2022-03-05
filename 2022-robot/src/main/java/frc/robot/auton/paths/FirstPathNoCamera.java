@@ -2,7 +2,6 @@ package frc.robot.auton.paths;
 
 
 import frc.robot.Robot;
-import frc.robot.RobotMap.Hopper;
 import frc.robot.auton.AutonMap;
 import frc.robot.auton.AutonPath;
 
@@ -23,7 +22,7 @@ public class FirstPathNoCamera extends AutonPath{
         setIntakeDown{
             @Override
             public void run(){
-                Robot.intake.setReverse();
+                
                 
             }
             public State nextState(){
@@ -34,17 +33,17 @@ public class FirstPathNoCamera extends AutonPath{
         toFirstBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(-70, 0.5, 30); 
+                Robot.drivetrain.driveStraight(-40, 0.45, 30); 
                 Robot.intake.run();
-                Robot.hopper.run();
             }
             @Override
             public State nextState(){
-               if(Robot.drivetrain.getRightPosition() > -70){
+               if(Robot.drivetrain.getRightPosition() > -37.5){
                     return this;
                 }
-                Robot.intake.stop();
+                Robot.drivetrain.stop();
                 Robot.hopper.stop();
+                Robot.intake.stop();
                 Robot.drivetrain.reset();
                 return turnToGoal;
             }
@@ -61,12 +60,11 @@ public class FirstPathNoCamera extends AutonPath{
                     return this;
                 }
                 Robot.drivetrain.stop();
-                Robot.drivetrain.reset();
-                return shootToSpeedFirst;
+                return shootBalls;
             }
         },
 
-        shootToSpeedFirst{
+        shootBalls{
             @Override
             public void run(){
                 Robot.shooter.shoot(Robot.shooter.calcSpeed());
@@ -76,6 +74,7 @@ public class FirstPathNoCamera extends AutonPath{
                 if(!Robot.shooter.onTarget()){
                     return this;
                 }
+                Robot.hopper.setForward();
                 Robot.hopper.reset();
                 return shoot;
             }
@@ -84,93 +83,65 @@ public class FirstPathNoCamera extends AutonPath{
         shoot{
             @Override
             public void run(){
-                Robot.hopper.setReverse();
                 Robot.hopper.run();
             }
             @Override
             public State nextState(){
-                if(Robot.shooter.onTarget()){
+                if(Math.abs(Robot.hopper.getDistance()) < 300){
                     return this;
                 }
                 Robot.hopper.stop();
-                Robot.hopper.setForward();
-                return shootToSpeedSecond;
-            }
-        },    
-
-        shootToSpeedSecond{
-            @Override
-            public void run(){
-
-            }
-            @Override
-            public State nextState(){
-                if(!Robot.shooter.onTarget()){
-                    return this;
-                }
-                Robot.hopper.setReverse();
-                return shoot2;
-            }
-        },
-
-        shoot2{
-            @Override
-            public void run(){
-                Robot.hopper.run();
-            }
-            @Override
-            public State nextState(){
-                if(Robot.shooter.onTarget()){
-                    return this;
-                }
-                Robot.hopper.setForward();
                 return turnBack;
             }
-        },   
-
+        },  
+        
         turnBack{
             @Override
             public void run(){
-                Robot.drivetrain.turn(0, 0.5, 30);
+                Robot.drivetrain.turnToZeroLeftSide(0.25, 30);
+                Robot.drivetrain.turntoZeroRightSide(0.25, 30);
             }
             @Override
             public State nextState(){
                 if(Math.abs(Robot.drivetrain.getRightPosition()) > 1){
                     return this;
                 }
-                Robot.drivetrain.reset();
-                return Done;
+                return toSecondBall;
             }
         },
-
-        driveToSecondBall{
+        toSecondBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(-200, 0.5, 30);
+                Robot.drivetrain.driveStraight(-113, 0.45, 30); 
                 Robot.intake.run();
-                Robot.hopper.run();
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.getRightPosition() > -200){
+               if(Robot.drivetrain.getRightPosition() > -111){
                     return this;
                 }
-                Robot.intake.stop();
+                Robot.drivetrain.stop();
                 Robot.hopper.stop();
-                return driveToShoot;
+                Robot.intake.stop();
+                Robot.drivetrain.reset();
+                return toFirstBallPosition;
             }
         },
-
-        driveToShoot{
+        toFirstBallPosition{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(0, 0.5, 30);
+                Robot.drivetrain.driveStraight(113, 0.45, 30); 
+                Robot.intake.run();
             }
             @Override
             public State nextState(){
-                if(Robot.drivetrain.getRightPosition() < 0){
+               if(Robot.drivetrain.getRightPosition() < 111){
                     return this;
                 }
+                Robot.drivetrain.stop();
+                Robot.hopper.stop();
+                Robot.intake.stop();
+                Robot.drivetrain.reset();
                 return turnToGoal2;
             }
         },
@@ -186,12 +157,11 @@ public class FirstPathNoCamera extends AutonPath{
                     return this;
                 }
                 Robot.drivetrain.stop();
-                Robot.drivetrain.reset();
-                return shootToSpeedFirst2;
+                return shootBalls2;
             }
         },
 
-        shootToSpeedFirst2{
+        shootBalls2{
             @Override
             public void run(){
                 Robot.shooter.shoot(Robot.shooter.calcSpeed());
@@ -201,25 +171,26 @@ public class FirstPathNoCamera extends AutonPath{
                 if(!Robot.shooter.onTarget()){
                     return this;
                 }
-                Robot.hopper.setReverse();
+                Robot.hopper.setForward();
                 Robot.hopper.reset();
-                return shoot3;
+                return shoot2;
             }
         },
 
-        shoot3{
+        shoot2{
             @Override
             public void run(){
                 Robot.hopper.run();
             }
             @Override
             public State nextState(){
-                if(Robot.shooter.onTarget()){
+                if(Math.abs(Robot.hopper.getDistance()) < 300){
                     return this;
                 }
+                Robot.hopper.stop();
                 return Done;
             }
-        },    
+        },  
 
         Done{
             @Override

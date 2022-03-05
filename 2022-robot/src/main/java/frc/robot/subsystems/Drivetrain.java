@@ -18,7 +18,7 @@ public class Drivetrain {
     public static Drivetrain instance;
     
     private PIDController pid;
-    private PIDController drivePID;
+    private PIDController drivePID, accelerationCurveRightPID, accelerationCurveLeftPID;
     private double kP, kI, kD;
     private Drivetrain() {
         
@@ -54,6 +54,9 @@ public class Drivetrain {
         pid = new PIDController(kP, kI, kD);
 
         drivePID = new PIDController(0.08, 0, 0);
+
+        accelerationCurveRightPID = new PIDController(0.008, 0, 0);
+        accelerationCurveLeftPID = new PIDController(0.008, 0, 0);
 
         
     }
@@ -137,7 +140,13 @@ public class Drivetrain {
         setLeftSpeed(left);
         setRightSpeed(right);
     }
+    //5500 max speed (5676 is true max)
+    public void accelerationCurveRight(double joystickValue){
+        double calcSpeed = 5500 * joystickValue;
+        setRightSpeed(accelerationCurveRightPID.calculate(r_primary.getEncoder().getVelocity(), calcSpeed));
+    }
 
+    
     //**********************AUTON STUFF**************************/
 
     public void driveStraight(double target, double maxPower, double smoothnessFactor) {
@@ -150,14 +159,22 @@ public class Drivetrain {
         setSpeed(calcSpeed);
     }
 
-    public void turn(double target, double maxPower, double smoothnessFactor) {
-        double distanceToTarget = Math.abs(target) - Math.abs(getRightPosition());
+    public void turntoZeroRightSide(double maxPower, double smoothnessFactor){
+        double distanceToTarget = Math.abs(getRightPosition());
         double calcSpeed = Math.log(distanceToTarget + 1)/Math.log(smoothnessFactor);
-        calcSpeed = calcSpeed*maxPower;
-        if (target < 0) {
+        if(getRightPosition() > 0){
             calcSpeed = calcSpeed * -1;
         }
-        turnRight(calcSpeed);
+        setRightSpeed(calcSpeed);
+    }
+
+    public void turnToZeroLeftSide(double maxPower, double smoothnessFactor){
+        double distanceToTarget = Math.abs(getLeftPosition());
+        double calcSpeed = Math.log(distanceToTarget + 1)/Math.log(smoothnessFactor);
+        if(getLeftPosition() > 0){
+            calcSpeed = calcSpeed * -1;
+        }
+        setLeftSpeed(calcSpeed);
     }
 
     public void driveArc(double targetLeft, double targetRight, double leftMaxSpeed, double rightMaxSpeed, double smoothnessFactor) {
@@ -217,7 +234,7 @@ public class Drivetrain {
     }
 
     public void turnToLimelight() {
-        double calcSpeed = pid.calculate(Robot.limelight.getTx(), 0);
+        double calcSpeed = -pid.calculate(Robot.limelight.getTx(), 0);
         setLeftSpeed(-calcSpeed);
         setRightSpeed(calcSpeed);
     }
@@ -229,14 +246,14 @@ public class Drivetrain {
     }
 
     public void goToTarget(){
-        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 16);
+        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 17.5);
         setSpeed(calcSpeed);
     }
 
 
 
     public boolean atTarget() {
-        pid.setTolerance(0.5);
+        pid.setTolerance(0.20);
         return pid.atSetpoint();
     }
   

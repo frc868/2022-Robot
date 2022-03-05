@@ -64,9 +64,10 @@ public class Astra {
      * @return either "B" or "R" to specify ball color
      * @author dr
      */
-    public String getColor(int ball_number) {
+   /* public String getColor(int ball_number) {
         NetworkTableEntry ty = table.getEntry("ty");
         String[] s = {"N"};
         return ty.getStringArray(s)[0];
     }
+    */
 }

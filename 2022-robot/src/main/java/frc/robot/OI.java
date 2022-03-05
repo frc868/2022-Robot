@@ -17,7 +17,7 @@ public class OI {
     public static void updateOI() {
         //Driver
 
-        Robot.drivetrain.tankDrive(-.75);
+        Robot.drivetrain.tankDrive(1);
         
         driver.bA.whenPressed(() -> Robot.intake.setReverse());
         driver.bY.whenPressed(() -> Robot.intake.setForward());

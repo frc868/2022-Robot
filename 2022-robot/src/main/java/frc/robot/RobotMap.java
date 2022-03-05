@@ -11,8 +11,8 @@ public class RobotMap {
         public static final int L_PRIMARY = 4;
         public static final int L_SECONDARY = 5;
         public static final int L_TERTIARY = 6;
-        public static final boolean RIGHT_IS_INVERTED = true;
-        public static final boolean LEFT_IS_INVERTED = false;
+        public static final boolean RIGHT_IS_INVERTED = false;
+        public static final boolean LEFT_IS_INVERTED = true;
     }
     public static class Gyro {
         public static final Port GYRO = SPI.Port.kMXP;
@@ -78,9 +78,9 @@ public class RobotMap {
                 public static final double KD = 0.00005;
             }
             public static class DRIVETRAIN_CONSTANTS {
-                public static final double KP = 0.022;
+                public static final double KP = 0.020;
                 public static final double KI = 0.00;
-                public static final double KD = 0.0006;
+                public static final double KD = 0.0005;
             }
         }
         public static class COMP_BOT {
