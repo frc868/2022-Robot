@@ -33,12 +33,12 @@ public class FirstPathNoCamera extends AutonPath{
         toFirstBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(40, 0.5, 30); 
+                Robot.drivetrain.driveStraight(-40, 0.45, 30); 
                 Robot.intake.run();
             }
             @Override
             public State nextState(){
-               if(Robot.drivetrain.getRightPosition() > 40){
+               if(Robot.drivetrain.getRightPosition() > -37.5){
                     return this;
                 }
                 Robot.drivetrain.stop();
@@ -60,7 +60,6 @@ public class FirstPathNoCamera extends AutonPath{
                     return this;
                 }
                 Robot.drivetrain.stop();
-                Robot.drivetrain.reset();
                 return shootBalls;
             }
         },
@@ -68,14 +67,14 @@ public class FirstPathNoCamera extends AutonPath{
         shootBalls{
             @Override
             public void run(){
-                Robot.intake.stop();Robot.shooter.shoot(Robot.shooter.calcSpeed());
+                Robot.shooter.shoot(Robot.shooter.calcSpeed());
             }
             @Override
             public State nextState(){
                 if(!Robot.shooter.onTarget()){
                     return this;
                 }
-                Robot.hopper.setReverse();
+                Robot.hopper.setForward();
                 Robot.hopper.reset();
                 return shoot;
             }
@@ -88,12 +87,111 @@ public class FirstPathNoCamera extends AutonPath{
             }
             @Override
             public State nextState(){
-                if(Math.abs(Robot.hopper.getDistance()) < 200){
+                if(Math.abs(Robot.hopper.getDistance()) < 300){
                     return this;
                 }
+                Robot.hopper.stop();
+                return turnBack;
+            }
+        },  
+        
+        turnBack{
+            @Override
+            public void run(){
+                Robot.drivetrain.turnToZeroLeftSide(0.25, 30);
+                Robot.drivetrain.turntoZeroRightSide(0.25, 30);
+            }
+            @Override
+            public State nextState(){
+                if(Math.abs(Robot.drivetrain.getRightPosition()) > 1){
+                    return this;
+                }
+                return toSecondBall;
+            }
+        },
+        toSecondBall{
+            @Override
+            public void run(){
+                Robot.drivetrain.driveStraight(-113, 0.45, 30); 
+                Robot.intake.run();
+            }
+            @Override
+            public State nextState(){
+               if(Robot.drivetrain.getRightPosition() > -111){
+                    return this;
+                }
+                Robot.drivetrain.stop();
+                Robot.hopper.stop();
+                Robot.intake.stop();
+                Robot.drivetrain.reset();
+                return toFirstBallPosition;
+            }
+        },
+        toFirstBallPosition{
+            @Override
+            public void run(){
+                Robot.drivetrain.driveStraight(113, 0.45, 30); 
+                Robot.intake.run();
+            }
+            @Override
+            public State nextState(){
+               if(Robot.drivetrain.getRightPosition() < 111){
+                    return this;
+                }
+                Robot.drivetrain.stop();
+                Robot.hopper.stop();
+                Robot.intake.stop();
+                Robot.drivetrain.reset();
+                return turnToGoal2;
+            }
+        },
+
+        turnToGoal2{
+            @Override
+            public void run(){
+               Robot.drivetrain.turnToLimelight();
+            }
+            @Override
+            public State nextState(){
+                if(!Robot.drivetrain.atTarget()){
+                    return this;
+                }
+                Robot.drivetrain.stop();
+                return shootBalls2;
+            }
+        },
+
+        shootBalls2{
+            @Override
+            public void run(){
+                Robot.shooter.shoot(Robot.shooter.calcSpeed());
+            }
+            @Override
+            public State nextState(){
+                if(!Robot.shooter.onTarget()){
+                    return this;
+                }
+                Robot.hopper.setForward();
+                Robot.hopper.reset();
+                return shoot2;
+            }
+        },
+
+        shoot2{
+            @Override
+            public void run(){
+                Robot.hopper.run();
+            }
+            @Override
+            public State nextState(){
+                if(Math.abs(Robot.hopper.getDistance()) < 300){
+                    return this;
+                }
+                Robot.hopper.stop();
                 return Done;
             }
-        },    
+        },  
+
         Done{
             @Override
             public void run(){
