@@ -49,6 +49,7 @@ public class Shooter {
             kD = RobotMap.PID_CONSTANTS.PRAC_BOT.SHOOTER_CONSTANTS.KD;
         }
         pid = new PIDController(kP, kI, kD);
+        
     }
 
     public static Shooter getInstance() {
@@ -117,11 +118,15 @@ public class Shooter {
         double acceleration = (vF - vI) / 0.02;
         return acceleration;
     }
-
+    //1.185
     public double calcSpeed(){
         double distance = Robot.limelight.getDistance();
-        double calcSpeed = 2048 * Math.pow(Math.E, 0.0264*distance) *  1.185;
+        double calcSpeed = 2064 * Math.pow(Math.E, 0.0264*distance);
         return calcSpeed;
+    }
+
+    public void reset(){
+        pid.reset();
     }
     
 

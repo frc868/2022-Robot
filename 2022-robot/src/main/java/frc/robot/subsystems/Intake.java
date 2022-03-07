@@ -83,6 +83,10 @@ public class Intake {
         i_primary.set(1);
     }
 
+    public void reverse(){
+        i_primary.set(-1);
+    }
+
     public void stop(){
         i_primary.set(0);
     }

@@ -33,12 +33,12 @@ public class FirstPathNoCamera extends AutonPath{
         toFirstBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(-40, 0.45, 30); 
+                Robot.drivetrain.driveStraight(-45, 0.25, 30); 
                 Robot.intake.run();
             }
             @Override
             public State nextState(){
-               if(Robot.drivetrain.getRightPosition() > -37.5){
+               if(Robot.drivetrain.getRightPosition() > -43){
                     return this;
                 }
                 Robot.drivetrain.stop();
@@ -91,7 +91,7 @@ public class FirstPathNoCamera extends AutonPath{
                     return this;
                 }
                 Robot.hopper.stop();
-                return turnBack;
+                return Done;
             }
         },  
         
@@ -112,12 +112,12 @@ public class FirstPathNoCamera extends AutonPath{
         toSecondBall{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(-113, 0.45, 30); 
+                Robot.drivetrain.driveStraight(-93, 0.45, 30); 
                 Robot.intake.run();
             }
             @Override
             public State nextState(){
-               if(Robot.drivetrain.getRightPosition() > -111){
+               if(Robot.drivetrain.getRightPosition() > -91){
                     return this;
                 }
                 Robot.drivetrain.stop();
@@ -130,12 +130,12 @@ public class FirstPathNoCamera extends AutonPath{
         toFirstBallPosition{
             @Override
             public void run(){
-                Robot.drivetrain.driveStraight(113, 0.45, 30); 
+                Robot.drivetrain.driveStraight(91, 0.45, 30); 
                 Robot.intake.run();
             }
             @Override
             public State nextState(){
-               if(Robot.drivetrain.getRightPosition() < 111){
+               if(Robot.drivetrain.getRightPosition() < 91){
                     return this;
                 }
                 Robot.drivetrain.stop();
@@ -184,7 +184,7 @@ public class FirstPathNoCamera extends AutonPath{
             }
             @Override
             public State nextState(){
-                if(Math.abs(Robot.hopper.getDistance()) < 300){
+                if(Math.abs(Robot.hopper.getDistance()) < 400){
                     return this;
                 }
                 Robot.hopper.stop();

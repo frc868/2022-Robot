@@ -18,7 +18,7 @@ public class Drivetrain {
     public static Drivetrain instance;
     
     private PIDController pid;
-    private PIDController drivePID, accelerationCurveRightPID, accelerationCurveLeftPID;
+    private PIDController drivePID;
     private double kP, kI, kD;
     private Drivetrain() {
         
@@ -54,9 +54,11 @@ public class Drivetrain {
         pid = new PIDController(kP, kI, kD);
 
         drivePID = new PIDController(0.08, 0, 0);
+        drivePID.setTolerance(1);
 
-        accelerationCurveRightPID = new PIDController(0.008, 0, 0);
-        accelerationCurveLeftPID = new PIDController(0.008, 0, 0);
+     //   r_primary.setOpenLoopRampRate(1.5);
+     //   l_primary.setOpenLoopRampRate(1.5);
+
 
         
     }
@@ -141,10 +143,7 @@ public class Drivetrain {
         setRightSpeed(right);
     }
     //5500 max speed (5676 is true max)
-    public void accelerationCurveRight(double joystickValue){
-        double calcSpeed = 5500 * joystickValue;
-        setRightSpeed(accelerationCurveRightPID.calculate(r_primary.getEncoder().getVelocity(), calcSpeed));
-    }
+    
 
     
     //**********************AUTON STUFF**************************/
@@ -246,15 +245,19 @@ public class Drivetrain {
     }
 
     public void goToTarget(){
-        double calcSpeed = drivePID.calculate(Robot.limelight.getDistance(), 17.5);
+        double calcSpeed = -drivePID.calculate(Robot.limelight.getDistance(), 7.83);
         setSpeed(calcSpeed);
     }
 
 
 
     public boolean atTarget() {
-        pid.setTolerance(0.20);
+        pid.setTolerance(0.70);
         return pid.atSetpoint();
+    }
+
+    public boolean atTargetDrive(){
+        return drivePID.atSetpoint();
     }
   
 }

@@ -1,4 +1,4 @@
-package frc.robot.auton.cameras;
+package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -62,11 +62,11 @@ public class Limelight {
      * @author dr
      */
     public double getDistance() {
-        double deg = RobotMap.LIMELIGHT.ANGLE + this.getTy();
+        double deg = RobotMap.SUBSYSTEMS.LIMELIGHT.ANGLE + this.getTy();
         double rad = deg * (Math.PI / 180.0);
 
-        return ((RobotMap.LIMELIGHT.HUB_HEIGHT 
-         - RobotMap.LIMELIGHT.LL_HEIGHT) 
+        return ((RobotMap.SUBSYSTEMS.LIMELIGHT.HUB_HEIGHT 
+         - RobotMap.SUBSYSTEMS.LIMELIGHT.LL_HEIGHT) 
          / Math.tan(rad)) / 12 +0.5;
     }
 

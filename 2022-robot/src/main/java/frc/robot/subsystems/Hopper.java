@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Hopper {
@@ -17,6 +18,8 @@ public class Hopper {
     private Hopper(){
         hopper = new CANSparkMax(RobotMap.Hopper.HOPPER, MotorType.kBrushless); 
         hopper.setInverted(RobotMap.Hopper.IS_INVERTED);
+
+        hopper.setOpenLoopRampRate(1);
 
         hopper_solenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Hopper.HOPPER_SOLENOID_2, RobotMap.Hopper.HOPPER_SOLENOID_1);
     }
@@ -85,6 +88,15 @@ public class Hopper {
             returner = false;
         }
         return returner;
+    }
+
+    public void variableRun(){
+        if(Robot.shooter.onTarget()){
+            setSpeed(1);
+        }
+        else{
+            setSpeed(0.2);
+        }
     }
     
     

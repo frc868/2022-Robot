@@ -1,6 +1,11 @@
 package frc.robot;
 
 
+import org.opencv.core.Mat;
+
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auton.AutonChooser;
@@ -29,9 +34,13 @@ public class Robot extends TimedRobot {
   public static Intake intake = Intake.getInstance();
   public static Climber climber = Climber.getInstance();
   public static PressureSensor pressure = PressureSensor.getInstance();
+  private static Mat mat;
+  private static CvSink sink;
+
 
   @Override
   public void robotInit() {
+    UsbCamera cam = CameraServer.startAutomaticCapture();
     OI.updateSmartDashboard();
     gyro.calibrate();
   }
@@ -43,7 +52,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     intake.setReverse();
     hopper.setReverse();
-
+    hopper.reset();
     drivetrain.reset();
  
 
@@ -66,8 +75,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     OI.updateOI();
     OI.updateSmartDashboard();
-   // System.out.println(limelight.getDistance());
-    System.out.println(gyro.getYaw());
+    System.out.println(limelight.getDistance());
     
   }
 
