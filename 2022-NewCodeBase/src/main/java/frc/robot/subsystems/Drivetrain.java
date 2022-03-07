@@ -46,6 +46,13 @@ public class Drivetrain {
     driveToLimelightPID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.DRIVE_TO_LIMELIGHT_PID.KP, RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.DRIVE_TO_LIMELIGHT_PID.KI, RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.DRIVE_TO_LIMELIGHT_PID.KD);
     rightSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.RIGHT_SIDE_PID.KP, RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.RIGHT_SIDE_PID.KI, RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.RIGHT_SIDE_PID.KD);
     leftSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.LEFT_SIDE_PID.KP, RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.LEFT_SIDE_PID.KI, RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.LEFT_SIDE_PID.KD);
+
+    //Setpoint tolerances
+    turnToLimelightPID.setTolerance(0.5);
+    driveToLimelightPID.setTolerance(0.5);
+    rightSidePID.setTolerance(0.25);
+    leftSidePID.setTolerance(0.25);
+
    }
 
    /**
@@ -89,16 +96,20 @@ public class Drivetrain {
     * @return current distance traveled, in ft, since last reset for left side
     */
    public double getLeftPosition(){
-        double calcDistance = (l_primary.getEncoder().getPosition() * 3) / 12; //6 inch wheel diameter
+        double calcDistance = (l_primary.getEncoder().getPosition() * 3 * (24 / 50)) / 12; //6 inch wheel diameter
         return calcDistance;
    }
 
    /**
-    * Resets the position of the encoders
+    * Resets the Drivetrain
     */
    public void reset(){
        r_primary.getEncoder().setPosition(0);
        l_primary.getEncoder().setPosition(0);
+       turnToLimelightPID.reset();
+       driveToLimelightPID.reset();
+       rightSidePID.reset();
+       leftSidePID.reset();
    }
 
    /**
@@ -158,6 +169,38 @@ public class Drivetrain {
     public void rightSide(double distance){
         double calcSpeed = rightSidePID.calculate(getRightPosition(), distance);
         setRightSpeed(calcSpeed);
+    }
+
+    /**
+     * Gets the boolean value of where the PID controller is at
+     * @return true if at target false if not
+     */
+    public boolean turnOnTarget(){
+        return turnToLimelightPID.atSetpoint();
+    }
+
+    /**
+     * Gets the boolean value of where the PID controller is at
+     * @return true if at target false if not
+     */
+    public boolean driveOnTarget(){
+        return driveToLimelightPID.atSetpoint();
+    }
+
+    /**
+     * Gets the boolean value of where the PID controller is at
+     * @return true if at target false if not
+     */
+    public boolean rightOnTarget(){
+        return rightSidePID.atSetpoint();
+    }
+
+    /**
+     * Gets the boolean value of where the PID controller is at
+     * @return true if at target false if not
+     */
+    public boolean leftOnTarget(){
+        return leftSidePID.atSetpoint();
     }
 
 }

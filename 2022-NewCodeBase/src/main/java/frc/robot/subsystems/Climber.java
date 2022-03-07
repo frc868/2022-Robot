@@ -24,6 +24,7 @@ public class Climber {
         c_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.CLIMBER.C_PRIMARY, MotorType.kBrushless); 
         c_secondary = new CANSparkMax(RobotMap.SUBSYSTEMS.CLIMBER.C_SECONDARY, MotorType.kBrushless);
 
+        //Solenoid ID setting
         climber_extend = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_EXTEND_CHANNEL1, RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_EXTEND_CHANNEL2);
         climber_lock = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_LOCK_CHANNEL1, RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_LOCK_CHANNEL2);        
 
@@ -34,6 +35,8 @@ public class Climber {
         //PID controller instantiation
         climber_pid = new PIDController(RobotMap.PID_CONSTANTS.CLIMBER_CONSTANTS.CLIMBER_PID.KP, RobotMap.PID_CONSTANTS.CLIMBER_CONSTANTS.CLIMBER_PID.KI, RobotMap.PID_CONSTANTS.CLIMBER_CONSTANTS.CLIMBER_PID.KD);
 
+        //Setpoint tolerance
+        climber_pid.setTolerance(0.25);
     }
 
     /**
@@ -64,6 +67,14 @@ public class Climber {
     }
 
     /**
+    * Resets the Climber
+    */
+   public void reset(){
+        c_primary.getEncoder().setPosition(0);
+        climber_pid.reset();
+    }
+
+    /**
      * Extends the locking pneumatic
      */
     public void lockExtend(){
@@ -84,6 +95,14 @@ public class Climber {
     public void climberToPosition(double targetRadians){
         double calcSpeed = climber_pid.calculate(getPosition(), targetRadians);
         setSpeed(calcSpeed);
+    }
+
+    /**
+     * Gets the boolean value of where the PID controller is at
+     * @return true if at target false if not
+     */
+    public boolean speedOnTarget(){
+        return climber_pid.atSetpoint();
     }
 }
 
