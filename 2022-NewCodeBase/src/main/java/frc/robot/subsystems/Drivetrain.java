@@ -9,7 +9,7 @@ import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Drivetrain {
-    private CANSparkMax r_primary, r_secondary, r_teritary, l_primary, l_secondary, l_tertiary;
+    private CANSparkMax r_primary, r_secondary, l_primary, l_secondary;
     private PIDController turnToLimelightPID, driveToLimelightPID, leftSidePID, rightSidePID;
     public static Drivetrain instance;
 
@@ -165,7 +165,7 @@ public class Drivetrain {
      * @param distance target distance, in ft
      */
     public void driveToLimelight(double distance) {
-        double calcSpeed = -driveToLimelightPID.calculate(Robot.limelight.getDistance(), distance);
+        double calcSpeed = -driveToLimelightPID.calculate(Robot.limelight.getTx(), distance);
         setLeftSpeed(calcSpeed);
         setRightSpeed(calcSpeed);
     }
@@ -213,8 +213,8 @@ public class Drivetrain {
      * 
      * @return true if at target false if not
      */
-    public boolean leftOnTarget() {
-        return leftSidePID.atSetpoint();
+    public boolean rightOnTarget() {
+        return rightSidePID.atSetpoint();
     }
 
     /**
@@ -222,8 +222,8 @@ public class Drivetrain {
      * 
      * @return true if at target false if not
      */
-    public boolean rightOnTarget() {
-        return rightSidePID.atSetpoint();
+    public boolean leftOnTarget() {
+        return leftSidePID.atSetpoint();
     }
 
 }
