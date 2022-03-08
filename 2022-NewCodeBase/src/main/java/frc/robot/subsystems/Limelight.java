@@ -22,6 +22,7 @@ public class Limelight {
 
     /**
      * Get whether or not the Limelight has any valid targets (0 or 1)
+     * 
      * @return
      */
     public double getTv() {
@@ -31,6 +32,7 @@ public class Limelight {
 
     /**
      * Get the x offset from the target in degrees
+     * 
      * @author dr
      */
     public double getTx() {
@@ -40,6 +42,7 @@ public class Limelight {
 
     /**
      * Get the y offset from the target in degrees
+     * 
      * @author dr
      */
     public double getTy() {
@@ -48,8 +51,9 @@ public class Limelight {
     }
 
     /**
-     * Get the percentage the target takes 
+     * Get the percentage the target takes
      * of the frame (can be used to calc distance)
+     * 
      * @author dr
      */
     public double getTa() {
@@ -59,15 +63,16 @@ public class Limelight {
 
     /**
      * Get the distance the limelight is from the camera.
+     * 
      * @author dr
      */
     public double getDistance() {
         double deg = RobotMap.SUBSYSTEMS.LIMELIGHT.ANGLE + this.getTy();
         double rad = deg * (Math.PI / 180.0);
 
-        return ((RobotMap.SUBSYSTEMS.LIMELIGHT.HUB_HEIGHT 
-         - RobotMap.SUBSYSTEMS.LIMELIGHT.LL_HEIGHT) 
-         / Math.tan(rad)) / 12 +0.5;
+        return ((RobotMap.SUBSYSTEMS.LIMELIGHT.HUB_HEIGHT
+                - RobotMap.SUBSYSTEMS.LIMELIGHT.LL_HEIGHT)
+                / Math.tan(rad)) / 12 + 0.5;
     }
 
 }

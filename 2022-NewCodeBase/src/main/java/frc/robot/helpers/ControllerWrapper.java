@@ -8,10 +8,10 @@ import frc.robot.RobotMap;
 /**
  * A wrapper for WPILib's XboxController class. Importantly, it adds the ability
  * to retrieve a WPILib Button.
- *  
+ * 
  * Utilized by instiating a new ControllerWrapper rather than an XboxController.
  * Any XboxController-specific submethods can be retrieved by
- * <code>driver.getController().getRawAxis(1)</code> or the like. 
+ * <code>driver.getController().getRawAxis(1)</code> or the like.
  * Buttons/D-pad directions are referenced using <code>driver.bA</code> or
  * <code>driver.dNE</code>, for example.
  */
@@ -58,6 +58,7 @@ public class ControllerWrapper {
 
     /**
      * Grants access to the base XboxController, for additional methods.
+     * 
      * @return an XboxController object
      */
     public XboxController getController() {
@@ -124,6 +125,7 @@ public class ControllerWrapper {
 
     /**
      * Sets the controller's deadzone.
+     * 
      * @param deadzone the deadzone (for both sides of the axis) to set
      */
     public void setDeadzone(double deadzone) {
@@ -147,7 +149,8 @@ public class ControllerWrapper {
 
         this.controller.setRumble(RumbleType.kLeftRumble, 1);
         this.controller.setRumble(RumbleType.kRightRumble, 1);
-        while (timer.get() < RUMBLE_DELAY) {} // idle
+        while (timer.get() < RUMBLE_DELAY) {
+        } // idle
         this.controller.setRumble(RumbleType.kLeftRumble, 0);
         this.controller.setRumble(RumbleType.kRightRumble, 0);
 
