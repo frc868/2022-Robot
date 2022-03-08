@@ -22,16 +22,12 @@ public class Drivetrain {
         // CAN ID settings
         r_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.R_PRIMARY, MotorType.kBrushless);
         r_secondary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.R_SECONDARY, MotorType.kBrushless);
-        r_teritary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.R_TERTIARY, MotorType.kBrushless);
         l_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.L_PRIMARY, MotorType.kBrushless);
         l_secondary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.L_SECONDARY, MotorType.kBrushless);
-        l_tertiary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.L_TERTIARY, MotorType.kBrushless);
 
         // Speed control groups
         r_secondary.follow(r_primary);
-        r_teritary.follow(r_primary);
         l_secondary.follow(l_primary);
-        l_tertiary.follow(l_primary);
 
         // Inverse logic
         r_primary.setInverted(RobotMap.SUBSYSTEMS.DRIVETRAIN.RIGHT_IS_INVERTED);
@@ -42,18 +38,18 @@ public class Drivetrain {
         l_primary.setOpenLoopRampRate(RobotMap.SUBSYSTEMS.DRIVETRAIN.TIME);
 
         // PID controller instantiation
-        turnToLimelightPID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.TURN_TO_LIMELIGHT_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.TURN_TO_LIMELIGHT_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.TURN_TO_LIMELIGHT_PID.KD);
-        driveToLimelightPID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.DRIVE_TO_LIMELIGHT_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.DRIVE_TO_LIMELIGHT_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.DRIVE_TO_LIMELIGHT_PID.KD);
-        rightSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.RIGHT_SIDE_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.RIGHT_SIDE_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.RIGHT_SIDE_PID.KD);
-        leftSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.LEFT_SIDE_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.LEFT_SIDE_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN_CONSTANTS.LEFT_SIDE_PID.KD);
+        turnToLimelightPID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.TURN_TO_LIMELIGHT_PID.KP,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.TURN_TO_LIMELIGHT_PID.KI,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.TURN_TO_LIMELIGHT_PID.KD);
+        driveToLimelightPID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.DRIVE_TO_LIMELIGHT_PID.KP,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.DRIVE_TO_LIMELIGHT_PID.KI,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.DRIVE_TO_LIMELIGHT_PID.KD);
+        rightSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.RIGHT_SIDE_PID.KP,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.RIGHT_SIDE_PID.KI,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.RIGHT_SIDE_PID.KD);
+        leftSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.LEFT_SIDE_PID.KP,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.LEFT_SIDE_PID.KI,
+                RobotMap.PID_CONSTANTS.DRIVETRAIN.LEFT_SIDE_PID.KD);
 
         // Setpoint tolerances
         turnToLimelightPID.setTolerance(0.5);

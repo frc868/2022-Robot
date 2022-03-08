@@ -40,12 +40,39 @@ public class Intake {
         return instance;
     }
 
-    public void setForward() {
+    /**
+     * Sets the intake to the up position.
+     */
+    public void setUp() {
         intake_solenoid.set(Value.kForward);
     }
 
-    public void setReverse() {
+    /**
+     * Sets the intake to the down position.
+     */
+    public void setDown() {
         intake_solenoid.set(Value.kReverse);
+    }
+
+    /**
+     * Runs the intake motors.
+     */
+    public void run() {
+        i_primary.set(1);
+    }
+
+    /**
+     * Runs the intake motors in reverse.
+     */
+    public void reverse() {
+        i_primary.set(-1);
+    }
+
+    /**
+     * Stops the intake motors.
+     */
+    public void stop() {
+        i_primary.set(0);
     }
 
 }

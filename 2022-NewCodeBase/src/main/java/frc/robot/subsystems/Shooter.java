@@ -27,9 +27,9 @@ public class Shooter {
         s_secondary.follow(s_primary, true);
 
         // PID controller instantiation
-        shooter_pid = new PIDController(RobotMap.PID_CONSTANTS.SHOOTER_CONSTANTS.SHOOTER_PID.KP,
-                RobotMap.PID_CONSTANTS.SHOOTER_CONSTANTS.SHOOTER_PID.KI,
-                RobotMap.PID_CONSTANTS.SHOOTER_CONSTANTS.SHOOTER_PID.KD);
+        shooter_pid = new PIDController(RobotMap.PID_CONSTANTS.SHOOTER.KP,
+                RobotMap.PID_CONSTANTS.SHOOTER.KI,
+                RobotMap.PID_CONSTANTS.SHOOTER.KD);
 
         // Tolerance setpoints
         shooter_pid.setTolerance(50);

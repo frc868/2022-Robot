@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.auton.AutonChooser;
 import frc.robot.subsystems.Astra;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
@@ -30,6 +31,7 @@ public class Robot extends TimedRobot {
   // public static Hopper hopper = Hopper.getInstance();
   public static Intake intake = Intake.getInstance();
   public static Climber climber = Climber.getInstance();
+  public static AutonChooser autonChooser = AutonChooser.getInstance();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -46,10 +48,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+
   }
 
   @Override
   public void autonomousPeriodic() {
+    autonChooser.runSelectedPath();
   }
 
   @Override

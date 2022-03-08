@@ -9,11 +9,9 @@ public class RobotMap {
 
             // CAN IDs
             public static final int R_PRIMARY = 1;
-            public static final int R_SECONDARY = 2;
-            public static final int R_TERTIARY = 3;
+            public static final int R_SECONDARY = 3;
             public static final int L_PRIMARY = 4;
-            public static final int L_SECONDARY = 5;
-            public static final int L_TERTIARY = 6;
+            public static final int L_SECONDARY = 6;
 
             // Inverse logic
             public static final boolean RIGHT_IS_INVERTED = false;
@@ -129,32 +127,26 @@ public class RobotMap {
     }
 
     public static class PID_CONSTANTS {
-        public static class CLIMBER_CONSTANTS {
 
-            // PID constansts for climber
-            public static class CLIMBER_PID {
+        // PID constansts for climber
+        public static class CLIMBER {
 
-                public static final double KP = 0.01;
-                public static final double KI = 0;
-                public static final double KD = 0;
-
-            }
-        }
-
-        public static class SHOOTER_CONSTANTS {
-
-            // PID constants for shooter
-            public static class SHOOTER_PID {
-
-                public static final double KP = 0.00055;
-                public static final double KI = 0.0023;
-                public static final double KD = 0.00005;
-
-            }
+            public static final double KP = 0.01;
+            public static final double KI = 0;
+            public static final double KD = 0;
 
         }
 
-        public static class DRIVETRAIN_CONSTANTS {
+        // PID constants for shooter
+        public static class SHOOTER {
+
+            public static final double KP = 0.00055;
+            public static final double KI = 0.0023;
+            public static final double KD = 0.00005;
+
+        }
+
+        public static class DRIVETRAIN {
 
             // PID constants for turning to limelight
             public static class TURN_TO_LIMELIGHT_PID {
