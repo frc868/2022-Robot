@@ -3,7 +3,6 @@ package frc.robot.helpers;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-
 /**
  * A wrapper for the WPILib Button class, to be used with ControllerWrapper.
  * Allows Runnables to be used rather than commands.
@@ -38,6 +37,7 @@ public class ButtonWrapper extends Trigger {
     /**
      * Retrieves the state of the button.
      * Required to extend the Button class.
+     * 
      * @return button state as a boolean
      */
     public boolean get() {
@@ -49,6 +49,7 @@ public class ButtonWrapper extends Trigger {
 
     /**
      * Runs "something" on the rising edge of a button press.
+     * 
      * @param func a lambda representing the action
      */
     public void whenPressed(Runnable func) {
@@ -69,6 +70,7 @@ public class ButtonWrapper extends Trigger {
 
     /**
      * Runs "something" on the falling edge of a button press.
+     * 
      * @param func a lambda representing the action
      */
     public void whenReleased(Runnable func) {
@@ -90,6 +92,7 @@ public class ButtonWrapper extends Trigger {
      * Runs "something" while the button is held.
      * This shouldn't conflict with whenPressed()'s implementation, as we shouldn't
      * be binding whenPressed and whileHeld to the same button ever.
+     * 
      * @param func a lambda representing the action
      */
     public void whileHeld(Runnable func) {

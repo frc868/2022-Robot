@@ -5,14 +5,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.OI;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Drivetrain {
     private CANSparkMax r_primary, r_secondary, l_primary, l_secondary;
     private PIDController turnToLimelightPID, driveToLimelightPID, leftSidePID, rightSidePID;
     public static Drivetrain instance;
-
-    private Limelight dLimelight = Limelight.getInstance();
 
     /**
      * Constructor of class Drivetrain. Used to instantiate the Drivetrain class.
@@ -155,7 +154,7 @@ public class Drivetrain {
      * Turns the robot to the limelight so that the angle is 0
      */
     public void turnToLimelight() {
-        double calcSpeed = -turnToLimelightPID.calculate(dLimelight.getTx(), 0);
+        double calcSpeed = -turnToLimelightPID.calculate(Robot.limelight.getTx(), 0);
         setLeftSpeed(-calcSpeed);
         setRightSpeed(calcSpeed);
     }
@@ -166,7 +165,7 @@ public class Drivetrain {
      * @param distance target distance, in ft
      */
     public void driveToLimelight(double distance) {
-        double calcSpeed = -driveToLimelightPID.calculate(dLimelight.getDistance(), distance);
+        double calcSpeed = -driveToLimelightPID.calculate(Robot.limelight.getTx(), distance);
         setLeftSpeed(calcSpeed);
         setRightSpeed(calcSpeed);
     }

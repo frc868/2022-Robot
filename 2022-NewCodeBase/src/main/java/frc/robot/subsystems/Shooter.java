@@ -12,8 +12,6 @@ public class Shooter {
     private PIDController shooter_pid;
     public static Shooter instance;
 
-    private Limelight sLimelight = Limelight.getInstance();
-
     /**
      * Constructor of class Shooter. Used to instantiate the Shooter class. Should
      * only be used in getInstance method.

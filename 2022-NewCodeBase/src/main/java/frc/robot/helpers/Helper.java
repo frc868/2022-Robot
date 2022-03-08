@@ -2,18 +2,21 @@ package frc.robot.helpers;
 
 /**
  * The helper class. Defines various functions used throughout the codebase.
- * These usually tend to be trivial math functions that we don't want to copy into each subsystem.
+ * These usually tend to be trivial math functions that we don't want to copy
+ * into each subsystem.
  * 
  * @author lm
  * @author ic
  */
 public class Helper {
     /**
-     * Given a value, checks to makes sure it is between min and max. If not replace with the value
-     *  of min or max. If so return value
+     * Given a value, checks to makes sure it is between min and max. If not replace
+     * with the value
+     * of min or max. If so return value
+     * 
      * @param value The value to check
-     * @param min The minimum acceptable value
-     * @param max The maximum acceptable value
+     * @param min   The minimum acceptable value
+     * @param max   The maximum acceptable value
      * @return The sanity value after check
      */
     public static double boundValue(double value, double min, double max) {
@@ -25,9 +28,12 @@ public class Helper {
         }
         return value;
     }
+
     /**
-     * Given a value, checks to makes sure it is between -1.0 and 1.0. If not replace with the 
+     * Given a value, checks to makes sure it is between -1.0 and 1.0. If not
+     * replace with the
      * value with -1.0 or 1.0. If so return value
+     * 
      * @param value The value to check
      * @return The sanity value after check
      */
@@ -36,11 +42,12 @@ public class Helper {
     }
 
     /**
-     * Creates a virtual deadzone. 
-     * If a value is between the lower max and upper min, it will output zero. 
+     * Creates a virtual deadzone.
+     * If a value is between the lower max and upper min, it will output zero.
      * If a value is outside this range, the original value will be outputted.
+     * 
      * @param value value to deadzone
-     * @param size the size of the deadzone
+     * @param size  the size of the deadzone
      * @return the "deadzoned" version of the input value
      */
     public static double deadzone(double value, double size) {
@@ -53,7 +60,8 @@ public class Helper {
 
     /**
      * Creates a virtual deadzone on a specific controller.
-     * @param value value to deadzone
+     * 
+     * @param value      value to deadzone
      * @param controller the controller to set the deadzone on
      * @return the "deadzoned" version of the input value
      */
@@ -63,11 +71,12 @@ public class Helper {
 
     /**
      * Takes the value and returns the value to the third power
+     * 
      * @param value value to be cubed
      * @return the third power of value
      */
     public static double desensitize(double value) {
         return Math.pow(value, 3);
-    } 
+    }
 
 }
