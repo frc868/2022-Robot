@@ -87,6 +87,13 @@ public class Shooter {
     }
 
     /**
+     * Stops the shooter
+     */
+    public void stop(){
+        setSpeed(0);
+    }
+
+    /**
      * Gets the boolean value of where the PID controller is at
      * 
      * @return true if at target false if not

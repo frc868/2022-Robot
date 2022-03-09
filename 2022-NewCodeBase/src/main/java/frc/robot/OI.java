@@ -32,13 +32,13 @@ public class OI {
     public static void updateOI() {
         Robot.drivetrain.tankDrive(1);
 
-        driver.bA.whenPressed(() -> Robot.intake.setReverse());
-        driver.bY.whenPressed(() -> Robot.intake.setForward());
+        driver.bA.whenPressed(() -> Robot.intake.setDown());
+        driver.bY.whenPressed(() -> Robot.intake.setUp());
 
         driver.bRB.whileHeld(() -> Robot.intake.run());
         driver.bRB.whenReleased(() -> Robot.intake.stop());
 
-        driver.dS.whileHeld(() -> Robot.drivetrain.goToTarget());
+        driver.dS.whileHeld(() -> Robot.drivetrain.driveToLimelight(0));
         driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
         driver.bSTART.whileHeld(() -> Robot.intake.reverse());
@@ -49,8 +49,8 @@ public class OI {
         operator.bRB.whileHeld(() -> Robot.hopper.run());
         operator.bRB.whenReleased(() -> Robot.hopper.stop());
 
-        operator.bX.whenPressed(() -> Robot.hopper.setReverse());
-        operator.bB.whenPressed(() -> Robot.hopper.setForward());
+        operator.bX.whenPressed(() -> Robot.hopper.gatekeepersOut());
+        operator.bB.whenPressed(() -> Robot.hopper.gatekeepersIn());
 
         operator.bLB.whileHeld(() -> Robot.shooter.shoot(speed));
         operator.bLB.whenReleased(() -> Robot.shooter.stop());
@@ -60,8 +60,8 @@ public class OI {
 
         Robot.climber.setSpeed(1 * operator.getLY());
 
-        operator.bY.whenPressed(() -> Robot.climber.setTrue()); // in
-        operator.bA.whenPressed(() -> Robot.climber.setFalse()); // out
+        operator.bY.whenPressed(() -> Robot.climber.lockRetract()); // in
+        operator.bA.whenPressed(() -> Robot.climber.lockExtend()); // out
 
         operator.dE.whenReleased(() -> speed += 100);
         operator.dW.whenReleased(() -> speed -= 100);

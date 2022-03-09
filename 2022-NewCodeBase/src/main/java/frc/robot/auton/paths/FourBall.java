@@ -112,6 +112,9 @@ public class FourBall extends AutonPath {
             }
         },
         turnToRoughlyThirdBall {
+            public void noYouDont(){
+                System.out.println("no");
+            }
             @Override
             public void init() {
             }
