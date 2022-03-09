@@ -10,7 +10,8 @@ import frc.robot.RobotMap;
 
 public class Drivetrain {
     private CANSparkMax r_primary, r_secondary, l_primary, l_secondary;
-    private PIDController turnToLimelightPID, driveToLimelightPID, leftSidePID, rightSidePID;
+    private PIDController turnToLimelightPID, driveToLimelightPID, turnToAstraPID, driveToAstraPID, leftSidePID,
+            rightSidePID, driveStraightPID;
     public static Drivetrain instance;
 
     /**
@@ -20,42 +21,50 @@ public class Drivetrain {
     private Drivetrain() {
 
         // CAN ID settings
-        r_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.R_PRIMARY, MotorType.kBrushless);
-        r_secondary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.R_SECONDARY, MotorType.kBrushless);
-        l_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.L_PRIMARY, MotorType.kBrushless);
-        l_secondary = new CANSparkMax(RobotMap.SUBSYSTEMS.DRIVETRAIN.L_SECONDARY, MotorType.kBrushless);
+        r_primary = new CANSparkMax(RobotMap.Subsystems.Drivetrain.R_PRIMARY, MotorType.kBrushless);
+        r_secondary = new CANSparkMax(RobotMap.Subsystems.Drivetrain.R_SECONDARY, MotorType.kBrushless);
+        l_primary = new CANSparkMax(RobotMap.Subsystems.Drivetrain.L_PRIMARY, MotorType.kBrushless);
+        l_secondary = new CANSparkMax(RobotMap.Subsystems.Drivetrain.L_SECONDARY, MotorType.kBrushless);
 
         // Speed control groups
         r_secondary.follow(r_primary);
         l_secondary.follow(l_primary);
 
         // Inverse logic
-        r_primary.setInverted(RobotMap.SUBSYSTEMS.DRIVETRAIN.RIGHT_IS_INVERTED);
-        l_primary.setInverted(RobotMap.SUBSYSTEMS.DRIVETRAIN.LEFT_IS_INVERTED);
+        r_primary.setInverted(RobotMap.Subsystems.Drivetrain.RIGHT_IS_INVERTED);
+        l_primary.setInverted(RobotMap.Subsystems.Drivetrain.LEFT_IS_INVERTED);
 
         // Max acceleration
-        r_primary.setOpenLoopRampRate(RobotMap.SUBSYSTEMS.DRIVETRAIN.TIME);
-        l_primary.setOpenLoopRampRate(RobotMap.SUBSYSTEMS.DRIVETRAIN.TIME);
+        r_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.TIME);
+        l_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.TIME);
 
         // PID controller instantiation
-        turnToLimelightPID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.TURN_TO_LIMELIGHT_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.TURN_TO_LIMELIGHT_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.TURN_TO_LIMELIGHT_PID.KD);
-        driveToLimelightPID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.DRIVE_TO_LIMELIGHT_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.DRIVE_TO_LIMELIGHT_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.DRIVE_TO_LIMELIGHT_PID.KD);
-        rightSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.RIGHT_SIDE_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.RIGHT_SIDE_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.RIGHT_SIDE_PID.KD);
-        leftSidePID = new PIDController(RobotMap.PID_CONSTANTS.DRIVETRAIN.LEFT_SIDE_PID.KP,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.LEFT_SIDE_PID.KI,
-                RobotMap.PID_CONSTANTS.DRIVETRAIN.LEFT_SIDE_PID.KD);
+        turnToLimelightPID = new PIDController(RobotMap.PIDConstants.Drivetrain.TurnToLimelight.KP,
+                RobotMap.PIDConstants.Drivetrain.TurnToLimelight.KI,
+                RobotMap.PIDConstants.Drivetrain.TurnToLimelight.KD);
+        driveToLimelightPID = new PIDController(RobotMap.PIDConstants.Drivetrain.DriveToLimelight.KP,
+                RobotMap.PIDConstants.Drivetrain.DriveToLimelight.KI,
+                RobotMap.PIDConstants.Drivetrain.DriveToLimelight.KD);
+        turnToAstraPID = new PIDController(RobotMap.PIDConstants.Drivetrain.TurnToAstra.KP,
+                RobotMap.PIDConstants.Drivetrain.TurnToAstra.KI, RobotMap.PIDConstants.Drivetrain.TurnToAstra.KD);
+        driveToAstraPID = new PIDController(RobotMap.PIDConstants.Drivetrain.DriveToAstra.KP,
+                RobotMap.PIDConstants.Drivetrain.DriveToAstra.KI, RobotMap.PIDConstants.Drivetrain.DriveToAstra.KD);
+        rightSidePID = new PIDController(RobotMap.PIDConstants.Drivetrain.RightDrivetrain.KP,
+                RobotMap.PIDConstants.Drivetrain.RightDrivetrain.KI,
+                RobotMap.PIDConstants.Drivetrain.RightDrivetrain.KD);
+        leftSidePID = new PIDController(RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KP,
+                RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KI,
+                RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KD);
+        driveStraightPID = new PIDController(RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KP,
+                RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KI,
+                RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KD);
 
         // Setpoint tolerances
         turnToLimelightPID.setTolerance(0.5);
         driveToLimelightPID.setTolerance(0.5);
         rightSidePID.setTolerance(0.25);
         leftSidePID.setTolerance(0.25);
+        driveStraightPID.setTolerance(0.25);
 
     }
 
@@ -120,6 +129,7 @@ public class Drivetrain {
         r_primary.getEncoder().setPosition(0);
         l_primary.getEncoder().setPosition(0);
         turnToLimelightPID.reset();
+        turnToAstraPID.reset();
         driveToLimelightPID.reset();
         rightSidePID.reset();
         leftSidePID.reset();
@@ -151,6 +161,16 @@ public class Drivetrain {
     }
 
     /**
+     * Drives straight towards a target
+     * @param target distance to target in feet
+     */
+    public void driveStraight(double target) {
+        double calcSpeed = driveStraightPID.calculate(getLeftPosition(), 0);
+        setLeftSpeed(calcSpeed);
+        setRightSpeed(calcSpeed);
+    }
+
+    /**
      * Turns the robot to the limelight so that the angle is 0
      */
     public void turnToLimelight() {
@@ -160,12 +180,33 @@ public class Drivetrain {
     }
 
     /**
-     * Drives the robot to target distance
+     * Turns the robot to the nearest ball so that the angle is 0
+     */
+    public void turnToAstra() {
+        double calcSpeed = -turnToAstraPID.calculate(Robot.astra.getTx(0), 0);
+        setLeftSpeed(-calcSpeed);
+        setRightSpeed(calcSpeed);
+    }
+
+    /**
+     * Drives the robot to target distance from the hub
+     * (usually used to make shots)
      * 
      * @param distance target distance, in ft
      */
     public void driveToLimelight(double distance) {
-        double calcSpeed = -driveToLimelightPID.calculate(Robot.limelight.getTx(), distance);
+        double calcSpeed = -driveToLimelightPID.calculate(Robot.limelight.getDistance(), distance);
+        setLeftSpeed(calcSpeed);
+        setRightSpeed(calcSpeed);
+    }
+
+    /**
+     * Drives the robot to the nearest ball that is of our alliance color
+     * 
+     * @param distance target distance, in ft
+     */
+    public void driveToAstra() {
+        double calcSpeed = -driveToAstraPID.calculate(Robot.astra.getTd(0), 0);
         setLeftSpeed(calcSpeed);
         setRightSpeed(calcSpeed);
     }
@@ -195,7 +236,7 @@ public class Drivetrain {
      * 
      * @return true if at target false if not
      */
-    public boolean turnOnTarget() {
+    public boolean turnToLimelightAtTarget() {
         return turnToLimelightPID.atSetpoint();
     }
 
@@ -204,7 +245,7 @@ public class Drivetrain {
      * 
      * @return true if at target false if not
      */
-    public boolean driveOnTarget() {
+    public boolean driveToLimelightAtTarget() {
         return driveToLimelightPID.atSetpoint();
     }
 
@@ -213,7 +254,25 @@ public class Drivetrain {
      * 
      * @return true if at target false if not
      */
-    public boolean rightOnTarget() {
+    public boolean turnToAstraAtTarget() {
+        return turnToAstraPID.atSetpoint();
+    }
+
+    /**
+     * Gets the boolean value of where the PID controller is at
+     * 
+     * @return true if at target false if not
+     */
+    public boolean driveToAstraAtTarget() {
+        return driveToAstraPID.atSetpoint();
+    }
+
+    /**
+     * Gets the boolean value of where the PID controller is at
+     * 
+     * @return true if at target false if not
+     */
+    public boolean rightAtTarget() {
         return rightSidePID.atSetpoint();
     }
 
@@ -222,8 +281,16 @@ public class Drivetrain {
      * 
      * @return true if at target false if not
      */
-    public boolean leftOnTarget() {
+    public boolean leftAtTarget() {
         return leftSidePID.atSetpoint();
+    }
+
+    /**
+     * Sets the speed of the drivetrain to zero.
+     */
+    public void stop() {
+        setRightSpeed(0);
+        setLeftSpeed(0);
     }
 
 }

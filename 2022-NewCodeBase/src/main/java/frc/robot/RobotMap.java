@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SPI.Port;
 
 public class RobotMap {
-    public static class SUBSYSTEMS {
-        public static class DRIVETRAIN {
+    public static class Subsystems {
+        public static class Drivetrain {
 
             // CAN IDs
             public static final int R_PRIMARY = 1;
@@ -22,17 +22,17 @@ public class RobotMap {
 
         }
 
-        public static class GYRO {
+        public static class Gyro {
 
             // SPI port logic
             public static final Port GYRO = SPI.Port.kMXP;
 
         }
 
-        public static class HOPPER {
+        public static class Hopper {
 
             // CAN IDs
-            public static final int HOPPER = 7;
+            public static final int H_MOTOR = 7;
 
             // Inverse logic
             public static final boolean IS_INVERTED = false;
@@ -43,7 +43,7 @@ public class RobotMap {
 
         }
 
-        public static class INTAKE {
+        public static class Intake {
 
             // CAN IDs
             public static final int I_PRIMARY = 10;
@@ -58,7 +58,7 @@ public class RobotMap {
 
         }
 
-        public static class CLIMBER {
+        public static class Climber {
 
             // CAN IDs
             public static final int C_PRIMARY = 12;
@@ -75,7 +75,7 @@ public class RobotMap {
 
         }
 
-        public static class SHOOTER {
+        public static class Shooter {
 
             // CAN IDs
             public static final int S_PRIMARY = 8;
@@ -86,7 +86,7 @@ public class RobotMap {
 
         }
 
-        public static class LIMELIGHT {
+        public static class Limelight {
 
             // Goal and angle measurements
             public static final double LL_HEIGHT = 22.0;
@@ -126,10 +126,10 @@ public class RobotMap {
 
     }
 
-    public static class PID_CONSTANTS {
+    public static class PIDConstants {
 
         // PID constansts for climber
-        public static class CLIMBER {
+        public static class Climber {
 
             public static final double KP = 0.01;
             public static final double KI = 0;
@@ -138,7 +138,7 @@ public class RobotMap {
         }
 
         // PID constants for shooter
-        public static class SHOOTER {
+        public static class Shooter {
 
             public static final double KP = 0.00055;
             public static final double KI = 0.0023;
@@ -146,10 +146,10 @@ public class RobotMap {
 
         }
 
-        public static class DRIVETRAIN {
+        public static class Drivetrain {
 
             // PID constants for turning to limelight
-            public static class TURN_TO_LIMELIGHT_PID {
+            public static class TurnToLimelight {
 
                 public static final double KP = 0.022;
                 public static final double KI = 0.00;
@@ -158,7 +158,25 @@ public class RobotMap {
             }
 
             // PID constants for driving to limelight
-            public static class DRIVE_TO_LIMELIGHT_PID {
+            public static class DriveToLimelight {
+
+                public static final double KP = 0.08;
+                public static final double KI = 0;
+                public static final double KD = 0;
+
+            }
+
+            // PID constants for turning to Astra
+            public static class TurnToAstra {
+
+                public static final double KP = 0;
+                public static final double KI = 0;
+                public static final double KD = 0;
+
+            }
+
+            // PID constants for driving to Astra
+            public static class DriveToAstra {
 
                 public static final double KP = 0.08;
                 public static final double KI = 0;
@@ -167,7 +185,7 @@ public class RobotMap {
             }
 
             // PID constants for driving right side to position
-            public static class RIGHT_SIDE_PID {
+            public static class RightDrivetrain {
 
                 public static final double KP = 0.01;
                 public static final double KI = 0;
@@ -175,8 +193,17 @@ public class RobotMap {
 
             }
 
-            // PID constants for driving left side to position
-            public static class LEFT_SIDE_PID {
+            // PID constants for driving right side to position
+            public static class LeftDrivetrain {
+
+                public static final double KP = 0.01;
+                public static final double KI = 0;
+                public static final double KD = 0;
+
+            }
+
+            // PID constants for driving straight
+            public static class DriveStraight {
 
                 public static final double KP = 0.01;
                 public static final double KI = 0;

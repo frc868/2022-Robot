@@ -19,17 +19,17 @@ public class Shooter {
     private Shooter() {
 
         // CAN ID setting
-        s_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.SHOOTER.S_PRIMARY, MotorType.kBrushless);
-        s_secondary = new CANSparkMax(RobotMap.SUBSYSTEMS.SHOOTER.S_SECONDARY, MotorType.kBrushless);
+        s_primary = new CANSparkMax(RobotMap.Subsystems.Shooter.S_PRIMARY, MotorType.kBrushless);
+        s_secondary = new CANSparkMax(RobotMap.Subsystems.Shooter.S_SECONDARY, MotorType.kBrushless);
 
         // Inverse logic
-        s_primary.setInverted(RobotMap.SUBSYSTEMS.SHOOTER.IS_INVERTED);
+        s_primary.setInverted(RobotMap.Subsystems.Shooter.IS_INVERTED);
         s_secondary.follow(s_primary, true);
 
         // PID controller instantiation
-        shooter_pid = new PIDController(RobotMap.PID_CONSTANTS.SHOOTER.KP,
-                RobotMap.PID_CONSTANTS.SHOOTER.KI,
-                RobotMap.PID_CONSTANTS.SHOOTER.KD);
+        shooter_pid = new PIDController(RobotMap.PIDConstants.Shooter.KP,
+                RobotMap.PIDConstants.Shooter.KI,
+                RobotMap.PIDConstants.Shooter.KD);
 
         // Tolerance setpoints
         shooter_pid.setTolerance(50);
@@ -93,6 +93,18 @@ public class Shooter {
      */
     public boolean speedOnTarget() {
         return shooter_pid.atSetpoint();
+    }
+
+    /**
+     * Calculates the speed that the shooter should go given the Limelight's
+     * distance to the goal
+     * 
+     * @return the RPM with which to spin the shooter at
+     */
+    public double calcSpeed() {
+        double distance = Robot.limelight.getDistance();
+        double calcSpeed = 2064 * Math.pow(Math.E, 0.0264 * distance);
+        return calcSpeed;
     }
 
 }

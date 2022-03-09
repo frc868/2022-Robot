@@ -10,7 +10,7 @@ import frc.robot.subsystems.Astra;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-// import frc.robot.subsystems.Hopper;
+import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
 
@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
   public static Limelight limelight = Limelight.getInstance();
   public static Astra astra = Astra.getInstance();
   public static Shooter shooter = Shooter.getInstance();
-  // public static Hopper hopper = Hopper.getInstance();
+  public static Hopper hopper = Hopper.getInstance();
   public static Intake intake = Intake.getInstance();
   public static Climber climber = Climber.getInstance();
   public static AutonChooser autonChooser = AutonChooser.getInstance();
@@ -58,6 +58,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    OI.updateOI();
   }
 
   @Override

@@ -22,24 +22,24 @@ public class Climber {
     private Climber() {
 
         // CAN ID setting
-        c_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.CLIMBER.C_PRIMARY, MotorType.kBrushless);
-        c_secondary = new CANSparkMax(RobotMap.SUBSYSTEMS.CLIMBER.C_SECONDARY, MotorType.kBrushless);
+        c_primary = new CANSparkMax(RobotMap.Subsystems.Climber.C_PRIMARY, MotorType.kBrushless);
+        c_secondary = new CANSparkMax(RobotMap.Subsystems.Climber.C_SECONDARY, MotorType.kBrushless);
 
         // Solenoid ID setting
         climber_extend = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-                RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_EXTEND_CHANNEL1,
-                RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_EXTEND_CHANNEL2);
-        climber_lock = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_LOCK_CHANNEL1,
-                RobotMap.SUBSYSTEMS.CLIMBER.CLIMBER_LOCK_CHANNEL2);
+                RobotMap.Subsystems.Climber.CLIMBER_EXTEND_CHANNEL1,
+                RobotMap.Subsystems.Climber.CLIMBER_EXTEND_CHANNEL2);
+        climber_lock = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Subsystems.Climber.CLIMBER_LOCK_CHANNEL1,
+                RobotMap.Subsystems.Climber.CLIMBER_LOCK_CHANNEL2);
 
         // Inverse logic
-        c_primary.setInverted(RobotMap.SUBSYSTEMS.CLIMBER.IS_INVERTED);
+        c_primary.setInverted(RobotMap.Subsystems.Climber.IS_INVERTED);
         c_secondary.follow(c_primary, true);
 
         // PID controller instantiation
-        climber_pid = new PIDController(RobotMap.PID_CONSTANTS.CLIMBER_CONSTANTS.CLIMBER_PID.KP,
-                RobotMap.PID_CONSTANTS.CLIMBER_CONSTANTS.CLIMBER_PID.KI,
-                RobotMap.PID_CONSTANTS.CLIMBER_CONSTANTS.CLIMBER_PID.KD);
+        climber_pid = new PIDController(RobotMap.PIDConstants.Climber.KP,
+                RobotMap.PIDConstants.Climber.KI,
+                RobotMap.PIDConstants.Climber.KD);
 
         // Setpoint tolerance
         climber_pid.setTolerance(0.25);

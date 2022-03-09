@@ -67,11 +67,11 @@ public class Limelight {
      * @author dr
      */
     public double getDistance() {
-        double deg = RobotMap.SUBSYSTEMS.LIMELIGHT.ANGLE + this.getTy();
+        double deg = RobotMap.Subsystems.Limelight.ANGLE + this.getTy();
         double rad = deg * (Math.PI / 180.0);
 
-        return ((RobotMap.SUBSYSTEMS.LIMELIGHT.HUB_HEIGHT
-                - RobotMap.SUBSYSTEMS.LIMELIGHT.LL_HEIGHT)
+        return ((RobotMap.Subsystems.Limelight.HUB_HEIGHT
+                - RobotMap.Subsystems.Limelight.LL_HEIGHT)
                 / Math.tan(rad)) / 12 + 0.5;
     }
 

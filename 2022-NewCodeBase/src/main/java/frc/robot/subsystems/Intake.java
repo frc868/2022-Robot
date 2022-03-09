@@ -21,15 +21,15 @@ public class Intake {
     private Intake() {
 
         // CAN ID setting
-        i_primary = new CANSparkMax(RobotMap.SUBSYSTEMS.INTAKE.I_PRIMARY, MotorType.kBrushless);
+        i_primary = new CANSparkMax(RobotMap.Subsystems.Intake.I_PRIMARY, MotorType.kBrushless);
 
         // Solenoid ID setting
         intake_solenoid = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-                RobotMap.SUBSYSTEMS.INTAKE.INTAKE_SOLENOID_CHANNEL2,
-                RobotMap.SUBSYSTEMS.INTAKE.INTAKE_SOLENOID_CHANNEL1);
+                RobotMap.Subsystems.Intake.INTAKE_SOLENOID_CHANNEL2,
+                RobotMap.Subsystems.Intake.INTAKE_SOLENOID_CHANNEL1);
 
         // Inverse logic
-        i_primary.setInverted(RobotMap.SUBSYSTEMS.INTAKE.IS_INVERTED);
+        i_primary.setInverted(RobotMap.Subsystems.Intake.IS_INVERTED);
 
     }
 
