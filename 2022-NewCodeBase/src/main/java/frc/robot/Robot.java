@@ -58,11 +58,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    OI.updateOI();
   }
 
   @Override
   public void teleopPeriodic() {
+    OI.updateOI();
+    OI.updateSmartDashboard();
   }
 
   @Override

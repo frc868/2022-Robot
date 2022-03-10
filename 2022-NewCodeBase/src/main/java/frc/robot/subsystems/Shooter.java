@@ -107,4 +107,11 @@ public class Shooter {
         return calcSpeed;
     }
 
+    /**
+     * Stops the shooter.
+     */
+    public void stop() {
+        setSpeed(0);
+    }
+
 }

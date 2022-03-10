@@ -44,14 +44,14 @@ public class Intake {
      * Sets the intake to the up position.
      */
     public void setUp() {
-        intake_solenoid.set(Value.kForward);
+        intake_solenoid.set(Value.kReverse);
     }
 
     /**
      * Sets the intake to the down position.
      */
     public void setDown() {
-        intake_solenoid.set(Value.kReverse);
+        intake_solenoid.set(Value.kForward);
     }
 
     /**

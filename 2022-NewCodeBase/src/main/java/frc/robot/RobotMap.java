@@ -91,7 +91,7 @@ public class RobotMap {
             // Goal and angle measurements
             public static final double LL_HEIGHT = 22.0;
             public static final double HUB_HEIGHT = 101.0;
-            public static final double ANGLE = 25.0;
+            public static final double ANGLE = 29.6375;
 
         }
     }
@@ -187,7 +187,7 @@ public class RobotMap {
             // PID constants for driving right side to position
             public static class RightDrivetrain {
 
-                public static final double KP = 0.01;
+                public static final double KP = 0.015;
                 public static final double KI = 0;
                 public static final double KD = 0;
 
@@ -196,7 +196,7 @@ public class RobotMap {
             // PID constants for driving right side to position
             public static class LeftDrivetrain {
 
-                public static final double KP = 0.01;
+                public static final double KP = 0.04;
                 public static final double KI = 0;
                 public static final double KD = 0;
 

@@ -10,7 +10,7 @@ import frc.robot.RobotMap;
 
 public class Hopper {
     public static Hopper instance;
-    private CANSparkMax motor;
+    private CANSparkMax h_primary;
     private DoubleSolenoid gatekeepers;
 
     /**
@@ -18,8 +18,8 @@ public class Hopper {
      * only be used in getInstance method.
      */
     private Hopper() {
-        motor = new CANSparkMax(RobotMap.Subsystems.Hopper.H_MOTOR, MotorType.kBrushless);
-        motor.setInverted(RobotMap.Subsystems.Hopper.IS_INVERTED);
+        h_primary = new CANSparkMax(RobotMap.Subsystems.Hopper.H_MOTOR, MotorType.kBrushless);
+        h_primary.setInverted(RobotMap.Subsystems.Hopper.IS_INVERTED);
 
         gatekeepers = new DoubleSolenoid(PneumaticsModuleType.REVPH, RobotMap.Subsystems.Hopper.GATEKEEPER_CHANNEL2,
                 RobotMap.Subsystems.Hopper.GATEKEEPER_CHANNEL1);
@@ -65,14 +65,25 @@ public class Hopper {
      * Runs the motor on the hopper.
      */
     public void run() {
-        motor.set(1);
+        h_primary.set(1);
     }
+
+    /**
+     * Runs the motor on the hopper in reverse.
+     */
+    public void reverse() {
+        h_primary.set(-1);
+    }
+
+    // public boolean gatekeepersIn() {
+    // return h_primary.get
+    // }
 
     /**
      * Stops the motor on the hopper.
      */
     public void stop() {
-        motor.set(0);
+        h_primary.set(0);
     }
 
 }

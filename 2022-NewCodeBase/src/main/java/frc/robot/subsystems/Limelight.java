@@ -72,7 +72,7 @@ public class Limelight {
 
         return ((RobotMap.Subsystems.Limelight.HUB_HEIGHT
                 - RobotMap.Subsystems.Limelight.LL_HEIGHT)
-                / Math.tan(rad)) / 12 + 0.5;
+                / Math.tan(rad)) / 12;
     }
 
 }

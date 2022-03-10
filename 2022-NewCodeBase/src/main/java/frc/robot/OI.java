@@ -1,6 +1,7 @@
 package frc.robot;
 
 import frc.robot.helpers.ControllerWrapper;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
 
@@ -11,7 +12,8 @@ public class OI {
     // Singleton Instance
     public static OI instance;
 
-    public static double speed;
+    public static double speed = 2300;
+    public static boolean shooterOn = false;
 
     /**
      * Creates a Singleton for class OI. Use this whenever OI and it's methods need
@@ -31,40 +33,57 @@ public class OI {
      */
     public static void updateOI() {
         Robot.drivetrain.tankDrive(1);
+        // Driver
 
-        driver.bA.whenPressed(() -> Robot.intake.setReverse());
-        driver.bY.whenPressed(() -> Robot.intake.setForward());
+        driver.bA.whenPressed(() -> Robot.intake.setUp());
+        driver.bY.whenPressed(() -> Robot.intake.setDown());
 
-        driver.bRB.whileHeld(() -> Robot.intake.run());
-        driver.bRB.whenReleased(() -> Robot.intake.stop());
-
-        driver.dS.whileHeld(() -> Robot.drivetrain.goToTarget());
-        driver.dS.whenReleased(() -> Robot.drivetrain.stop());
-
-        driver.bSTART.whileHeld(() -> Robot.intake.reverse());
-        driver.bSTART.whenReleased(() -> Robot.intake.stop());
+        // driver.dS.whileHeld(() -> Robot.drivetrain.goToTarget());
+        // driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
         // Operator
 
-        operator.bRB.whileHeld(() -> Robot.hopper.run());
-        operator.bRB.whenReleased(() -> Robot.hopper.stop());
+        operator.bRB.whileHeld(() -> {
+            Robot.hopper.run();
+            Robot.intake.run();
+        });
+        operator.bRB.whenReleased(() -> {
+            Robot.hopper.stop();
+            Robot.intake.stop();
+        });
 
-        operator.bX.whenPressed(() -> Robot.hopper.setReverse());
-        operator.bB.whenPressed(() -> Robot.hopper.setForward());
+        operator.bA.whileHeld(() -> {
+            Robot.hopper.reverse();
+            Robot.intake.reverse();
+        });
+        operator.bA.whenReleased(() -> {
+            Robot.hopper.stop();
+            Robot.intake.stop();
+        });
 
-        operator.bLB.whileHeld(() -> Robot.shooter.shoot(speed));
-        operator.bLB.whenReleased(() -> Robot.shooter.stop());
+        operator.bX.whenPressed(() -> Robot.hopper.gatekeepersOut());
+        operator.bB.whenPressed(() -> Robot.hopper.gatekeepersIn());
+
+        operator.bLB.whenPressed(() -> {
+            shooterOn = !shooterOn;
+        });
 
         operator.dN.whileHeld(() -> Robot.drivetrain.turnToLimelight());
         operator.dN.whenReleased(() -> Robot.drivetrain.stop());
 
         Robot.climber.setSpeed(1 * operator.getLY());
 
-        operator.bY.whenPressed(() -> Robot.climber.setTrue()); // in
-        operator.bA.whenPressed(() -> Robot.climber.setFalse()); // out
+        // operator.bY.whenPressed(() -> Robot.climber.lockExtend());
+        // operator.bA.whenPressed(() -> Robot.climber.lockRetract());
 
-        operator.dE.whenReleased(() -> speed += 100);
-        operator.dW.whenReleased(() -> speed -= 100);
+        operator.dE.whenReleased(() -> speed += 50);
+        operator.dW.whenReleased(() -> speed -= 50);
+
+        if (shooterOn) {
+            Robot.shooter.shoot(speed);
+        } else {
+            Robot.shooter.stop();
+        }
 
     }
 
@@ -72,6 +91,12 @@ public class OI {
      * Code to display and get values on SmartDashboard
      */
     public static void updateSmartDashboard() {
-
+        SmartDashboard.putNumber("rpm", Robot.shooter.getVelocity());
+        SmartDashboard.putBoolean("atTarget", Robot.shooter.speedOnTarget());
+        // SmartDashboard.putBoolean("gatekeeper", Robot.hopper.getGateKeeper());
+        SmartDashboard.putNumber("distance", Robot.limelight.getDistance());
+        SmartDashboard.putNumber("speed", speed);
+        SmartDashboard.putBoolean("shooterOn", shooterOn);
+        SmartDashboard.putNumber("limelightDistance", Robot.limelight.getDistance());
     }
 }
