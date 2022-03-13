@@ -1,11 +1,5 @@
 package frc.robot;
 
-
-import org.opencv.core.Mat;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.auton.AutonChooser;
@@ -18,9 +12,6 @@ import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Climber;
-
-
-
 
 public class Robot extends TimedRobot {
   public static boolean isCompBot = false;
@@ -37,16 +28,15 @@ public class Robot extends TimedRobot {
   private static Mat mat;
   private static CvSink sink;
 
-
   @Override
   public void robotInit() {
-    UsbCamera cam = CameraServer.startAutomaticCapture();
     OI.updateSmartDashboard();
-    gyro.calibrate();
+    gyro.resetAngle();
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+  }
 
   @Override
   public void autonomousInit() {
@@ -54,7 +44,6 @@ public class Robot extends TimedRobot {
     hopper.setReverse();
     hopper.reset();
     drivetrain.reset();
- 
 
     autonChooser.resetSelectedPath();
   }
@@ -64,34 +53,32 @@ public class Robot extends TimedRobot {
     autonChooser.runSelectedPath();
   }
 
-
   @Override
   public void teleopInit() {
     drivetrain.reset();
-    gyro.reset();
   }
 
   @Override
   public void teleopPeriodic() {
     OI.updateOI();
     OI.updateSmartDashboard();
-    System.out.println(limelight.getDistance());
-    
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+  }
 
   @Override
   public void testInit() {
     SmartDashboard.putNumber("pressure", pressure.getPressure());
   }
-  
+
   @Override
   public void testPeriodic() {
-    
+
   }
 }
