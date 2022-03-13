@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SPI.Port;
 
 public class RobotMap {
+    public static final boolean HIGH_GOAL_MODE = true;
+
     public static class Subsystems {
         public static class Drivetrain {
 
@@ -18,7 +20,7 @@ public class RobotMap {
             public static final boolean LEFT_IS_INVERTED = true;
 
             // Max accleration
-            public static final double TIME = 1.5;
+            public static final double TIME = 0.8;
 
         }
 
@@ -84,6 +86,10 @@ public class RobotMap {
             // Inverse logic
             public static final boolean IS_INVERTED = true;
 
+            // Good shot RPMs
+            public static final double HIGH_GOAL_RPM = 2800.0;
+            public static final double LOW_GOAL_RPM = 0.0;
+
         }
 
         public static class Limelight {
@@ -93,6 +99,9 @@ public class RobotMap {
             public static final double HUB_HEIGHT = 101.0;
             public static final double ANGLE = 29.6375;
 
+            // Good shot distances
+            public static final double HIGH_GOAL_SHOT_DISTANCE = 5.8;
+            public static final double LOW_GOAL_SHOT_DISTANCE = 0.0; // untested
         }
     }
 
@@ -161,7 +170,7 @@ public class RobotMap {
             public static class DriveToLimelight {
 
                 public static final double KP = 0.08;
-                public static final double KI = 0;
+                public static final double KI = 0.005;
                 public static final double KD = 0;
 
             }
@@ -187,7 +196,7 @@ public class RobotMap {
             // PID constants for driving right side to position
             public static class RightDrivetrain {
 
-                public static final double KP = 0.015;
+                public static final double KP = 0.04;
                 public static final double KI = 0;
                 public static final double KD = 0;
 
@@ -209,6 +218,12 @@ public class RobotMap {
                 public static final double KI = 0;
                 public static final double KD = 0;
 
+            }
+
+            public static class TurnToAngleGyro {
+                public static final double KP = 0.01;
+                public static final double KI = 0;
+                public static final double KD = 0;
             }
         }
     }

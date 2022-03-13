@@ -12,8 +12,12 @@ public class OI {
     // Singleton Instance
     public static OI instance;
 
-    public static double speed = 2300;
+    public static double shooterSpeed = RobotMap.HIGH_GOAL_MODE ? RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM
+            : RobotMap.Subsystems.Shooter.LOW_GOAL_RPM;
     public static boolean shooterOn = false;
+
+    public static double driveDistance = RobotMap.HIGH_GOAL_MODE ? RobotMap.Subsystems.Limelight.HIGH_GOAL_SHOT_DISTANCE
+            : RobotMap.Subsystems.Limelight.LOW_GOAL_SHOT_DISTANCE;
 
     /**
      * Creates a Singleton for class OI. Use this whenever OI and it's methods need
@@ -38,8 +42,8 @@ public class OI {
         driver.bA.whenPressed(() -> Robot.intake.setUp());
         driver.bY.whenPressed(() -> Robot.intake.setDown());
 
-        // driver.dS.whileHeld(() -> Robot.drivetrain.goToTarget());
-        // driver.dS.whenReleased(() -> Robot.drivetrain.stop());
+        driver.dS.whileHeld(() -> Robot.drivetrain.driveToLimelight(driveDistance));
+        driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
         // Operator
 
@@ -76,11 +80,11 @@ public class OI {
         // operator.bY.whenPressed(() -> Robot.climber.lockExtend());
         // operator.bA.whenPressed(() -> Robot.climber.lockRetract());
 
-        operator.dE.whenReleased(() -> speed += 50);
-        operator.dW.whenReleased(() -> speed -= 50);
+        operator.dE.whenReleased(() -> shooterSpeed += 50);
+        operator.dW.whenReleased(() -> shooterSpeed -= 50);
 
         if (shooterOn) {
-            Robot.shooter.shoot(speed);
+            Robot.shooter.shoot(shooterSpeed);
         } else {
             Robot.shooter.stop();
         }
@@ -93,10 +97,12 @@ public class OI {
     public static void updateSmartDashboard() {
         SmartDashboard.putNumber("rpm", Robot.shooter.getVelocity());
         SmartDashboard.putBoolean("atTarget", Robot.shooter.speedOnTarget());
-        // SmartDashboard.putBoolean("gatekeeper", Robot.hopper.getGateKeeper());
+        SmartDashboard.putBoolean("gatekeeper", Robot.hopper.gatekeepersStatus());
         SmartDashboard.putNumber("distance", Robot.limelight.getDistance());
-        SmartDashboard.putNumber("speed", speed);
+        SmartDashboard.putNumber("speed", shooterSpeed);
         SmartDashboard.putBoolean("shooterOn", shooterOn);
         SmartDashboard.putNumber("limelightDistance", Robot.limelight.getDistance());
+        SmartDashboard.putNumber("pressure", Robot.pressureSensor.getPressure());
+        SmartDashboard.putNumber("gyroAngle", Robot.gyro.getAngle());
     }
 }

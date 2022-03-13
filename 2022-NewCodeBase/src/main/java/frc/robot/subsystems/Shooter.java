@@ -89,7 +89,7 @@ public class Shooter {
     /**
      * Stops the shooter
      */
-    public void stop(){
+    public void stop() {
         setSpeed(0);
     }
 
@@ -113,12 +113,4 @@ public class Shooter {
         double calcSpeed = 2064 * Math.pow(Math.E, 0.0264 * distance);
         return calcSpeed;
     }
-
-    /**
-     * Stops the shooter.
-     */
-    public void stop() {
-        setSpeed(0);
-    }
-
 }

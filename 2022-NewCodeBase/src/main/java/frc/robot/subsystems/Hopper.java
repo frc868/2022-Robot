@@ -86,4 +86,11 @@ public class Hopper {
         h_primary.set(0);
     }
 
+    /**
+     * Gets the status of the gatekeepers.
+     */
+    public boolean gatekeepersStatus() {
+        return gatekeepers.get() == Value.kForward;
+    }
+
 }

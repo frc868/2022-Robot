@@ -13,6 +13,8 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Climber;
+import frc.robot.sensors.PressureSensor;
+import frc.robot.sensors.Gyro;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,6 +34,8 @@ public class Robot extends TimedRobot {
   public static Intake intake = Intake.getInstance();
   public static Climber climber = Climber.getInstance();
   public static AutonChooser autonChooser = AutonChooser.getInstance();
+  public static PressureSensor pressureSensor = PressureSensor.getInstance();
+  public static Gyro gyro = Gyro.getInstance();
 
   /**
    * This function is run when the robot is first started up and should be used
@@ -58,6 +62,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    drivetrain.reset();
+    gyro.resetAngle();
   }
 
   @Override
