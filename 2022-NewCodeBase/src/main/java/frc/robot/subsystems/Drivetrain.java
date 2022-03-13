@@ -35,8 +35,8 @@ public class Drivetrain {
         l_primary.setInverted(RobotMap.Subsystems.Drivetrain.LEFT_IS_INVERTED);
 
         // Max acceleration
-        r_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.TIME);
-        l_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.TIME);
+        r_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
+        l_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
 
         // PID controller instantiation
         turnToLimelightPID = new PIDController(RobotMap.PIDConstants.Drivetrain.TurnToLimelight.KP,

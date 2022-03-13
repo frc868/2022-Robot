@@ -19,8 +19,8 @@ public class RobotMap {
             public static final boolean RIGHT_IS_INVERTED = false;
             public static final boolean LEFT_IS_INVERTED = true;
 
-            // Max accleration
-            public static final double TIME = 0.8;
+            // Max accleration (time in seconds to go from zero to full throttle)
+            public static final double MAX_ACCEL_RATE = 0.8;
 
         }
 
