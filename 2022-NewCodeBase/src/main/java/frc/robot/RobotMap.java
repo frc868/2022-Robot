@@ -157,69 +157,112 @@ public class RobotMap {
 
         public static class Drivetrain {
 
-            // PID constants for turning to limelight
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be retuned this week.
+             */
             public static class TurnToLimelight {
-
                 public static final double KP = 0.022;
                 public static final double KI = 0.00;
                 public static final double KD = 0.0006;
-
             }
 
-            // PID constants for driving to limelight
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be re-tuned this week.
+             */
             public static class DriveToLimelight {
-
                 public static final double KP = 0.08;
                 public static final double KI = 0.005;
                 public static final double KD = 0;
-
             }
 
-            // PID constants for turning to Astra
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be re-tuned this week.
+             */
             public static class TurnToAstra {
-
                 public static final double KP = 0;
                 public static final double KI = 0;
                 public static final double KD = 0;
-
             }
 
-            // PID constants for driving to Astra
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be re-tuned this week.
+             */
             public static class DriveToAstra {
-
                 public static final double KP = 0.08;
                 public static final double KI = 0;
                 public static final double KD = 0;
-
             }
 
-            // PID constants for driving right side to position
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be re-tuned this week.
+             */
             public static class RightDrivetrain {
-
                 public static final double KP = 0.04;
                 public static final double KI = 0;
                 public static final double KD = 0;
-
             }
 
-            // PID constants for driving right side to position
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be re-tuned this week.
+             */
             public static class LeftDrivetrain {
-
                 public static final double KP = 0.04;
                 public static final double KI = 0;
                 public static final double KD = 0;
-
             }
 
-            // PID constants for driving straight
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be re-tuned this week.
+             */
             public static class DriveStraight {
-
                 public static final double KP = 0.01;
                 public static final double KI = 0;
                 public static final double KD = 0;
-
             }
 
+            /**
+             * Tuning data
+             * Date:
+             * Location:
+             * Resting voltage:
+             * Working voltage:
+             * Notes: This will be re-tuned this week.
+             */
             public static class TurnToAngleGyro {
                 public static final double KP = 0.01;
                 public static final double KI = 0;
