@@ -20,14 +20,14 @@ public class RobotMap {
             public static final boolean LEFT_IS_INVERTED = true;
 
             // Max accleration (time in seconds to go from zero to full throttle)
-            public static final double MAX_ACCEL_RATE = 0.8;
+            public static final double MAX_ACCEL_RATE = 0.6;
 
         }
 
         public static class Gyro {
 
-            // SPI port logic
-            public static final Port GYRO = SPI.Port.kMXP;
+            // SPI port that the gyro is on
+            public static final int PORT = 0;
 
         }
 
@@ -139,20 +139,16 @@ public class RobotMap {
 
         // PID constansts for climber
         public static class Climber {
-
             public static final double KP = 0.01;
             public static final double KI = 0;
             public static final double KD = 0;
-
         }
 
         // PID constants for shooter
         public static class Shooter {
-
             public static final double KP = 0.00055;
             public static final double KI = 0.0023;
             public static final double KD = 0.00005;
-
         }
 
         public static class Drivetrain {

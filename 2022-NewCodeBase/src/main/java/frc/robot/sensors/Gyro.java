@@ -1,14 +1,11 @@
 package frc.robot.sensors;
 
-import com.kauailabs.navx.frc.AHRS;
 import frc.robot.RobotMap;
-
-import edu.wpi.first.wpilibj.SPI;
-// import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.AnalogGyro;
 
 public class Gyro {
-    private static Gyro instance = null; // Instance of Gyro class for getInstance
-    private AHRS gyro; // Instance of the NavX, used for Gyro reporting
+    private static Gyro instance = null;
+    private AnalogGyro gyro; // Instance of the NavX, used for Gyro reporting
 
     /**
      * This is the constructor for our Gyro class. It is private because
@@ -16,7 +13,8 @@ public class Gyro {
      * the getInstance() method.
      */
     private Gyro() {
-        gyro = new AHRS(SPI.Port.kMXP);
+        gyro = new AnalogGyro(RobotMap.Subsystems.Gyro.PORT);
+        gyro.calibrate();
     }
 
     /**
@@ -34,7 +32,7 @@ public class Gyro {
      * Gets the current angle of the gyro.
      */
     public double getAngle() {
-        return gyro.getYaw();
+        return gyro.getAngle();
     }
 
     /**
