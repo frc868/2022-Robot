@@ -66,6 +66,9 @@ public class Drivetrain {
         leftSidePID.setTolerance(0.25);
         driveStraightPID.setTolerance(0.25);
 
+        r_primary.getEncoder().setPositionConversionFactor(0.181348469499);
+        l_primary.getEncoder().setPositionConversionFactor(0.181348469499);
+
     }
 
     /**
@@ -107,9 +110,7 @@ public class Drivetrain {
      * @return current distance traveled, in ft, since last reset for right side
      */
     public double getRightPosition() {
-        double calcDistance = (r_primary.getEncoder().getPosition() * 3 * (24 / 50)) / 12; // 6 inch wheel diameter,
-                                                                                           // 24/50 gear reduction
-        return calcDistance;
+        return -1 * r_primary.getEncoder().getPosition();
     }
 
     /**
@@ -118,9 +119,9 @@ public class Drivetrain {
      * @return current distance traveled, in ft, since last reset for left side
      */
     public double getLeftPosition() {
-        double calcDistance = (l_primary.getEncoder().getPosition() * 3 * (24 / 50)) / 12; // 6 inch wheel diameter
-        return calcDistance;
+        return -1 * l_primary.getEncoder().getPosition();
     }
+    
 
     /**
      * Resets the Drivetrain
@@ -292,6 +293,26 @@ public class Drivetrain {
     public void stop() {
         setRightSpeed(0);
         setLeftSpeed(0);
+    }
+    
+    public void driveStraightRight(double target, double maxPower, double smoothnessFactor){
+        double distanceToTarget = Math.abs(target) - Math.abs(getRightPosition());
+        double calcSpeed = Math.log(distanceToTarget + 1) / Math.log(smoothnessFactor);
+        calcSpeed = calcSpeed * maxPower;
+        if(target > 0){
+            calcSpeed = calcSpeed * -1;
+        }
+        setRightSpeed(calcSpeed);
+    }
+
+    public void driveStraightLeft(double target, double maxPower, double smoothnessFactor){
+        double distanceToTarget = Math.abs(target) - Math.abs(getLeftPosition());
+        double calcSpeed = Math.log(distanceToTarget + 1) / Math.log(smoothnessFactor);
+        calcSpeed = calcSpeed * maxPower;
+        if(target > 0){
+            calcSpeed = calcSpeed * -1;
+        }
+        setLeftSpeed(calcSpeed);
     }
 
 }
