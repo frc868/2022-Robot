@@ -44,4 +44,8 @@ public class AutonChooser {
         return chooser.getSelected();
     }
 
+    public void reset(){
+        chooser.getSelected().reset();
+    }
+
 }

@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-
+    autonChooser.reset();
   }
 
   @Override
@@ -70,6 +70,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     OI.updateOI();
     OI.updateSmartDashboard();
+    System.out.println(drivetrain.getRightPosition() + " " + drivetrain.getLeftPosition());
   }
 
   @Override

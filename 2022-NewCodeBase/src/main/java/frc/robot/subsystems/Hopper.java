@@ -93,4 +93,8 @@ public class Hopper {
         return gatekeepers.get() == Value.kForward;
     }
 
+    public double getPosition(){
+        return h_primary.getEncoder().getPosition();
+    }
+
 }

@@ -113,4 +113,13 @@ public class Shooter {
         double calcSpeed = 2064 * Math.pow(Math.E, 0.0264 * distance);
         return calcSpeed;
     }
+
+    public double getPosition(){
+        return s_primary.getEncoder().getPosition();
+    }
+
+    public void setShooterPosition(double position){
+        s_primary.getEncoder().setPosition(position);
+    }
+
 }

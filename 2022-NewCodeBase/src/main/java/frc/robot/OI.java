@@ -39,10 +39,10 @@ public class OI {
         Robot.drivetrain.tankDrive(1);
         // Driver
 
-        driver.bA.whenPressed(() -> Robot.intake.setUp());
-        driver.bY.whenPressed(() -> Robot.intake.setDown());
+        driver.bA.whenPressed(() -> Robot.intake.setDown());
+        driver.bY.whenPressed(() -> Robot.intake.setUp());
 
-        driver.dS.whileHeld(() -> Robot.drivetrain.driveToLimelight(driveDistance));
+        driver.dS.whileHeld(() -> Robot.drivetrain.driveToLimelight(5.3));
         driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
         // Operator
@@ -107,5 +107,6 @@ public class OI {
         SmartDashboard.putNumber("limelightDistance", Robot.limelight.getDistance());
         SmartDashboard.putNumber("pressure", Robot.pressureSensor.getPressure());
         SmartDashboard.putNumber("gyroAngle", Robot.gyro.getAngle());
+        SmartDashboard.putNumber("left", Robot.drivetrain.getLeftPosition());
     }
 }
