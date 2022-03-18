@@ -75,6 +75,9 @@ public class OI {
         operator.dN.whileHeld(() -> Robot.drivetrain.turnToLimelight());
         operator.dN.whenReleased(() -> Robot.drivetrain.stop());
 
+        operator.dS.whileHeld(() -> Robot.drivetrain.turnToAstra());
+        operator.dS.whenReleased(() -> Robot.drivetrain.stop());
+
         Robot.climber.setSpeed(1 * operator.getLY());
 
         // operator.bY.whenPressed(() -> Robot.climber.lockExtend());
