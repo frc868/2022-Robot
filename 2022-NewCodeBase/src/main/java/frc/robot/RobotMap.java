@@ -20,7 +20,7 @@ public class RobotMap {
             public static final boolean LEFT_IS_INVERTED = true;
 
             // Max accleration (time in seconds to go from zero to full throttle)
-            public static final double MAX_ACCEL_RATE = 0.6;
+            public static final double MAX_ACCEL_RATE = 0.4;
 
         }
 
@@ -190,7 +190,7 @@ public class RobotMap {
              * Notes: This will be re-tuned this week.
              */
             public static class TurnToAstra {
-                public static final double KP = 0;
+                public static final double KP = 0.08;
                 public static final double KI = 0;
                 public static final double KD = 0;
             }
@@ -218,7 +218,7 @@ public class RobotMap {
              * Notes: This will be re-tuned this week.
              */
             public static class RightDrivetrain {
-                public static final double KP = 0.04;
+                public static final double KP = 0.08;
                 public static final double KI = 0;
                 public static final double KD = 0;
             }
