@@ -42,7 +42,7 @@ public class OI {
         driver.bA.whenPressed(() -> Robot.intake.setDown());
         driver.bY.whenPressed(() -> Robot.intake.setUp());
 
-        driver.dS.whileHeld(() -> Robot.drivetrain.driveToLimelight(5.3));
+        driver.dS.whileHeld(() -> Robot.drivetrain.driveToLimelight(driveDistance));
         driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
         // Operator
