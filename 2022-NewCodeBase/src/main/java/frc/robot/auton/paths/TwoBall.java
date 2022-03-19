@@ -56,18 +56,21 @@ public class TwoBall extends AutonPath {
 
             @Override
             public void execute() {
-                Robot.drivetrain.driveStraightRight(8, 0.25, 60);
+                Robot.drivetrain.driveStraightRight(11, 0.4, 60);
                 
-                Robot.drivetrain.driveStraightLeft(8, 0.25, 60);
+                Robot.drivetrain.driveStraightLeft(11, 0.4, 60);
+                Robot.intake.run();
                 System.out.println(Robot.drivetrain.getRightPosition() + " " + Robot.drivetrain.getLeftPosition());
             }
 
             @Override
             public AutonState nextState() {
-                if (!(Robot.drivetrain.getRightPosition() < 7.5) && !(Robot.drivetrain.getLeftPosition() < 7.5)) {
+                if (!(Robot.drivetrain.getRightPosition() < 10.5) && !(Robot.drivetrain.getLeftPosition() < 10.5)) {
                     Robot.drivetrain.stop();
+                    Robot.intake.stop();
+                    Robot.hopper.stop();
                     Robot.shooter.reset();
-                    return shooterUpToSpeedOne;
+                    return turnToGoal;
                 } else {
                     return this;
                 }
@@ -90,7 +93,7 @@ public class TwoBall extends AutonPath {
                     return this;
                 }
                 
-                return shooterUpToSpeedOne;
+                return driveToGoal;
             }
         },
         driveToGoal{
@@ -107,6 +110,9 @@ public class TwoBall extends AutonPath {
                 if(!Robot.drivetrain.driveToLimelightAtTarget()){
                     return this;
                 }
+                Robot.drivetrain.stop();
+                Robot.hopper.stop();
+                Robot.intake.stop();
                 return shooterUpToSpeedOne;
             }
         },
@@ -123,10 +129,11 @@ public class TwoBall extends AutonPath {
 
             @Override
             public AutonState nextState() {
-                if (Robot.shooter.getPosition() < 400) {
+                if (Robot.shooter.getPosition() < 100) {
                     return this;
                 } else {
                     Robot.hopper.gatekeepersIn();
+                    Robot.hopper.reset();
                     return feedBallOne;
                 }
             }
@@ -142,50 +149,11 @@ public class TwoBall extends AutonPath {
             }
             @Override
             public AutonState nextState(){
-                if(!Robot.shooter.speedOnTarget()){
+                if(Robot.hopper.getPosition() < 200){
                     return this;
                 }
                 Robot.shooter.reset();
-                return shooterUpToSpeedTwo;
-            }
-        },
-        shooterUpToSpeedTwo {
-            @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                System.out.println("shooting" +  Robot.shooter.getPosition());
-                Robot.shooter.shoot(2800);
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (Robot.shooter.getPosition() < 200) {
-                    return this;
-                } else {
-                    Robot.hopper.gatekeepersIn();
-                    return feedBallTwo;
-                }
-            }
-        },
-        feedBallTwo {
-            @Override
-            public void init(){
-
-            }
-            @Override
-            public void execute(){
-                Robot.hopper.run();
-            }
-            @Override
-            public AutonState nextState(){
-                if(!Robot.shooter.speedOnTarget()){
-                    return this;
-                }
-                Robot.shooter.stop();
-                return done;
+                return intakeUp;
             }
         },
         intakeUp {

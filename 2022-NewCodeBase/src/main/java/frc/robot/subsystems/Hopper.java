@@ -97,4 +97,8 @@ public class Hopper {
         return h_primary.getEncoder().getPosition();
     }
 
+    public void reset(){
+        h_primary.getEncoder().setPosition(0);
+    }
+
 }
