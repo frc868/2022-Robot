@@ -25,13 +25,10 @@ public class Robot extends TimedRobot {
   public static Intake intake = Intake.getInstance();
   public static Climber climber = Climber.getInstance();
   public static PressureSensor pressure = PressureSensor.getInstance();
-  private static Mat mat;
-  private static CvSink sink;
 
   @Override
   public void robotInit() {
     OI.updateSmartDashboard();
-    gyro.resetAngle();
   }
 
   @Override
