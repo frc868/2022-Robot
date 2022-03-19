@@ -100,7 +100,7 @@ public class RobotMap {
             public static final double ANGLE = 29.6375;
 
             // Good shot distances
-            public static final double HIGH_GOAL_SHOT_DISTANCE = 5.8;
+            public static final double HIGH_GOAL_SHOT_DISTANCE = 5.3;
             public static final double LOW_GOAL_SHOT_DISTANCE = 0.0; // untested
         }
     }
@@ -190,9 +190,9 @@ public class RobotMap {
              * Notes: This will be re-tuned this week.
              */
             public static class TurnToAstra {
-                public static final double KP = 0.08;
-                public static final double KI = 0;
-                public static final double KD = 0;
+                public static final double KP = 0.022;
+                public static final double KI = 0.00;
+                public static final double KD = 0.0006;
             }
 
             /**
