@@ -8,7 +8,7 @@ import frc.robot.auton.AutonPath;
 public class TwoBall extends AutonPath {
 
     private AutonState currentState = AutonState.intakeDown;
-    private static Timer timer = new Timer();
+    private static Timer timer;
 
     private enum AutonState {
         intakeDown {
@@ -31,7 +31,7 @@ public class TwoBall extends AutonPath {
         waitOneSecond {
             @Override
             public void init() {
-                timer.start();
+                timer.reset();
             }
 
             @Override
