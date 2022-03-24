@@ -37,7 +37,7 @@ public class BackupTwoBall extends AutonPath {
 
             @Override
             public void execute() {
-                // Nothing, just waiting for the timer to finish
+
             }
 
             @Override
@@ -58,21 +58,22 @@ public class BackupTwoBall extends AutonPath {
 
             @Override
             public void execute() {
-                Robot.drivetrain.driveStraightRight(8, 0.25, 60);
-                Robot.drivetrain.driveStraightLeft(8, 0.25, 60);
-                System.out.println(Robot.drivetrain.getRightPosition() + " " + Robot.drivetrain.getLeftPosition());
+                Robot.drivetrain.driveStraightRight(11, 0.4, 60);
+                Robot.drivetrain.driveStraightLeft(11, 0.4, 60);
+                Robot.intake.run();
             }
 
             @Override
             public AutonState nextState() {
-                if (!(Robot.drivetrain.getRightPosition() < 7.5) && !(Robot.drivetrain.getLeftPosition() < 7.5)) {
-                    Robot.drivetrain.stop();
-                    Robot.shooter.reset();
-                    return shooterUpToSpeedOne;
-                } else {
+                if ((Robot.drivetrain.getRightPosition() < 10.5) && (Robot.drivetrain.getLeftPosition() < 10.5)) {
                     return this;
+                } else {
+                    Robot.drivetrain.stop();
+                    Robot.intake.stop();
+                    Robot.hopper.stop();
+                    Robot.shooter.reset();
+                    return turnToGoal;
                 }
-
             }
         },
         turnToGoal {
@@ -89,9 +90,9 @@ public class BackupTwoBall extends AutonPath {
             public AutonState nextState() {
                 if (!Robot.drivetrain.turnToLimelightAtTarget()) {
                     return this;
+                } else {
+                    return driveToGoal;
                 }
-
-                return shooterUpToSpeedOne;
             }
         },
         driveToGoal {
@@ -109,30 +110,16 @@ public class BackupTwoBall extends AutonPath {
             public AutonState nextState() {
                 if (!Robot.drivetrain.driveToLimelightAtTarget()) {
                     return this;
+                } else {
+                    Robot.drivetrain.stop();
+                    Robot.hopper.stop();
+                    Robot.intake.stop();
+                    shooterUpToSpeed.init();
+                    return shooterUpToSpeed;
                 }
-                return shooterUpToSpeed;
             }
         },
         shooterUpToSpeed {
-            @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                Robot.shooter.shoot(RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM);
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (Robot.shooter.getPosition() < 400) {
-                    return this;
-                } else {
-                    return feedBallOne;
-                }
-            }
-        },
-        waitOneSecond2 {
             @Override
             public void init() {
                 timer.reset();
@@ -140,15 +127,17 @@ public class BackupTwoBall extends AutonPath {
 
             @Override
             public void execute() {
-                // Nothing, just waiting for the timer to finish
+                Robot.shooter.shoot(2800);
             }
 
             @Override
             public AutonState nextState() {
-                if (timer.get() < 1) {
+                if (timer.get() < 2) {
                     return this;
                 } else {
-                    return feedBallOne;
+                    Robot.hopper.reset();
+                    feedBalls.init();
+                    return feedBalls;
                 }
             }
         },
@@ -165,52 +154,11 @@ public class BackupTwoBall extends AutonPath {
 
             @Override
             public AutonState nextState() {
-                if (!Robot.shooter.speedOnTarget()) {
+                if (Robot.hopper.getPosition() < 200) {
                     return this;
                 }
                 Robot.shooter.reset();
-                return shooterUpToSpeedTwo;
-            }
-        },
-        shooterUpToSpeedTwo {
-            @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                System.out.println("shooting" + Robot.shooter.getPosition());
-                Robot.shooter.shoot(2800);
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (Robot.shooter.getPosition() < 200) {
-                    return this;
-                } else {
-                    Robot.hopper.gatekeepersIn();
-                    return feedBallTwo;
-                }
-            }
-        },
-        feedBallTwo {
-            @Override
-            public void init() {
-
-            }
-
-            @Override
-            public void execute() {
-                Robot.hopper.run();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.shooter.speedOnTarget()) {
-                    return this;
-                }
-                Robot.shooter.stop();
-                return done;
+                return intakeUp;
             }
         },
         intakeUp {
@@ -236,10 +184,8 @@ public class BackupTwoBall extends AutonPath {
 
             @Override
             public void execute() {
-                System.out.println("done");
-                Robot.drivetrain.setLeftSpeed(0);
-                Robot.drivetrain.setRightSpeed(0);
-                Robot.shooter.setSpeed(0);
+                Robot.drivetrain.stop();
+                Robot.shooter.stop();
                 Robot.hopper.stop();
             }
 
