@@ -1,5 +1,6 @@
 package frc.robot;
 
+import frc.robot.RobotMap.Subsystems.Shooter;
 import frc.robot.helpers.ControllerWrapper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -45,6 +46,13 @@ public class OI {
         driver.dS.whileHeld(() -> Robot.drivetrain.driveToLimelight(driveDistance));
         driver.dS.whenReleased(() -> Robot.drivetrain.stop());
 
+        driver.bB.whenPressed(() -> Robot.climber.lockExtend());
+        driver.bX.whenPressed(() -> Robot.climber.lockRetract());
+
+        driver.bSTART.whenPressed(() ->Robot.climber.setForward());
+        driver.bMENU.whenPressed(() -> Robot.climber.setReverse());
+        
+
         // Operator
 
         operator.bRB.whileHeld(() -> {
@@ -65,6 +73,10 @@ public class OI {
             Robot.intake.stop();
         });
 
+        operator.bSTART.whenPressed(() -> 
+            shooterSpeed = shooterSpeed == RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM ? RobotMap.Subsystems.Shooter.LOW_GOAL_RPM : RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM
+        );
+
         operator.bX.whenPressed(() -> Robot.hopper.gatekeepersOut());
         operator.bB.whenPressed(() -> Robot.hopper.gatekeepersIn());
 
@@ -77,6 +89,7 @@ public class OI {
 
         operator.dS.whileHeld(() -> Robot.drivetrain.turnToAstra());
         operator.dS.whenReleased(() -> Robot.drivetrain.stop());
+
 
         Robot.climber.setSpeed(1 * operator.getLY());
 
@@ -108,5 +121,7 @@ public class OI {
         SmartDashboard.putNumber("pressure", Robot.pressureSensor.getPressure());
         SmartDashboard.putNumber("gyroAngle", Robot.gyro.getAngle());
         SmartDashboard.putNumber("left", Robot.drivetrain.getLeftPosition());
+        SmartDashboard.putBoolean("lock", Robot.climber.getLock());
+        SmartDashboard.putNumber("shooter speed", shooterSpeed);
     }
 }

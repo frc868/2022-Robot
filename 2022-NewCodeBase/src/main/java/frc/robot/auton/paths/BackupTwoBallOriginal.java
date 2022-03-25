@@ -92,7 +92,7 @@ public class BackupTwoBallOriginal extends AutonPath {
                 if (!Robot.drivetrain.turnToLimelightAtTarget()) {
                     return this;
                 }
-
+                Robot.drivetrain.stop();
                 return driveToGoal;
             }
         },
@@ -104,7 +104,7 @@ public class BackupTwoBallOriginal extends AutonPath {
 
             @Override
             public void execute() {
-                Robot.drivetrain.driveToLimelight(5.3);
+                Robot.drivetrain.driveToLimelight(6.75);
             }
 
             @Override
@@ -115,6 +115,25 @@ public class BackupTwoBallOriginal extends AutonPath {
                 Robot.drivetrain.stop();
                 Robot.hopper.stop();
                 Robot.intake.stop();
+                return turnToGoalSecondTime;
+            }
+        },
+        turnToGoalSecondTime {
+            @Override
+            public void init() {
+            }
+
+            @Override
+            public void execute() {
+                Robot.drivetrain.turnToLimelight();
+            }
+
+            @Override
+            public AutonState nextState() {
+                if (!Robot.drivetrain.turnToLimelightAtTarget()) {
+                    return this;
+                }
+                Robot.drivetrain.stop();
                 return shooterUpToSpeedOne;
             }
         },

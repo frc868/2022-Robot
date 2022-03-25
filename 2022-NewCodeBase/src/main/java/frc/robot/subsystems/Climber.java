@@ -99,6 +99,10 @@ public class Climber {
         climber_lock.set(Value.kForward);
     }
 
+    public boolean getLock(){
+        return climber_lock.get() == Value.kReverse;
+    }
+
     /**
      * Drives the climber to target position
      * 
@@ -116,5 +120,13 @@ public class Climber {
      */
     public boolean speedOnTarget() {
         return climber_pid.atSetpoint();
+    }
+
+    public void setForward(){
+        climber_extend.set(Value.kForward);
+    }
+
+    public void setReverse(){
+        climber_extend.set(Value.kReverse);
     }
 }

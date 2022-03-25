@@ -88,7 +88,7 @@ public class RobotMap {
 
             // Good shot RPMs
             public static final double HIGH_GOAL_RPM = 2800.0;
-            public static final double LOW_GOAL_RPM = 0.0;
+            public static final double LOW_GOAL_RPM = 2150.0;
 
         }
 
@@ -100,7 +100,7 @@ public class RobotMap {
             public static final double ANGLE = 29.6375;
 
             // Good shot distances
-            public static final double HIGH_GOAL_SHOT_DISTANCE = 5.3;
+            public static final double HIGH_GOAL_SHOT_DISTANCE = 6.75;
             public static final double LOW_GOAL_SHOT_DISTANCE = 0.0; // untested
         }
     }

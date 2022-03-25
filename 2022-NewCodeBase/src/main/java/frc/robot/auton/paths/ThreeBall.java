@@ -24,8 +24,8 @@ public class ThreeBall extends AutonPath {
 
             @Override
             public AutonState nextState() {
-                waitOneSecond.init();
-                return waitOneSecond;
+                driveToBall.init();
+                return driveToBall;
             }
         },
         waitOneSecond {
@@ -44,33 +44,36 @@ public class ThreeBall extends AutonPath {
                 if (timer.get() < 1) {
                     return this;
                 } else {
-                    return driveToSecondBall;
+                    return driveToBall;
                 }
             }
         },
-        driveToSecondBall {
+        driveToBall {
             @Override
             public void init() {
+                Robot.drivetrain.reset();
             }
 
             @Override
             public void execute() {
-                Robot.drivetrain.driveToAstra();
+                Robot.drivetrain.driveStraightRight(8, 0.5, 60);
+                
+                Robot.drivetrain.driveStraightLeft(8, 0.5, 60);
                 Robot.intake.run();
-                Robot.hopper.run();
+                System.out.println(Robot.drivetrain.getRightPosition() + " " + Robot.drivetrain.getLeftPosition());
             }
 
             @Override
             public AutonState nextState() {
-                if (!Robot.drivetrain.driveToAstraAtTarget()) {
-                    return this;
-                } else {
+                if (!(Robot.drivetrain.getRightPosition() < 7.5) && !(Robot.drivetrain.getLeftPosition() < 7.5)) {
                     Robot.drivetrain.stop();
-                    Robot.hopper.stop();
+                    Robot.shooter.reset();
                     Robot.intake.stop();
-                    Robot.drivetrain.reset();
                     return turnToGoal;
+                } else {
+                    return this;
                 }
+
             }
         },
         turnToGoal {
@@ -88,131 +91,102 @@ public class ThreeBall extends AutonPath {
                 if (!Robot.drivetrain.turnToLimelightAtTarget()) {
                     return this;
                 }
-                return shootFirstAndSecondBalls;
+                
+                return driveToGoal;
             }
         },
-        shootFirstAndSecondBalls {
+        driveToGoal{
+            @Override
+            public void init(){
+
+            }
+            @Override
+            public void execute(){
+                Robot.drivetrain.driveToLimelight(5.3);
+            }
+            @Override
+            public AutonState nextState(){
+                if(!Robot.drivetrain.driveToLimelightAtTarget()){
+                    return this;
+                }
+                return shooterUpToSpeedOne;
+            }
+        },
+        shooterUpToSpeedOne {
             @Override
             public void init() {
             }
 
             @Override
             public void execute() {
-                Robot.shooter.shoot(Robot.shooter.calcSpeed());
+                System.out.println("shooting" +  Robot.shooter.getPosition());
+                Robot.shooter.shoot(2800);
             }
 
             @Override
             public AutonState nextState() {
-                if (!Robot.shooter.speedOnTarget()) {
+                if (Robot.shooter.getPosition() < 200) {
                     return this;
                 } else {
-                    return turnToRoughlyThirdBall;
+                    Robot.hopper.gatekeepersIn();
+                    return feedBallOne;
                 }
             }
         },
-        turnToRoughlyThirdBall {
+        feedBallOne {
             @Override
-            public void init() {
-            }
+            public void init(){
 
-            @Override
-            public void execute() {
-                // TODO: use navx for this
             }
-
             @Override
-            public AutonState nextState() {
-                return turnToAstraThirdBall;
+            public void execute(){
+                Robot.hopper.run();
+            }
+            @Override
+            public AutonState nextState(){
+                if(!Robot.shooter.speedOnTarget()){
+                    return this;
+                }
+                Robot.shooter.reset();
+                return shooterUpToSpeedTwo;
             }
         },
-        turnToAstraThirdBall {
+        shooterUpToSpeedTwo {
             @Override
             public void init() {
             }
 
             @Override
             public void execute() {
-                Robot.drivetrain.turnToAstra();
+                System.out.println("shooting" +  Robot.shooter.getPosition());
             }
 
             @Override
             public AutonState nextState() {
-                if (!Robot.drivetrain.turnToAstraAtTarget()) {
+                if (Robot.shooter.getPosition() < 200) {
                     return this;
                 } else {
-                    return driveToThirdBall;
+                    Robot.hopper.gatekeepersIn();
+                    return feedBallTwo;
                 }
             }
         },
-        driveToThirdBall {
+        feedBallTwo {
             @Override
-            public void init() {
-            }
+            public void init(){
 
-            @Override
-            public void execute() {
-                Robot.drivetrain.driveToAstra();
             }
-
             @Override
-            public AutonState nextState() {
-                if (!Robot.drivetrain.turnToAstraAtTarget()) {
-                    return this;
-                } else {
-                    return turnToRoughlyGoal;
-                }
+            public void execute(){
+                Robot.hopper.run();
             }
-        },
-        turnToRoughlyGoal {
             @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                // TODO: use navx
-            }
-
-            @Override
-            public AutonState nextState() {
-                return turnToGoal2;
-            }
-        },
-        turnToGoal2 {
-            @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                Robot.drivetrain.turnToLimelight();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.drivetrain.turnToLimelightAtTarget()) {
+            public AutonState nextState(){
+                if(!Robot.shooter.speedOnTarget()){
                     return this;
                 }
-                return shootThirdBall;
-            }
-        },
-        shootThirdBall {
-            @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                Robot.shooter.shoot(Robot.shooter.calcSpeed());
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.shooter.speedOnTarget()) {
-                    return this;
-                } else {
-                    return intakeUp;
-                }
+                Robot.shooter.stop();
+                return done;
             }
         },
         intakeUp {
@@ -233,10 +207,12 @@ public class ThreeBall extends AutonPath {
         done {
             @Override
             public void init() {
+
             }
 
             @Override
             public void execute() {
+                System.out.println("done");
                 Robot.drivetrain.setLeftSpeed(0);
                 Robot.drivetrain.setRightSpeed(0);
                 Robot.shooter.setSpeed(0);
@@ -247,7 +223,6 @@ public class ThreeBall extends AutonPath {
             public AutonState nextState() {
                 return this;
             }
-
         };
 
         public abstract void init();
@@ -271,6 +246,6 @@ public class ThreeBall extends AutonPath {
 
     @Override
     public String toString() {
-        return "ThreeBall";
+        return "TwoBall";
     }
 }

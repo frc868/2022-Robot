@@ -35,8 +35,8 @@ public class Drivetrain {
         l_primary.setInverted(RobotMap.Subsystems.Drivetrain.LEFT_IS_INVERTED);
 
         // Max acceleration
-        r_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
-        l_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
+      //  r_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
+      //  l_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
 
         // PID controller instantiation
         turnToLimelightPID = new PIDController(RobotMap.PIDConstants.Drivetrain.TurnToLimelight.KP,
@@ -168,8 +168,8 @@ public class Drivetrain {
      */
     public void driveStraight(double target) {
         double calcSpeed = driveStraightPID.calculate(getLeftPosition(), 0);
-        setLeftSpeed(calcSpeed);
-        setRightSpeed(calcSpeed);
+        setLeftSpeed(calcSpeed*0.80);
+        setRightSpeed(calcSpeed*0.80);
     }
 
     /**
