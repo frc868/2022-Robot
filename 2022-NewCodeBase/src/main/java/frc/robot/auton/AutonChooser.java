@@ -1,7 +1,7 @@
 package frc.robot.auton;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import frc.robot.auton.paths.BackupTwoBallOriginal;
+import frc.robot.auton.paths.TwoBallEncoders;
 
 public class AutonChooser {
     private static AutonChooser instance;
@@ -11,8 +11,8 @@ public class AutonChooser {
      * Constructor that defines each choosable path.
      */
     private AutonChooser() {
-        this.addPath("BackupTwoBallOriginal", new BackupTwoBallOriginal());
-        chooser.setDefaultOption("BackupTwoBallOriginal", new BackupTwoBallOriginal());
+        this.addPath("TwoBallEncoders", new TwoBallEncoders());
+        chooser.setDefaultOption("TwoBallEncoders", new TwoBallEncoders());
     }
 
     public static AutonChooser getInstance() {

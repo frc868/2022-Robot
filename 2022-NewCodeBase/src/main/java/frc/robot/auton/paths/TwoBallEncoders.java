@@ -5,7 +5,7 @@ import frc.robot.Robot;
 import frc.robot.auton.AutonMap;
 import frc.robot.auton.AutonPath;
 
-public class BackupTwoBallOriginal extends AutonPath {
+public class TwoBallEncoders extends AutonPath {
 
     private AutonState currentState = AutonState.intakeDown;
     private static Timer timer;
@@ -236,6 +236,6 @@ public class BackupTwoBallOriginal extends AutonPath {
 
     @Override
     public String toString() {
-        return "BackupTwoBallOriginal";
+        return "TwoBallEncoders";
     }
 }
