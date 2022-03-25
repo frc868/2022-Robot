@@ -12,7 +12,7 @@ public class AutonChooser {
      */
     private AutonChooser() {
         this.addPath("BackupTwoBallOriginal", new BackupTwoBallOriginal());
-        chooser.setDefaultOption("FirstPath", new BackupTwoBallOriginal());
+        chooser.setDefaultOption("BackupTwoBallOriginal", new BackupTwoBallOriginal());
     }
 
     public static AutonChooser getInstance() {
@@ -44,7 +44,7 @@ public class AutonChooser {
         return chooser.getSelected();
     }
 
-    public void reset(){
+    public void reset() {
         chooser.getSelected().reset();
     }
 

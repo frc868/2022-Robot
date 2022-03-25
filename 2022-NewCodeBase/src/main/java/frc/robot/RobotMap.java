@@ -190,9 +190,9 @@ public class RobotMap {
              * Notes: This will be re-tuned this week.
              */
             public static class TurnToAstra {
-                public static final double KP = 0.022;
-                public static final double KI = 0.00;
-                public static final double KD = 0.0006;
+                public static final double KP = 0.0022;
+                public static final double KI = 0;
+                public static final double KD = 0;
             }
 
             /**
