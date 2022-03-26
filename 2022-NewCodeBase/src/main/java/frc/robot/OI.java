@@ -37,7 +37,7 @@ public class OI {
      * Code to be called during TeleOp periodic
      */
     public static void updateOI() {
-        Robot.drivetrain.tankDrive(1);
+        Robot.drivetrain.tankDrive(0.8);
         // Driver
 
         driver.bA.whenPressed(() -> Robot.intake.setDown());
@@ -49,9 +49,8 @@ public class OI {
         driver.bB.whenPressed(() -> Robot.climber.lockExtend());
         driver.bX.whenPressed(() -> Robot.climber.lockRetract());
 
-        driver.bSTART.whenPressed(() ->Robot.climber.setForward());
+        driver.bSTART.whenPressed(() -> Robot.climber.setForward());
         driver.bMENU.whenPressed(() -> Robot.climber.setReverse());
-        
 
         // Operator
 
@@ -73,9 +72,9 @@ public class OI {
             Robot.intake.stop();
         });
 
-        operator.bSTART.whenPressed(() -> 
-            shooterSpeed = shooterSpeed == RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM ? RobotMap.Subsystems.Shooter.LOW_GOAL_RPM : RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM
-        );
+        operator.bSTART.whenPressed(() -> shooterSpeed = shooterSpeed == RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM
+                ? RobotMap.Subsystems.Shooter.LOW_GOAL_RPM
+                : RobotMap.Subsystems.Shooter.HIGH_GOAL_RPM);
 
         operator.bX.whenPressed(() -> Robot.hopper.gatekeepersOut());
         operator.bB.whenPressed(() -> Robot.hopper.gatekeepersIn());
@@ -89,7 +88,6 @@ public class OI {
 
         operator.dS.whileHeld(() -> Robot.drivetrain.turnToAstra());
         operator.dS.whenReleased(() -> Robot.drivetrain.stop());
-
 
         Robot.climber.setSpeed(1 * operator.getLY());
 

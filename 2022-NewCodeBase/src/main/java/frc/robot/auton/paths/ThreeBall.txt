@@ -1,0 +1,20 @@
+Starting: Intake up, hopper gatekeepers out
+
+intakeDown
+waitOneSecond
+driveToSecondBall
+turnToGoal
+driveToGoal
+turnToGoalAgain
+shooterUpToSpeed
+feedFirstAndSecondBalls
+turnToRoughlyThirdBall
+turnToAstraThirdBall
+driveToThirdBall
+turnToRoughlyGoal
+turnToGoal
+driveToGoal
+turnToGoalAgain
+shooterUpToSpeed
+feedThirdAndFourthBall
+intakeUp

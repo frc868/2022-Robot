@@ -35,8 +35,8 @@ public class Drivetrain {
         l_primary.setInverted(RobotMap.Subsystems.Drivetrain.LEFT_IS_INVERTED);
 
         // Max acceleration
-      //  r_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
-      //  l_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
+        // r_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
+        // l_primary.setOpenLoopRampRate(RobotMap.Subsystems.Drivetrain.MAX_ACCEL_RATE);
 
         // PID controller instantiation
         turnToLimelightPID = new PIDController(RobotMap.PIDConstants.Drivetrain.TurnToLimelight.KP,
@@ -60,8 +60,8 @@ public class Drivetrain {
                 RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KD);
 
         // Setpoint tolerances
-        turnToLimelightPID.setTolerance(0.5);
-        driveToLimelightPID.setTolerance(0.5);
+        turnToLimelightPID.setTolerance(0.7);
+        driveToLimelightPID.setTolerance(0.55);
         rightSidePID.setTolerance(0.25);
         leftSidePID.setTolerance(0.25);
         driveStraightPID.setTolerance(0.25);
@@ -121,7 +121,6 @@ public class Drivetrain {
     public double getLeftPosition() {
         return -1 * l_primary.getEncoder().getPosition();
     }
-    
 
     /**
      * Resets the Drivetrain
@@ -168,8 +167,8 @@ public class Drivetrain {
      */
     public void driveStraight(double target) {
         double calcSpeed = driveStraightPID.calculate(getLeftPosition(), 0);
-        setLeftSpeed(calcSpeed*0.80);
-        setRightSpeed(calcSpeed*0.80);
+        setLeftSpeed(calcSpeed * 0.80);
+        setRightSpeed(calcSpeed * 0.80);
     }
 
     /**
@@ -198,6 +197,7 @@ public class Drivetrain {
      */
     public void driveToLimelight(double distance) {
         double calcSpeed = -driveToLimelightPID.calculate(Robot.limelight.getDistance(), distance);
+        calcSpeed *= 0.6;
         setLeftSpeed(calcSpeed);
         setRightSpeed(calcSpeed);
     }
@@ -294,22 +294,22 @@ public class Drivetrain {
         setRightSpeed(0);
         setLeftSpeed(0);
     }
-    
-    public void driveStraightRight(double target, double maxPower, double smoothnessFactor){
+
+    public void driveStraightRight(double target, double maxPower, double smoothnessFactor) {
         double distanceToTarget = Math.abs(target) - Math.abs(getRightPosition());
         double calcSpeed = Math.log(distanceToTarget + 1) / Math.log(smoothnessFactor);
         calcSpeed = calcSpeed * maxPower;
-        if(target > 0){
+        if (target > 0) {
             calcSpeed = calcSpeed * -1;
         }
         setRightSpeed(calcSpeed);
     }
 
-    public void driveStraightLeft(double target, double maxPower, double smoothnessFactor){
+    public void driveStraightLeft(double target, double maxPower, double smoothnessFactor) {
         double distanceToTarget = Math.abs(target) - Math.abs(getLeftPosition());
         double calcSpeed = Math.log(distanceToTarget + 1) / Math.log(smoothnessFactor);
         calcSpeed = calcSpeed * maxPower;
-        if(target > 0){
+        if (target > 0) {
             calcSpeed = calcSpeed * -1;
         }
         setLeftSpeed(calcSpeed);

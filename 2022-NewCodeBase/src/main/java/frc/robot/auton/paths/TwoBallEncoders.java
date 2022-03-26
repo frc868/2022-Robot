@@ -105,6 +105,7 @@ public class TwoBallEncoders extends AutonPath {
             @Override
             public void execute() {
                 Robot.drivetrain.driveToLimelight(6.75);
+                Robot.shooter.shoot(2800);
             }
 
             @Override
@@ -112,51 +113,13 @@ public class TwoBallEncoders extends AutonPath {
                 if (!Robot.drivetrain.driveToLimelightAtTarget()) {
                     return this;
                 }
+
                 Robot.drivetrain.stop();
                 Robot.hopper.stop();
                 Robot.intake.stop();
-                return turnToGoalSecondTime;
-            }
-        },
-        turnToGoalSecondTime {
-            @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                Robot.drivetrain.turnToLimelight();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.drivetrain.turnToLimelightAtTarget()) {
-                    return this;
-                }
-                Robot.drivetrain.stop();
-                return shooterUpToSpeedOne;
-            }
-        },
-        shooterUpToSpeedOne {
-            @Override
-            public void init() {
-            }
-
-            @Override
-            public void execute() {
-                System.out.println("shooting" + Robot.shooter.getPosition());
-                Robot.shooter.shoot(2800);
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (Robot.shooter.getPosition() < 100) {
-                    return this;
-                } else {
-                    Robot.hopper.gatekeepersIn();
-                    Robot.hopper.reset();
-                    return feedBallOne;
-                }
+                Robot.hopper.gatekeepersIn();
+                Robot.hopper.reset();
+                return feedBallOne;
             }
         },
         feedBallOne {
@@ -172,7 +135,7 @@ public class TwoBallEncoders extends AutonPath {
 
             @Override
             public AutonState nextState() {
-                if (Robot.hopper.getPosition() < 200) {
+                if (Robot.hopper.getPosition() < 300) {
                     return this;
                 }
                 Robot.shooter.reset();
