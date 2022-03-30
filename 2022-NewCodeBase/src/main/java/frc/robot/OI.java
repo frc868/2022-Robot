@@ -2,6 +2,7 @@ package frc.robot;
 
 import frc.robot.RobotMap.Subsystems.Shooter;
 import frc.robot.helpers.ControllerWrapper;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class OI {
@@ -94,9 +95,10 @@ public class OI {
         // operator.bY.whenPressed(() -> Robot.climber.lockExtend());
         // operator.bA.whenPressed(() -> Robot.climber.lockRetract());
 
-        operator.dE.whenReleased(() -> shooterSpeed += 50);
-        operator.dW.whenReleased(() -> shooterSpeed -= 50);
+        operator.dE.whenReleased(() -> shooterSpeed += 10);
+        operator.dW.whenReleased(() -> shooterSpeed -= 10);
 
+        shooterSpeed = Robot.shooter.calcSpeed();
         if (shooterOn) {
             Robot.shooter.shoot(shooterSpeed);
         } else {
@@ -113,13 +115,36 @@ public class OI {
         SmartDashboard.putBoolean("atTarget", Robot.shooter.speedOnTarget());
         SmartDashboard.putBoolean("gatekeeper", Robot.hopper.gatekeepersStatus());
         SmartDashboard.putNumber("distance", Robot.limelight.getDistance());
-        SmartDashboard.putNumber("speed", shooterSpeed);
+        SmartDashboard.putNumber("shooterSpeed", shooterSpeed);
         SmartDashboard.putBoolean("shooterOn", shooterOn);
         SmartDashboard.putNumber("limelightDistance", Robot.limelight.getDistance());
         SmartDashboard.putNumber("pressure", Robot.pressureSensor.getPressure());
         SmartDashboard.putNumber("gyroAngle", Robot.gyro.getAngle());
+        SmartDashboard.putNumber("gyropitch", Robot.gyro.getPitch());
+        SmartDashboard.putNumber("gyroyaw", Robot.gyro.getYaw());
+        SmartDashboard.putNumber("gyroroll", Robot.gyro.getRoll());
         SmartDashboard.putNumber("left", Robot.drivetrain.getLeftPosition());
+        SmartDashboard.putNumber("right", Robot.drivetrain.getRightPosition());
         SmartDashboard.putBoolean("lock", Robot.climber.getLock());
         SmartDashboard.putNumber("shooter speed", shooterSpeed);
     }
+
+    /**
+     * Update SD to allow for PID tuning, this should only be called in testInit
+     */
+    public static void pidAdjustInit(PIDController pidController) {
+        SmartDashboard.putNumber("kpAdjuster", pidController.getP());
+        SmartDashboard.putNumber("kIAdjuster", pidController.getI());
+        SmartDashboard.putNumber("kDAdjuster", pidController.getD());
+    }
+
+    /**
+     * Update SD to allow for PID tuning, this should only be called in testPeriodic
+     */
+    public static void pidAdjust(PIDController pidController) {
+        pidController.setP(SmartDashboard.getNumber("kpAdjuster", pidController.getP()));
+        pidController.setI(SmartDashboard.getNumber("kIAdjuster", pidController.getI()));
+        pidController.setD(SmartDashboard.getNumber("kDAdjuster", pidController.getD()));
+    }
+
 }
