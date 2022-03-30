@@ -56,19 +56,20 @@ public class TwoBallEncoders extends AutonPath {
 
             @Override
             public void execute() {
-                Robot.drivetrain.driveStraightRight(11, 0.4, 60);
+                Robot.drivetrain.driveStraightRight(7.1, 0.4, 60);
 
-                Robot.drivetrain.driveStraightLeft(11, 0.4, 60);
+                Robot.drivetrain.driveStraightLeft(7.1, 0.4, 60);
                 Robot.intake.run();
                 System.out.println(Robot.drivetrain.getRightPosition() + " " + Robot.drivetrain.getLeftPosition());
             }
 
             @Override
             public AutonState nextState() {
-                if (!(Robot.drivetrain.getRightPosition() < 10.5) && !(Robot.drivetrain.getLeftPosition() < 10.5)) {
+                if (!(Robot.drivetrain.getRightPosition() < 6.7) && !(Robot.drivetrain.getLeftPosition() < 6.7)) {
                     Robot.drivetrain.stop();
                     Robot.intake.stop();
                     Robot.hopper.stop();
+                    Robot.hopper.reset();
                     Robot.shooter.reset();
                     return turnToGoal;
                 } else {
@@ -93,33 +94,29 @@ public class TwoBallEncoders extends AutonPath {
                     return this;
                 }
                 Robot.drivetrain.stop();
-                return driveToGoal;
+                return shooterUpToSpeedOne;
             }
         },
-        driveToGoal {
+        shooterUpToSpeedOne {
             @Override
             public void init() {
-
             }
 
             @Override
             public void execute() {
-                Robot.drivetrain.driveToLimelight(6.75);
-                Robot.shooter.shoot(2800);
+                System.out.println("shooting" + Robot.shooter.getPosition());
+                Robot.shooter.shoot(Robot.shooter.calcSpeed());
             }
 
             @Override
             public AutonState nextState() {
-                if (!Robot.drivetrain.driveToLimelightAtTarget()) {
+                if (Robot.shooter.getPosition() < 100) {
                     return this;
+                } else {
+                    Robot.hopper.gatekeepersIn();
+                    Robot.hopper.reset();
+                    return feedBallOne;
                 }
-
-                Robot.drivetrain.stop();
-                Robot.hopper.stop();
-                Robot.intake.stop();
-                Robot.hopper.gatekeepersIn();
-                Robot.hopper.reset();
-                return feedBallOne;
             }
         },
         feedBallOne {
@@ -150,6 +147,7 @@ public class TwoBallEncoders extends AutonPath {
             @Override
             public void execute() {
                 Robot.intake.setUp();
+                Robot.hopper.gatekeepersOut();
             }
 
             @Override
