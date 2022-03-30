@@ -2,6 +2,7 @@ package frc.robot.auton;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.auton.paths.TwoBallEncoders;
+import frc.robot.auton.paths.ThreeBall;
 
 public class AutonChooser {
     private static AutonChooser instance;
@@ -12,7 +13,9 @@ public class AutonChooser {
      */
     private AutonChooser() {
         this.addPath("TwoBallEncoders", new TwoBallEncoders());
-        chooser.setDefaultOption("TwoBallEncoders", new TwoBallEncoders());
+        this.addPath("ThreeBall", new ThreeBall());
+        chooser.setDefaultOption("ThreeBall", new ThreeBall());
+
     }
 
     public static AutonChooser getInstance() {
