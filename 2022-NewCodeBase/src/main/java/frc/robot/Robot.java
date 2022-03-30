@@ -59,19 +59,23 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     autonChooser.runSelectedPath();
+    OI.updateSmartDashboard();
   }
 
   @Override
   public void teleopInit() {
     drivetrain.reset();
     gyro.resetAngle();
+    Robot.gyro.resetAngle();
+    OI.pidAdjustInit(Robot.drivetrain.getTurnToLimelightPID());
   }
 
   @Override
   public void teleopPeriodic() {
     OI.updateOI();
     OI.updateSmartDashboard();
-    System.out.println(drivetrain.getRightPosition() + " " + drivetrain.getLeftPosition());
+    OI.pidAdjust(Robot.drivetrain.getTurnToLimelightPID());
+
   }
 
   @Override
@@ -84,13 +88,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    // drivetrain.reset();
     drivetrain.reset();
+    gyro.resetAngle();
+    OI.pidAdjustInit(Robot.drivetrain.getTurnToLimelightPID());
   }
 
   @Override
   public void testPeriodic() {
-    SmartDashboard.putNumber("left", drivetrain.getLeftPosition());
-    SmartDashboard.putNumber("right", drivetrain.getRightPosition());
+    OI.updateOI();
+    // OI.updateOI();
+    OI.updateSmartDashboard();
   }
 
   @Override
