@@ -109,16 +109,18 @@ public class Shooter {
      * @return the RPM with which to spin the shooter at
      */
     public double calcSpeed() {
+        // R^2 = 0.987
+        // 5017 + -735x + 76.8x^2 + -2.4x^3
         double distance = Robot.limelight.getDistance();
-        double calcSpeed = 2064 * Math.pow(Math.E, 0.0264 * distance);
+        double calcSpeed = 5017 + (-735 * distance) + (76.8 * Math.pow(distance, 2)) + (-2.4 * Math.pow(distance, 3));
         return calcSpeed;
     }
 
-    public double getPosition(){
+    public double getPosition() {
         return s_primary.getEncoder().getPosition();
     }
 
-    public void setShooterPosition(double position){
+    public void setShooterPosition(double position) {
         s_primary.getEncoder().setPosition(position);
     }
 
