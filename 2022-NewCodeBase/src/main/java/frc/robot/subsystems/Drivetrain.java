@@ -68,7 +68,6 @@ public class Drivetrain {
 
         r_primary.getEncoder().setPositionConversionFactor(0.181348469499);
         l_primary.getEncoder().setPositionConversionFactor(0.181348469499);
-
     }
 
     /**
@@ -185,6 +184,7 @@ public class Drivetrain {
      */
     public void turnToAstra() {
         double calcSpeed = -turnToAstraPID.calculate(Robot.astra.getTx(0), 0);
+        calcSpeed *= 0.8;
         setLeftSpeed(-calcSpeed);
         setRightSpeed(calcSpeed);
     }
@@ -313,6 +313,10 @@ public class Drivetrain {
             calcSpeed = calcSpeed * -1;
         }
         setLeftSpeed(calcSpeed);
+    }
+
+    public PIDController getTurnToLimelightPID() {
+        return this.turnToLimelightPID;
     }
 
 }
