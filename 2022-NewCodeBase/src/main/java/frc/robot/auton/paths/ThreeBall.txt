@@ -18,3 +18,7 @@ turnToGoalAgain
 shooterUpToSpeed
 feedThirdAndFourthBall
 intakeUp
+
+// 7.39 for third ball drive distance
+// 1.27 left, -1.22 right encoder for turn
+// -67.68 navx for turn

@@ -43,7 +43,7 @@ public class Hopper {
      * Sets the gatekeepers to the in position (where they are holding the ball)
      */
     public void gatekeepersIn() {
-        gatekeepers.set(Value.kForward); // TODO: check whether this is in or out
+        gatekeepers.set(Value.kForward);
     }
 
     /**
@@ -93,11 +93,11 @@ public class Hopper {
         return gatekeepers.get() == Value.kForward;
     }
 
-    public double getPosition(){
+    public double getPosition() {
         return h_primary.getEncoder().getPosition();
     }
 
-    public void reset(){
+    public void reset() {
         h_primary.getEncoder().setPosition(0);
     }
 
