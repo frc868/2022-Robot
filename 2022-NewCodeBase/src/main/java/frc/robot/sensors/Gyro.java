@@ -1,10 +1,7 @@
 package frc.robot.sensors;
 
-import frc.robot.RobotMap;
-
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.SerialPort;
 
 public class Gyro {

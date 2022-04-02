@@ -1,8 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SPI.Port;
-
 public class RobotMap {
     public static final boolean HIGH_GOAL_MODE = true;
 

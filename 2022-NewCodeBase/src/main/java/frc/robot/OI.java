@@ -1,6 +1,5 @@
 package frc.robot;
 
-import frc.robot.RobotMap.Subsystems.Shooter;
 import frc.robot.helpers.ControllerWrapper;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

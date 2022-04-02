@@ -6,7 +6,6 @@ package frc.robot.auton.paths;
 
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
-import frc.robot.auton.AutonMap;
 import frc.robot.auton.AutonPath;
 
 public class FourBall extends AutonPath {
