@@ -44,11 +44,7 @@ public class Astra {
         NetworkTableEntry tx = table.getEntry("tx");
         double[] out = { 0.0 };
         double[] arr = tx.getDoubleArray(out);
-        if (arr.length > 0) {
-            return arr[0];
-        } else {
-            return 0;
-        }
+        return arr.length > 0 ? arr[0] : 0.0;
     }
 
     /**
@@ -63,7 +59,9 @@ public class Astra {
      */
     public double getTy(int ball_number) {
         NetworkTableEntry ty = table.getEntry("ty");
-        return ty.getDoubleArray(new double[1])[0];
+        double[] out = { 0.0 };
+        double[] arr = ty.getDoubleArray(out);
+        return arr.length > 0 ? arr[0] : 0.0;
     }
 
     /**
@@ -78,22 +76,8 @@ public class Astra {
      */
     public double getTd(int ball_number) {
         NetworkTableEntry td = table.getEntry("td");
-        return td.getDoubleArray(new double[1])[0];
+        double[] out = { 0.0 };
+        double[] arr = td.getDoubleArray(out);
+        return arr.length > 0 ? arr[0] : 0.0;
     }
-
-    /**
-     * Get the color of a specified ball.
-     * Balls are sorted by distance (0 is the closest)
-     * 
-     * @param ball_number ball to provide information for
-     * @return either "B" or "R" to specify ball color
-     * @author dr
-     */
-    /*
-     * public String getColor(int ball_number) {
-     * NetworkTableEntry ty = table.getEntry("ty");
-     * String[] s = {"N"};
-     * return ty.getStringArray(s)[0];
-     * }
-     */
 }
