@@ -60,8 +60,9 @@ public class Drivetrain {
                 RobotMap.PIDConstants.Drivetrain.LeftDrivetrain.KD);
 
         // Setpoint tolerances
-        turnToLimelightPID.setTolerance(0.7);
+        turnToLimelightPID.setTolerance(1.5);
         driveToLimelightPID.setTolerance(0.55);
+        turnToAstraPID.setTolerance(1.5);
         rightSidePID.setTolerance(0.25);
         leftSidePID.setTolerance(0.25);
         driveStraightPID.setTolerance(0.25);
@@ -175,6 +176,12 @@ public class Drivetrain {
      */
     public void turnToLimelight() {
         double calcSpeed = -turnToLimelightPID.calculate(Robot.limelight.getTx(), 0);
+        setLeftSpeed(-calcSpeed);
+        setRightSpeed(calcSpeed);
+    }
+
+    public void turnToLimelightAuton() {
+        double calcSpeed = -0.7 * turnToLimelightPID.calculate(Robot.limelight.getTx(), 0);
         setLeftSpeed(-calcSpeed);
         setRightSpeed(calcSpeed);
     }

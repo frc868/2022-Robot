@@ -99,23 +99,23 @@ public class TwoBallEncoders extends AutonPath {
             }
         },
         shooterUpToSpeed {
-            double shooterSpeed;
+            // double shooterSpeed;
 
             @Override
             public void init() {
                 Robot.drivetrain.stop();
-                shooterSpeed = Robot.shooter.calcSpeed();
+                // shooterSpeed = Robot.shooter.calcSpeed();
             }
 
             @Override
             public void execute() {
-                System.out.println("shooting" + Robot.shooter.getPosition());
-                Robot.shooter.shoot(shooterSpeed);
+                // System.out.println("shooting" + shooterSpeed);
+                Robot.shooter.shoot(Robot.shooter.calcSpeed());
             }
 
             @Override
             public AutonState nextState() {
-                if (Robot.shooter.getPosition() < 100) {
+                if (Robot.shooter.getPosition() < 150) {
                     return this;
                 } else {
                     feedBalls.init();
@@ -140,13 +140,55 @@ public class TwoBallEncoders extends AutonPath {
                 if (Robot.hopper.getPosition() < 300) {
                     return this;
                 }
-                Robot.shooter.reset();
+                intakeUp.init();
                 return intakeUp;
             }
         },
+        // waitForSpeed {
+        // @Override
+        // public void init() {
+        // Robot.shooter.reset();
+        // }
+
+        // @Override
+        // public void execute() {
+
+        // }
+
+        // @Override
+        // public AutonState nextState() {
+        // if (Robot.shooter.getPosition() < 200) {
+        // return this;
+        // }
+        // shootSecond.init();
+        // return shootSecond;
+        // }
+        // },
+        // shootSecond {
+        // @Override
+        // public void init() {
+
+        // Robot.hopper.reset();
+        // }
+
+        // @Override
+        // public void execute() {
+        // Robot.hopper.run();
+        // }
+
+        // @Override
+        // public AutonState nextState() {
+        // if (Robot.hopper.getPosition() < 150) {
+        // return this;
+        // }
+        // intakeUp.init();
+        // return intakeUp;
+        // }
+        // },
         intakeUp {
             @Override
             public void init() {
+                Robot.shooter.reset();
             }
 
             @Override

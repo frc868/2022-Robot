@@ -52,6 +52,9 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
+        Robot.shooter.reset();
+        Robot.drivetrain.reset();
+        Robot.hopper.reset();
         autonChooser.reset();
     }
 
