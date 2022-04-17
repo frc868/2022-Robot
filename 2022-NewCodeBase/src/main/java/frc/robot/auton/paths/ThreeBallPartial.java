@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 import frc.robot.auton.AutonPath;
 
-public class ThreeBall extends AutonPath {
+public class ThreeBallPartial extends AutonPath {
 
     private AutonState currentState = AutonState.intakeDown;
     private static Timer timer;
@@ -172,213 +172,37 @@ public class ThreeBall extends AutonPath {
             @Override
             public AutonState nextState() {
                 if (Robot.drivetrain.getLeftPosition() > 2.14) {
-                    turnToAstraThirdBall.init();
-                    return turnToAstraThirdBall;
+                    drivePartialDistance.init();
+                    return drivePartialDistance;
                 } else {
                     return this;
                 }
             }
         },
-        turnToAstraThirdBall {
+        drivePartialDistance {
             @Override
             public void init() {
+                Robot.drivetrain.reset();
                 Robot.drivetrain.stop();
-                Robot.drivetrain.reset();
-                Robot.intake.stop();
-                Robot.hopper.stop();
-                Robot.shooter.reset();
             }
 
             @Override
             public void execute() {
-                Robot.drivetrain.turnToAstra();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.drivetrain.turnToAstraAtTarget()) {
-                    return this;
-                } else {
-                    turnToAstraThirdBall2.init();
-                    return turnToAstraThirdBall2;
-                }
-            }
-        },
-        turnToAstraThirdBall2 {
-            @Override
-            public void init() {
-                Robot.drivetrain.stop();
-                Robot.drivetrain.reset();
-                Robot.intake.stop();
-                Robot.hopper.stop();
-                Robot.shooter.reset();
-            }
-
-            @Override
-            public void execute() {
-                Robot.drivetrain.turnToAstra();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.drivetrain.turnToAstraAtTarget()) {
-                    return this;
-                } else {
-                    driveToThirdBall.init();
-                    return driveToThirdBall;
-                }
-            }
-        },
-        driveToThirdBall {
-            @Override
-            public void init() {
-                Robot.drivetrain.reset();
-            }
-
-            @Override
-            public void execute() {
-                Robot.drivetrain.driveStraightRight(6.7, 0.8, 60);
-                Robot.drivetrain.driveStraightLeft(6.7, 0.8, 60);
-                Robot.intake.run();
+                Robot.drivetrain.driveStraightRight(4.3, 0.7, 60);
+                Robot.drivetrain.driveStraightLeft(4.3, 0.7, 60);
+                // Robot.intake.run();
                 System.out.println(Robot.drivetrain.getRightPosition() + " " + Robot.drivetrain.getLeftPosition());
             }
 
             @Override
             public AutonState nextState() {
-                if (!(Robot.drivetrain.getRightPosition() < 6.35) && !(Robot.drivetrain.getLeftPosition() < 6.35)) {
-                    turnToRoughlyGoal.init();
-                    return turnToRoughlyGoal;
+                if (!(Robot.drivetrain.getRightPosition() < 4) && !(Robot.drivetrain.getLeftPosition() < 4)) {
+                    done.init();
+                    return done;
                 } else {
                     return this;
                 }
 
-            }
-        },
-        turnToRoughlyGoal {
-            @Override
-            public void init() {
-                Robot.drivetrain.reset();
-                Robot.drivetrain.stop();
-                Robot.hopper.stop();
-                Robot.intake.stop();
-                Robot.shooter.reset();
-            }
-
-            @Override
-            public void execute() {
-                Robot.drivetrain.driveStraightRight(1.5, 1.3, 60);
-                Robot.drivetrain.driveStraightLeft(-1.5, 1.3, 60);
-                Robot.intake.run();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (Robot.drivetrain.getRightPosition() > 1) {
-                    turnToGoal2.init();
-                    return turnToGoal2;
-                } else {
-                    return this;
-                }
-            }
-        },
-        turnToGoal2 {
-            @Override
-            public void init() {
-                Robot.drivetrain.reset();
-                Robot.drivetrain.stop();
-                Robot.intake.stop();
-                Robot.hopper.stop();
-                Robot.hopper.reset();
-                Robot.shooter.reset();
-            }
-
-            @Override
-            public void execute() {
-                Robot.drivetrain.turnToLimelightAuton();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.drivetrain.turnToLimelightAtTarget()) {
-                    return this;
-                } else {
-                    turnToGoal22.init();
-                    return turnToGoal22;
-                }
-            }
-        },
-        turnToGoal22 {
-            @Override
-            public void init() {
-                Robot.drivetrain.stop();
-                Robot.drivetrain.reset();
-                Robot.intake.stop();
-                Robot.hopper.stop();
-                Robot.hopper.reset();
-                Robot.shooter.reset();
-            }
-
-            @Override
-            public void execute() {
-                Robot.drivetrain.turnToLimelightAuton();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (!Robot.drivetrain.turnToLimelightAtTarget()) {
-                    return this;
-                } else {
-                    shooterUpToSpeed2.init();
-                    return shooterUpToSpeed2;
-                }
-            }
-        },
-        shooterUpToSpeed2 {
-            // double shooterSpeed;
-
-            @Override
-            public void init() {
-                Robot.drivetrain.stop();
-                Robot.shooter.reset();
-                // shooterSpeed = Robot.shooter.calcSpeed();
-            }
-
-            @Override
-            public void execute() {
-                System.out.println("shooting" + Robot.shooter.getPosition());
-                Robot.shooter.shoot(Robot.shooter.calcSpeed()); // 3033
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (Robot.shooter.getPosition() < 100) {
-                    return this;
-                } else {
-                    feedBallThree.init();
-                    return feedBallThree;
-
-                }
-            }
-        },
-        feedBallThree {
-            @Override
-            public void init() {
-                Robot.hopper.gatekeepersIn();
-                Robot.hopper.reset();
-            }
-
-            @Override
-            public void execute() {
-                Robot.hopper.run();
-            }
-
-            @Override
-            public AutonState nextState() {
-                if (Robot.hopper.getPosition() < 300) {
-                    return this;
-                }
-                done.init();
-                return done;
             }
         },
         intakeUp {
@@ -400,7 +224,7 @@ public class ThreeBall extends AutonPath {
         done {
             @Override
             public void init() {
-
+                Robot.drivetrain.stop();
             }
 
             @Override
@@ -439,6 +263,6 @@ public class ThreeBall extends AutonPath {
 
     @Override
     public String toString() {
-        return "ThreeBall";
+        return "ThreeBallPartial";
     }
 }
