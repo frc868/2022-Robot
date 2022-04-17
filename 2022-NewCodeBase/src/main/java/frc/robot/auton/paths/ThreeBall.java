@@ -64,16 +64,16 @@ public class ThreeBall extends AutonPath {
 
             @Override
             public void execute() {
-                Robot.drivetrain.driveStraightRight(7.1, 0.55, 60);
+                Robot.drivetrain.driveStraightRight(6.1, 0.55, 60);
 
-                Robot.drivetrain.driveStraightLeft(7.1, 0.55, 60);
+                Robot.drivetrain.driveStraightLeft(6.1, 0.55, 60);
                 Robot.intake.run();
                 System.out.println(Robot.drivetrain.getRightPosition() + " " + Robot.drivetrain.getLeftPosition());
             }
 
             @Override
             public AutonState nextState() {
-                if (!(Robot.drivetrain.getRightPosition() < 6.7) && !(Robot.drivetrain.getLeftPosition() < 6.7)) {
+                if (!(Robot.drivetrain.getRightPosition() < 5.85) && !(Robot.drivetrain.getLeftPosition() < 5.85)) {
                     turnToGoal.init();
                     return turnToGoal;
                 } else {
@@ -119,7 +119,7 @@ public class ThreeBall extends AutonPath {
             @Override
             public void execute() {
                 System.out.println("shooting" + Robot.shooter.getPosition());
-                Robot.shooter.shoot(3170);
+                Robot.shooter.shoot(Robot.shooter.calcSpeed());
             }
 
             @Override
