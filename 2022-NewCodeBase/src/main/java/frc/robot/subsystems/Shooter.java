@@ -112,8 +112,14 @@ public class Shooter {
         // R^2 = 0.987
         // 5017 + -735x + 76.8x^2 + -2.4x^3
         double distance = Robot.limelight.getDistance();
-        double calcSpeed = 5017 + (-735 * distance) + (76.8 * Math.pow(distance, 2)) + (-2.4 * Math.pow(distance, 3));
-        return calcSpeed;
+        // double calcSpeed = 5017 + (-735 * distance) + (76.8 * Math.pow(distance, 2))
+        // + (-2.4 * Math.pow(distance, 3));
+        double calcSpeed = 2783 + (-28 * distance) + (4.35 * Math.pow(distance, 2));
+        if (calcSpeed > 4000) {
+            return 4000;
+        } else {
+            return calcSpeed;
+        }
     }
 
     public double getPosition() {
