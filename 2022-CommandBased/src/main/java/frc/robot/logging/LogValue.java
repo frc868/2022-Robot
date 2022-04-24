@@ -1,9 +1,6 @@
 package frc.robot.logging;
 
-import java.util.ArrayList;
 import java.util.concurrent.Callable;
-
-import edu.wpi.first.util.sendable.Sendable;
 
 public class LogValue<K> {
 
@@ -30,8 +27,4 @@ public class LogValue<K> {
     public Class<K> getType() {
         return type;
     }
-
-    // public K getType() {
-    // return type;
-    // }
 }

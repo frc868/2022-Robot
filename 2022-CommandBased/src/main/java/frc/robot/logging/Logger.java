@@ -1,13 +1,10 @@
 package frc.robot.logging;
 
-import java.util.List;
-
 import edu.wpi.first.util.sendable.Sendable;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Logger<T> {
-    private T obj;
+    public T obj;
     private String subsystem;
     private String deviceName;
     private LogValue<?>[] values;
