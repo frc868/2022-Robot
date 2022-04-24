@@ -9,11 +9,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-    private CANSparkMax i_primary = new CANSparkMax(Constants.Intake.CANIDs.I_PRIMARY, MotorType.kBrushless);
+    private CANSparkMax i_primary = new CANSparkMax(Constants.Intake.CANIDs.MOTOR,
+            MotorType.kBrushless);
     private DoubleSolenoid solenoid = new DoubleSolenoid(
             PneumaticsModuleType.REVPH,
-            Constants.Intake.INTAKE_CHANNEL1,
-            Constants.Intake.INTAKE_CHANNEL2);
+            Constants.Intake.Solenoids.INTAKE_CHANNEL_1,
+            Constants.Intake.Solenoids.INTAKE_CHANNEL_2);
 
     public Intake() {
         i_primary.setInverted(Constants.Intake.IS_INVERTED);

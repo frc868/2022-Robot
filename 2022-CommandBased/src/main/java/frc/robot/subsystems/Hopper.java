@@ -14,10 +14,10 @@ import frc.robot.Constants;
  * @author dr
  */
 public class Hopper extends SubsystemBase {
-    private CANSparkMax h_primary = new CANSparkMax(Constants.Hopper.CANIDs.H_PRIMARY, MotorType.kBrushless);;
+    private CANSparkMax h_primary = new CANSparkMax(Constants.Hopper.CANIDs.MOTOR, MotorType.kBrushless);;
     private DoubleSolenoid gatekeepers = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-            Constants.Hopper.GATEKEEPER_CHANNEL2,
-            Constants.Hopper.GATEKEEPER_CHANNEL1);
+            Constants.Hopper.Solenoids.GATEKEEPER_CHANNEL_2,
+            Constants.Hopper.Solenoids.GATEKEEPER_CHANNEL_1);
 
     public Hopper() {
         h_primary.setInverted(Constants.Hopper.IS_INVERTED);

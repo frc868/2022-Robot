@@ -6,12 +6,17 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
-
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.OI;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.TurnToBall;
 import frc.robot.commands.TurnToGoal;
+import frc.robot.commands.auton.paths.FiveBall;
 import frc.robot.commands.auton.paths.FourBall;
+import frc.robot.commands.auton.paths.LeaveTarmac;
+import frc.robot.commands.auton.paths.ThreeBall;
+import frc.robot.commands.auton.paths.TwoBall;
 import frc.robot.sensors.Astra;
 import frc.robot.sensors.Limelight;
 import frc.robot.commands.RunShooter;
@@ -39,9 +44,9 @@ public class RobotContainer {
     private final Astra astra = new Astra();
     private final Gyro gyro = new Gyro();
 
-    // private final ExampleCommand m_autoCommand = new ExampleCommand(drivetrain);
     XboxController driverController = new XboxController(OI.DRIVER_PORT);
     XboxController operatorController = new XboxController(OI.OPERATOR_PORT);
+    SendableChooser<Command> chooser = new SendableChooser<>();
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -51,10 +56,22 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(
                 new DefaultDrive(drivetrain, driverController::getLeftX, driverController::getRightX));
         climber.setDefaultCommand(
-                new FunctionalCommand(null, () -> climber.setSpeed(operatorController.getLeftY()), null, () -> {
+                new FunctionalCommand(() -> {
+                }, () -> climber.setSpeed(operatorController.getLeftY()), (interrupted) -> {
+                }, () -> {
                     return false;
                 }, climber));
         configureButtonBindings();
+        configureAutonChooser();
+    }
+
+    private void configureAutonChooser() {
+        chooser.addOption("Leave Tarmac", new LeaveTarmac(drivetrain, shooter, intake, hopper, limelight));
+        chooser.addOption("Two Ball", new TwoBall(drivetrain, shooter, intake, hopper, limelight));
+        chooser.setDefaultOption("Three Ball",
+                new ThreeBall(drivetrain, shooter, intake, hopper, limelight, astra, gyro));
+        chooser.addOption("Four Ball", new FourBall(drivetrain, shooter, intake, hopper, limelight, astra, gyro));
+        chooser.addOption("Five Ball", new FiveBall(drivetrain, shooter, intake, hopper, limelight, astra, gyro));
     }
 
     private void configureButtonBindings() {
@@ -113,7 +130,6 @@ public class RobotContainer {
     }
 
     public Command getAutonomousCommand() {
-        return new FourBall(drivetrain, shooter, intake, hopper, limelight,
-                astra, gyro);
+        return chooser.getSelected();
     }
 }

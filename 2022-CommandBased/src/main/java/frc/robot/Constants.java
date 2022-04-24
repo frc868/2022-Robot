@@ -61,30 +61,34 @@ public final class Constants {
 
     public static final class Hopper {
         public static final class CANIDs {
-            public static final int H_PRIMARY = 0;
+            public static final int MOTOR = 7;
         }
 
-        public static final int GATEKEEPER_CHANNEL1 = 0;
-        public static final int GATEKEEPER_CHANNEL2 = 0;
+        public static final class Solenoids {
+            public static final int GATEKEEPER_CHANNEL_1 = 1;
+            public static final int GATEKEEPER_CHANNEL_2 = 6;
+        }
 
         public static final boolean IS_INVERTED = false;
     }
 
     public static final class Intake {
         public static final class CANIDs {
-            public static final int I_PRIMARY = 0;
+            public static final int MOTOR = 10;
         }
 
-        public static final int INTAKE_CHANNEL1 = 0;
-        public static final int INTAKE_CHANNEL2 = 0;
+        public static final class Solenoids {
+            public static final int INTAKE_CHANNEL_1 = 0;
+            public static final int INTAKE_CHANNEL_2 = 7;
+        }
 
         public static final boolean IS_INVERTED = false;
     }
 
     public static final class Shooter {
         public static final class CANIDs {
-            public static final int S_PRIMARY = 0;
-            public static final int S_SECONDARY = 0;
+            public static final int PRIMARY = 8;
+            public static final int SECONDARY = 13;
         }
 
         public static final boolean IS_INVERTED = false;
@@ -106,19 +110,21 @@ public final class Constants {
     }
 
     public static final class Climber {
-
-        // CAN IDs
-        public static final int C_PRIMARY = 12;
-        public static final int C_SECONDARY = 9;
+        public static final class CANIDs {
+            public static final int PRIMARY = 12;
+            public static final int SECONDARY = 9;
+        }
 
         // Inverse logic
         public static final boolean IS_INVERTED = false;
 
-        // Solenoid logic
-        public static final int CLIMBER_EXTEND_CHANNEL1 = 2;
-        public static final int CLIMBER_EXTEND_CHANNEL2 = 5;
-        public static final int CLIMBER_LOCK_CHANNEL1 = 3;
-        public static final int CLIMBER_LOCK_CHANNEL2 = 4;
+        public static final class Solenoids {
+            public static final int CLIMBER_2ND_STAGE_CHANNEL_1 = 2;
+            public static final int CLIMBER_2ND_STAGE_CHANNEL_2 = 5;
+            public static final int CLIMBER_LOCK_CHANNEL_1 = 3;
+            public static final int CLIMBER_LOCK_CHANNEL_2 = 4;
+
+        }
 
     }
 }

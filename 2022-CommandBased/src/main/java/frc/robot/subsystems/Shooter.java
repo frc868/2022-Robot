@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-    private CANSparkMax s_primary = new CANSparkMax(Constants.Shooter.CANIDs.S_PRIMARY, MotorType.kBrushless);
-    private CANSparkMax s_secondary = new CANSparkMax(Constants.Shooter.CANIDs.S_SECONDARY,
+    private CANSparkMax s_primary = new CANSparkMax(Constants.Shooter.CANIDs.PRIMARY,
+            MotorType.kBrushless);
+    private CANSparkMax s_secondary = new CANSparkMax(Constants.Shooter.CANIDs.SECONDARY,
             MotorType.kBrushless);
     private MotorControllerGroup shooterMotors = new MotorControllerGroup(s_primary, s_secondary);
 
@@ -18,7 +19,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        s_primary.set(speed);
+        shooterMotors.set(speed);
     }
 
     /**

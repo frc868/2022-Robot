@@ -11,18 +11,28 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.logging.LogProfileBuilder;
+import frc.robot.logging.Logger;
 
 /**
  * Drivetrain subsystem, includes all of the motors and the methods with which
  * to drive the bot.
  */
 public class Drivetrain extends SubsystemBase {
-    private CANSparkMax l_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_PRIMARY, MotorType.kBrushless);
-    private CANSparkMax l_secondary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_SECONDARY, MotorType.kBrushless);
-    private CANSparkMax r_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.R_PRIMARY, MotorType.kBrushless);
-    private CANSparkMax r_secondary = new CANSparkMax(Constants.Drivetrain.CANIDs.R_SECONDARY, MotorType.kBrushless);
+    private CANSparkMax l_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_PRIMARY,
+            MotorType.kBrushless);
+    private Logger<CANSparkMax> logger = new Logger<CANSparkMax>(l_primary, "Drivetrain", "Left Primary Motor",
+            LogProfileBuilder.buildCANSparkMaxLogger(l_primary));
+
+    private CANSparkMax l_secondary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_SECONDARY,
+            MotorType.kBrushless);
+    private CANSparkMax r_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.R_PRIMARY,
+            MotorType.kBrushless);
+    private CANSparkMax r_secondary = new CANSparkMax(Constants.Drivetrain.CANIDs.R_SECONDARY,
+            MotorType.kBrushless);
     private MotorControllerGroup leftMotors = new MotorControllerGroup(l_primary, l_secondary);
     private MotorControllerGroup rightMotors = new MotorControllerGroup(r_primary, r_secondary);
     private DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
@@ -37,6 +47,15 @@ public class Drivetrain extends SubsystemBase {
         leftMotors.setInverted(Constants.Drivetrain.IS_LEFT_INVERTED);
         rightMotors.setInverted(Constants.Drivetrain.IS_RIGHT_INVERTED);
         drive.setMaxOutput(0.8);
+    }
+
+    @Override
+    public void periodic() {
+        logger.run();
+        SmartDashboard.putData("Drivetrain/Drive", drive);
+        SmartDashboard.putData("Drivetrain/NavX", navx);
+        SmartDashboard.putData("Drivetrain/Left Motor Controller Group", leftMotors);
+        SmartDashboard.putData("Drivetrain/Right Motor Controller Group", rightMotors);
     }
 
     /**

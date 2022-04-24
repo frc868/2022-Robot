@@ -19,23 +19,23 @@ public class Climber extends SubsystemBase {
     /**
      * The primary climber motor.
      */
-    private CANSparkMax c_primary = new CANSparkMax(Constants.Climber.C_PRIMARY, MotorType.kBrushless);
+    private CANSparkMax c_primary = new CANSparkMax(Constants.Climber.CANIDs.PRIMARY, MotorType.kBrushless);
     /**
      * The secondary climber motor.
      */
-    private CANSparkMax c_secondary = new CANSparkMax(Constants.Climber.C_SECONDARY, MotorType.kBrushless);
+    private CANSparkMax c_secondary = new CANSparkMax(Constants.Climber.CANIDs.SECONDARY, MotorType.kBrushless);
     /**
      * The double solenoid for the second stage of the climber
      */
     private DoubleSolenoid climberSecondStage = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-            Constants.Climber.CLIMBER_EXTEND_CHANNEL1,
-            Constants.Climber.CLIMBER_EXTEND_CHANNEL2);
+            Constants.Climber.Solenoids.CLIMBER_2ND_STAGE_CHANNEL_1,
+            Constants.Climber.Solenoids.CLIMBER_2ND_STAGE_CHANNEL_2);
     /**
      * The lock for the climber.
      */
-    private DoubleSolenoid climber_lock = new DoubleSolenoid(PneumaticsModuleType.REVPH,
-            Constants.Climber.CLIMBER_LOCK_CHANNEL1,
-            Constants.Climber.CLIMBER_LOCK_CHANNEL2);
+    private DoubleSolenoid climberLocks = new DoubleSolenoid(PneumaticsModuleType.REVPH,
+            Constants.Climber.Solenoids.CLIMBER_LOCK_CHANNEL_1,
+            Constants.Climber.Solenoids.CLIMBER_LOCK_CHANNEL_2);
     /**
      * The motor controller group containing both of the climber motors.
      */
@@ -48,6 +48,7 @@ public class Climber extends SubsystemBase {
     public Climber() {
         climberMotors.setInverted(Constants.Climber.IS_INVERTED);
         addChild("Climber Motors", climberMotors);
+
     }
 
     /**
@@ -79,14 +80,14 @@ public class Climber extends SubsystemBase {
      * Extends the climber locking pneumatic.
      */
     public void extendLock() {
-        climber_lock.set(Value.kReverse);
+        climberLocks.set(Value.kReverse);
     }
 
     /**
      * Retracts the climber locking pneumatic.
      */
     public void retractLock() {
-        climber_lock.set(Value.kForward);
+        climberLocks.set(Value.kForward);
     }
 
     /**
@@ -95,7 +96,7 @@ public class Climber extends SubsystemBase {
      * @return true if the locks are extended, false if not
      */
     public boolean getLock() {
-        return climber_lock.get() == Value.kReverse;
+        return climberLocks.get() == Value.kReverse;
     }
 
     /**
