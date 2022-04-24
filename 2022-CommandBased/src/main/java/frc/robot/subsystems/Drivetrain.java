@@ -8,13 +8,16 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.logging.LogGroup;
 import frc.robot.logging.LogProfileBuilder;
+import frc.robot.logging.LogValue;
 import frc.robot.logging.Logger;
 
 /**
@@ -24,9 +27,6 @@ import frc.robot.logging.Logger;
 public class Drivetrain extends SubsystemBase {
     private CANSparkMax l_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_PRIMARY,
             MotorType.kBrushless);
-    private Logger<CANSparkMax> logger = new Logger<CANSparkMax>(l_primary, "Drivetrain", "Left Primary Motor",
-            LogProfileBuilder.buildCANSparkMaxLogger(l_primary));
-
     private CANSparkMax l_secondary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_SECONDARY,
             MotorType.kBrushless);
     private CANSparkMax r_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.R_PRIMARY,
@@ -37,6 +37,19 @@ public class Drivetrain extends SubsystemBase {
     private MotorControllerGroup rightMotors = new MotorControllerGroup(r_primary, r_secondary);
     private DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
     private AHRS navx = new AHRS(SerialPort.Port.kMXP);
+    private LogGroup logger = new LogGroup(
+            new Logger<?>[] {
+                    new Logger<CANSparkMax>(l_primary, "Drivetrain", "Left Primary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogValues(l_primary)),
+                    new Logger<CANSparkMax>(l_secondary, "Drivetrain", "Left Secondary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogValues(l_secondary)),
+                    new Logger<CANSparkMax>(r_primary, "Drivetrain", "Right Primary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogValues(r_primary)),
+                    new Logger<CANSparkMax>(r_secondary, "Drivetrain", "Right Secondary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogValues(r_secondary)),
+                    new Logger<AHRS>(navx, "Drivetrain", "NavX",
+                            LogProfileBuilder.buildNavXLogValues(navx))
+            });
 
     /**
      * Initializes the drivetrain.
@@ -49,13 +62,13 @@ public class Drivetrain extends SubsystemBase {
         drive.setMaxOutput(0.8);
     }
 
+    /**
+     * Runs every 20ms. In this method, all we do is run SmartDashboard/logging
+     * related functions (do NOT run any code that should belong in a command here!)
+     */
     @Override
     public void periodic() {
         logger.run();
-        SmartDashboard.putData("Drivetrain/Drive", drive);
-        SmartDashboard.putData("Drivetrain/NavX", navx);
-        SmartDashboard.putData("Drivetrain/Left Motor Controller Group", leftMotors);
-        SmartDashboard.putData("Drivetrain/Right Motor Controller Group", rightMotors);
     }
 
     /**
