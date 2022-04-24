@@ -6,11 +6,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveStraight;
-import frc.robot.commands.FeedBalls;
-import frc.robot.commands.RunShooter;
 import frc.robot.commands.TurnToAngleGyro;
 import frc.robot.commands.TurnToBall;
-import frc.robot.commands.TurnToGoal;
 import frc.robot.commands.auton.ShootSequence;
 import frc.robot.sensors.Astra;
 import frc.robot.sensors.Limelight;
@@ -36,9 +33,7 @@ public class ThreeBall extends SequentialCommandGroup {
                         new DriveStraight(0, drivetrain),
                         new RunCommand(intake::runMotors, intake)),
                 new DriveStraight(-0, drivetrain),
-                new TurnToGoal(drivetrain, limelight),
-                new RunShooter(shooter, limelight),
-                new FeedBalls(hopper),
+                new ShootSequence(drivetrain, shooter, limelight, hopper),
                 new InstantCommand(intake::setUp, intake));
     }
 }
