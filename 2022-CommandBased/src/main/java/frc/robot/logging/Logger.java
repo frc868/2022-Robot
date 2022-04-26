@@ -7,9 +7,9 @@ public class Logger<T> {
     public T obj;
     private String subsystem;
     private String deviceName;
-    private LogValue<?>[] values;
+    private LogItem<?>[] values;
 
-    public Logger(T obj, String subsystem, String deviceName, LogValue<?>[] values) {
+    public Logger(T obj, String subsystem, String deviceName, LogItem<?>[] values) {
         this.obj = obj;
         this.subsystem = subsystem;
         this.deviceName = deviceName;
@@ -17,34 +17,34 @@ public class Logger<T> {
     }
 
     public void run() {
-        for (LogValue<?> v : values) {
+        for (LogItem<?> v : values) {
             try {
-                switch (v.getType().getCanonicalName()) {
-                    case LogType.STRING:
+                switch (v.getType()) {
+                    case STRING:
                         SmartDashboard.putString(subsystem + "/" + deviceName + "/" + v.getKey(),
                                 (String) v.getFunc().call());
                         break;
-                    case LogType.NUMBER:
+                    case NUMBER:
                         SmartDashboard.putNumber(subsystem + "/" + deviceName + "/" + v.getKey(),
                                 (double) v.getFunc().call());
                         break;
-                    case LogType.BOOLEAN:
+                    case BOOLEAN:
                         SmartDashboard.putBoolean(subsystem + "/" + deviceName + "/" + v.getKey(),
                                 (boolean) v.getFunc().call());
                         break;
-                    case LogType.DATA:
+                    case DATA:
                         SmartDashboard.putData(subsystem + "/" + deviceName + "/" + v.getKey(),
                                 (Sendable) v.getFunc().call());
                         break;
-                    case LogType.STRING_ARRAY:
+                    case STRING_ARRAY:
                         SmartDashboard.putStringArray(subsystem + "/" + deviceName + "/" + v.getKey(),
                                 (String[]) v.getFunc().call());
                         break;
-                    case LogType.NUMBER_ARRAY:
+                    case NUMBER_ARRAY:
                         SmartDashboard.putNumberArray(subsystem + "/" + deviceName + "/" + v.getKey(),
                                 (double[]) v.getFunc().call());
                         break;
-                    case LogType.BOOLEAN_ARRAY:
+                    case BOOLEAN_ARRAY:
                         SmartDashboard.putBooleanArray(subsystem + "/" + deviceName + "/" + v.getKey(),
                                 (boolean[]) v.getFunc().call());
                         break;
