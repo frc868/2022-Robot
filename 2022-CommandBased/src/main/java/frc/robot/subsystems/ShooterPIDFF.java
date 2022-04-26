@@ -58,7 +58,7 @@ public class ShooterPIDFF extends PIDSubsystem {
     }
 
     /**
-     * Resets the Shooter
+     * Resets the shooter
      */
     public void resetEncoders() {
         primaryMotor.getEncoder().setPosition(0);
