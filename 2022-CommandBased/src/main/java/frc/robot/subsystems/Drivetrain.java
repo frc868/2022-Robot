@@ -8,16 +8,21 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.logging.LogGroup;
+import frc.robot.logging.LogItem;
 import frc.robot.logging.LogProfileBuilder;
-import frc.robot.logging.LogValue;
+import frc.robot.logging.LogType;
 import frc.robot.logging.Logger;
 
 /**
@@ -25,41 +30,50 @@ import frc.robot.logging.Logger;
  * to drive the bot.
  */
 public class Drivetrain extends SubsystemBase {
-    private CANSparkMax l_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_PRIMARY,
+    private CANSparkMax leftPrimaryMotor = new CANSparkMax(Constants.Drivetrain.CANIDs.L_PRIMARY,
             MotorType.kBrushless);
-    private CANSparkMax l_secondary = new CANSparkMax(Constants.Drivetrain.CANIDs.L_SECONDARY,
+    private CANSparkMax leftSecondaryMotor = new CANSparkMax(Constants.Drivetrain.CANIDs.L_SECONDARY,
             MotorType.kBrushless);
-    private CANSparkMax r_primary = new CANSparkMax(Constants.Drivetrain.CANIDs.R_PRIMARY,
+    private CANSparkMax rightPrimaryMotor = new CANSparkMax(Constants.Drivetrain.CANIDs.R_PRIMARY,
             MotorType.kBrushless);
-    private CANSparkMax r_secondary = new CANSparkMax(Constants.Drivetrain.CANIDs.R_SECONDARY,
+    private CANSparkMax rightSecondaryMotor = new CANSparkMax(Constants.Drivetrain.CANIDs.R_SECONDARY,
             MotorType.kBrushless);
-    private MotorControllerGroup leftMotors = new MotorControllerGroup(l_primary, l_secondary);
-    private MotorControllerGroup rightMotors = new MotorControllerGroup(r_primary, r_secondary);
+    private MotorControllerGroup leftMotors = new MotorControllerGroup(leftPrimaryMotor, leftSecondaryMotor);
+    private MotorControllerGroup rightMotors = new MotorControllerGroup(rightPrimaryMotor, rightSecondaryMotor);
     private DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
     private AHRS navx = new AHRS(SerialPort.Port.kMXP);
+
+    private DifferentialDriveOdometry odometry;
+    private Field2d field = new Field2d();
+
     private LogGroup logger = new LogGroup(
             new Logger<?>[] {
-                    new Logger<CANSparkMax>(l_primary, "Drivetrain", "Left Primary Motor",
-                            LogProfileBuilder.buildCANSparkMaxLogValues(l_primary)),
-                    new Logger<CANSparkMax>(l_secondary, "Drivetrain", "Left Secondary Motor",
-                            LogProfileBuilder.buildCANSparkMaxLogValues(l_secondary)),
-                    new Logger<CANSparkMax>(r_primary, "Drivetrain", "Right Primary Motor",
-                            LogProfileBuilder.buildCANSparkMaxLogValues(r_primary)),
-                    new Logger<CANSparkMax>(r_secondary, "Drivetrain", "Right Secondary Motor",
-                            LogProfileBuilder.buildCANSparkMaxLogValues(r_secondary)),
+                    new Logger<CANSparkMax>(leftPrimaryMotor, "Drivetrain", "Left Primary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(leftPrimaryMotor)),
+                    new Logger<CANSparkMax>(leftSecondaryMotor, "Drivetrain", "Left Secondary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(leftSecondaryMotor)),
+                    new Logger<CANSparkMax>(rightPrimaryMotor, "Drivetrain", "Right Primary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(rightPrimaryMotor)),
+                    new Logger<CANSparkMax>(rightSecondaryMotor, "Drivetrain", "Right Secondary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(rightSecondaryMotor)),
                     new Logger<AHRS>(navx, "Drivetrain", "NavX",
-                            LogProfileBuilder.buildNavXLogValues(navx))
+                            LogProfileBuilder.buildNavXLogItems(navx)),
+                    new Logger<Field2d>(field, "Drivetrain", "Field",
+                            new LogItem<?>[] {
+                                    new LogItem<Sendable>(LogType.DATA, "Field", () -> field)
+                            })
             });
 
     /**
      * Initializes the drivetrain.
      */
     public Drivetrain() {
-        l_primary.getEncoder().setPositionConversionFactor(Constants.Drivetrain.ENCODER_DISTANCE_PER_PULSE);
-        r_primary.getEncoder().setPositionConversionFactor(Constants.Drivetrain.ENCODER_DISTANCE_PER_PULSE);
+        leftPrimaryMotor.getEncoder().setPositionConversionFactor(Constants.Drivetrain.ENCODER_DISTANCE_PER_PULSE);
+        rightPrimaryMotor.getEncoder().setPositionConversionFactor(Constants.Drivetrain.ENCODER_DISTANCE_PER_PULSE);
         leftMotors.setInverted(Constants.Drivetrain.IS_LEFT_INVERTED);
         rightMotors.setInverted(Constants.Drivetrain.IS_RIGHT_INVERTED);
         drive.setMaxOutput(0.8);
+        odometry = new DifferentialDriveOdometry(navx.getRotation2d());
     }
 
     /**
@@ -69,6 +83,37 @@ public class Drivetrain extends SubsystemBase {
     @Override
     public void periodic() {
         logger.run();
+        odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftPosition(), getRightPosition());
+        field.setRobotPose(odometry.getPoseMeters());
+    }
+
+    /**
+     * Gets the pose of the robot (the estimated location on the field).
+     * 
+     * @return the pose
+     */
+    public Pose2d getPose() {
+        return odometry.getPoseMeters();
+    }
+
+    /**
+     * Gets the current wheel speeds of the robot.
+     * 
+     * @return the current wheel speeds
+     */
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(leftPrimaryMotor.getEncoder().getVelocity(),
+                rightPrimaryMotor.getEncoder().getVelocity());
+    }
+
+    /**
+     * Resets the odometry of the robot to a specified pose.
+     * 
+     * @param pose the pose to which to set the odometry.
+     */
+    public void resetOdometry(Pose2d pose) {
+        resetEncoders();
+        odometry.resetPosition(pose, navx.getRotation2d());
     }
 
     /**
@@ -96,11 +141,23 @@ public class Drivetrain extends SubsystemBase {
     }
 
     /**
+     * Control the motors with with volts (useful for feed-forward calculations).
+     * 
+     * @param leftVolts  the left output
+     * @param rightVolts the right output
+     */
+    public void tankDriveVolts(double leftVolts, double rightVolts) {
+        leftMotors.setVoltage(leftVolts);
+        rightMotors.setVoltage(rightVolts);
+        drive.feed();
+    }
+
+    /**
      * Resets the drivetrain encoders by setting their positions to zero.
      */
     public void resetEncoders() {
-        l_primary.getEncoder().setPosition(0);
-        r_primary.getEncoder().setPosition(0);
+        leftPrimaryMotor.getEncoder().setPosition(0);
+        rightPrimaryMotor.getEncoder().setPosition(0);
     }
 
     /**
@@ -109,7 +166,7 @@ public class Drivetrain extends SubsystemBase {
      * @return the position of the left primary motor encoder
      */
     public double getLeftPosition() {
-        return l_primary.getEncoder().getPosition();
+        return leftPrimaryMotor.getEncoder().getPosition();
     }
 
     /**
@@ -119,7 +176,7 @@ public class Drivetrain extends SubsystemBase {
      */
 
     public double getRightPosition() {
-        return r_primary.getEncoder().getPosition();
+        return rightPrimaryMotor.getEncoder().getPosition();
     }
 
     /**
@@ -128,7 +185,8 @@ public class Drivetrain extends SubsystemBase {
      * @return the average position of the left and right encoders.
      */
     public double getPosition() {
-        return (double) (l_primary.getEncoder().getPosition() + r_primary.getEncoder().getPosition()) / 2.0;
+        return (double) (leftPrimaryMotor.getEncoder().getPosition() + rightPrimaryMotor.getEncoder().getPosition())
+                / 2.0;
     }
 
     /**

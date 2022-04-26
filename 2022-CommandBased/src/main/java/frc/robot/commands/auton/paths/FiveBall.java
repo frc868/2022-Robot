@@ -12,14 +12,13 @@ import frc.robot.commands.auton.ShootSequence;
 import frc.robot.sensors.Astra;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class FiveBall extends SequentialCommandGroup {
     public FiveBall(Drivetrain drivetrain, Shooter shooter, Intake intake, Hopper hopper, Limelight limelight,
-            Astra astra, Gyro gyro) {
+            Astra astra) {
         addCommands(
                 new InstantCommand(intake::setDown, intake), // intake down
                 new WaitCommand(0.5), // wait for intake to come down
@@ -27,13 +26,13 @@ public class FiveBall extends SequentialCommandGroup {
                         new DriveStraight(0, drivetrain),
                         new RunCommand(intake::runMotors, intake)),
                 new ShootSequence(drivetrain, shooter, limelight, hopper).withTimeout(4), // shoot 1st and 2nd ball
-                new TurnToAngleGyro(150, drivetrain, gyro).withTimeout(2), // turn to general location of 3rd ball to
-                                                                           // put in camera FOV
+                new TurnToAngleGyro(150, drivetrain).withTimeout(2), // turn to general location of 3rd ball to
+                                                                     // put in camera FOV
                 new TurnToBall(drivetrain, astra).withTimeout(1), // turn to ball precisely with camera
                 new ParallelRaceGroup(
                         new DriveStraight(0, drivetrain),
                         new RunCommand(intake::runMotors, intake)), // drive and intake 3rd ball
-                new TurnToAngleGyro(-25, drivetrain, gyro), // turn to goal enough to get in limelight frame
+                new TurnToAngleGyro(-25, drivetrain), // turn to goal enough to get in limelight frame
                 new ShootSequence(drivetrain, shooter, limelight, hopper).withTimeout(4), // shoot 3rd ball
                 new TurnToBall(drivetrain, astra).withTimeout(1), // turn to 4th ball
                 new ParallelRaceGroup(
