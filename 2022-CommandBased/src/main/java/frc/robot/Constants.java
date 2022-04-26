@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -29,6 +31,11 @@ public final class Constants {
         public static final boolean IS_RIGHT_INVERTED = false;
         public static final double ENCODER_DISTANCE_PER_PULSE = 1.0;
         public static final double TRACK_WIDTH = 0.0;
+        public static final double kV = 0;
+        public static final double kS = 0;
+        public static final double kA = 0;
+        public static final double kP = 0;
+        public static final DifferentialDriveKinematics KINEMATICS = new DifferentialDriveKinematics(TRACK_WIDTH);
 
         public static final class DriveStraightPID {
             public static final int kP = 1;
@@ -128,6 +135,11 @@ public final class Constants {
             public static final int CLIMBER_LOCK_CHANNEL_2 = 4;
 
         }
+    }
+
+    public static final class Auton {
+        public static final double MAX_VELOCITY = 5;
+        public static final double MAX_ACCELERATION = 8;
 
     }
 }
