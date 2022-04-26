@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants;
+import frc.robot.logging.LogGroup;
+import frc.robot.logging.LogProfileBuilder;
+import frc.robot.logging.Logger;
 
 /**
  * Climber subsystem, includes the climber arms, locks, and 2nd stage arms.
@@ -19,11 +22,11 @@ public class Climber extends SubsystemBase {
     /**
      * The primary climber motor.
      */
-    private CANSparkMax c_primary = new CANSparkMax(Constants.Climber.CANIDs.PRIMARY, MotorType.kBrushless);
+    private CANSparkMax primaryMotor = new CANSparkMax(Constants.Climber.CANIDs.PRIMARY, MotorType.kBrushless);
     /**
      * The secondary climber motor.
      */
-    private CANSparkMax c_secondary = new CANSparkMax(Constants.Climber.CANIDs.SECONDARY, MotorType.kBrushless);
+    private CANSparkMax secondaryMotor = new CANSparkMax(Constants.Climber.CANIDs.SECONDARY, MotorType.kBrushless);
     /**
      * The double solenoid for the second stage of the climber
      */
@@ -39,7 +42,19 @@ public class Climber extends SubsystemBase {
     /**
      * The motor controller group containing both of the climber motors.
      */
-    private MotorControllerGroup climberMotors = new MotorControllerGroup(c_primary, c_secondary);
+    private MotorControllerGroup climberMotors = new MotorControllerGroup(primaryMotor, secondaryMotor);
+
+    private LogGroup logger = new LogGroup(
+            new Logger<?>[] {
+                    new Logger<CANSparkMax>(primaryMotor, "Climber", "Primary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(primaryMotor)),
+                    new Logger<CANSparkMax>(secondaryMotor, "Climber", "Secondary Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(secondaryMotor)),
+                    new Logger<DoubleSolenoid>(climberSecondStage, "Climber", "Second Stage",
+                            LogProfileBuilder.buildDoubleSolenoidLogItems(climberSecondStage)),
+                    new Logger<DoubleSolenoid>(climberLocks, "Climber", "Locks",
+                            LogProfileBuilder.buildDoubleSolenoidLogItems(climberLocks))
+            });
 
     /**
      * The constructor for the class. Sets the climber motors to the inverted status
@@ -47,8 +62,11 @@ public class Climber extends SubsystemBase {
      */
     public Climber() {
         climberMotors.setInverted(Constants.Climber.IS_INVERTED);
-        addChild("Climber Motors", climberMotors);
+    }
 
+    @Override
+    public void periodic() {
+        logger.run();
     }
 
     /**
@@ -57,7 +75,7 @@ public class Climber extends SubsystemBase {
      * @return current distance traveled since last reset
      */
     public double getPosition() {
-        return c_primary.getEncoder().getPosition();
+        return primaryMotor.getEncoder().getPosition();
     }
 
     /**
@@ -73,7 +91,7 @@ public class Climber extends SubsystemBase {
      * Resets the encoders by setting their positions to zero.
      */
     public void resetEncoders() {
-        c_primary.getEncoder().setPosition(0);
+        primaryMotor.getEncoder().setPosition(0);
     }
 
     /**

@@ -14,7 +14,7 @@ package frc.robot;
  * <p>
  * It is advised to statically import this class (or one of its inner classes)
  * wherever the
- * constants are needed, to reduce verbosity. 
+ * constants are needed, to reduce verbosity.
  */
 public final class Constants {
     public static final class Drivetrain {
@@ -28,6 +28,7 @@ public final class Constants {
         public static final boolean IS_LEFT_INVERTED = true;
         public static final boolean IS_RIGHT_INVERTED = false;
         public static final double ENCODER_DISTANCE_PER_PULSE = 1.0;
+        public static final double TRACK_WIDTH = 0.0;
 
         public static final class DriveStraightPID {
             public static final int kP = 1;
@@ -95,6 +96,8 @@ public final class Constants {
         public static final int kP = 1;
         public static final int kI = 0;
         public static final int kD = 0;
+        public static final int kS = 0;
+        public static final int kV = 0;
     }
 
     public static final class Limelight {

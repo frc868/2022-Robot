@@ -22,7 +22,6 @@ import frc.robot.sensors.Limelight;
 import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Gyro;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -42,7 +41,6 @@ public class RobotContainer {
     private final Shooter shooter = new Shooter();
     private final Limelight limelight = new Limelight();
     private final Astra astra = new Astra();
-    private final Gyro gyro = new Gyro();
 
     XboxController driverController = new XboxController(OI.DRIVER_PORT);
     XboxController operatorController = new XboxController(OI.OPERATOR_PORT);
@@ -69,9 +67,9 @@ public class RobotContainer {
         chooser.addOption("Leave Tarmac", new LeaveTarmac(drivetrain, shooter, intake, hopper, limelight));
         chooser.addOption("Two Ball", new TwoBall(drivetrain, shooter, intake, hopper, limelight));
         chooser.setDefaultOption("Three Ball",
-                new ThreeBall(drivetrain, shooter, intake, hopper, limelight, astra, gyro));
-        chooser.addOption("Four Ball", new FourBall(drivetrain, shooter, intake, hopper, limelight, astra, gyro));
-        chooser.addOption("Five Ball", new FiveBall(drivetrain, shooter, intake, hopper, limelight, astra, gyro));
+                new ThreeBall(drivetrain, shooter, intake, hopper, limelight, astra));
+        chooser.addOption("Four Ball", new FourBall(drivetrain, shooter, intake, hopper, limelight, astra));
+        chooser.addOption("Five Ball", new FiveBall(drivetrain, shooter, intake, hopper, limelight, astra));
     }
 
     private void configureButtonBindings() {

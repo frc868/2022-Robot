@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.logging.LogGroup;
+import frc.robot.logging.LogProfileBuilder;
+import frc.robot.logging.Logger;
 
 /**
  * The hopper subsystem, includes the hopper motors and the gatekeepers.
@@ -14,13 +17,26 @@ import frc.robot.Constants;
  * @author dr
  */
 public class Hopper extends SubsystemBase {
-    private CANSparkMax h_primary = new CANSparkMax(Constants.Hopper.CANIDs.MOTOR, MotorType.kBrushless);;
+    private CANSparkMax motor = new CANSparkMax(Constants.Hopper.CANIDs.MOTOR, MotorType.kBrushless);;
     private DoubleSolenoid gatekeepers = new DoubleSolenoid(PneumaticsModuleType.REVPH,
             Constants.Hopper.Solenoids.GATEKEEPER_CHANNEL_2,
             Constants.Hopper.Solenoids.GATEKEEPER_CHANNEL_1);
 
+    private LogGroup logger = new LogGroup(
+            new Logger<?>[] {
+                    new Logger<CANSparkMax>(motor, "Hopper", "Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(motor)),
+                    new Logger<DoubleSolenoid>(gatekeepers, "Hopper", "Gatekeepers",
+                            LogProfileBuilder.buildDoubleSolenoidLogItems(gatekeepers))
+            });
+
     public Hopper() {
-        h_primary.setInverted(Constants.Hopper.IS_INVERTED);
+        motor.setInverted(Constants.Hopper.IS_INVERTED);
+    }
+
+    @Override
+    public void periodic() {
+        logger.run();
     }
 
     public void gatekeepersIn() {
@@ -36,14 +52,14 @@ public class Hopper extends SubsystemBase {
     }
 
     public void runMotor() {
-        h_primary.set(1);
+        motor.set(1);
     }
 
     public void reverseMotor() {
-        h_primary.set(-1);
+        motor.set(-1);
     }
 
     public void stopMotor() {
-        h_primary.set(0);
+        motor.set(0);
     }
 }

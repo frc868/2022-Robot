@@ -7,17 +7,32 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.logging.LogGroup;
+import frc.robot.logging.LogProfileBuilder;
+import frc.robot.logging.Logger;
 
 public class Intake extends SubsystemBase {
-    private CANSparkMax i_primary = new CANSparkMax(Constants.Intake.CANIDs.MOTOR,
+    private CANSparkMax motor = new CANSparkMax(Constants.Intake.CANIDs.MOTOR,
             MotorType.kBrushless);
     private DoubleSolenoid solenoid = new DoubleSolenoid(
             PneumaticsModuleType.REVPH,
             Constants.Intake.Solenoids.INTAKE_CHANNEL_1,
             Constants.Intake.Solenoids.INTAKE_CHANNEL_2);
+    private LogGroup logger = new LogGroup(
+            new Logger<?>[] {
+                    new Logger<CANSparkMax>(motor, "Intake", "Motor",
+                            LogProfileBuilder.buildCANSparkMaxLogItems(motor)),
+                    new Logger<DoubleSolenoid>(solenoid, "Intake", "Gatekeepers",
+                            LogProfileBuilder.buildDoubleSolenoidLogItems(solenoid)),
+            });
 
     public Intake() {
-        i_primary.setInverted(Constants.Intake.IS_INVERTED);
+        motor.setInverted(Constants.Intake.IS_INVERTED);
+    }
+
+    @Override
+    public void periodic() {
+        logger.run();
     }
 
     /**
@@ -38,20 +53,20 @@ public class Intake extends SubsystemBase {
      * Runs the intake motors.
      */
     public void runMotors() {
-        i_primary.set(1);
+        motor.set(1);
     }
 
     /**
      * Runs the intake motors in reverse.
      */
     public void reverseMotors() {
-        i_primary.set(-1);
+        motor.set(-1);
     }
 
     /**
      * Stops the intake motors.
      */
     public void stop() {
-        i_primary.set(0);
+        motor.set(0);
     }
 }
