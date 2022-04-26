@@ -30,7 +30,6 @@ import frc.robot.commands.auton.paths.ThreeBall;
 import frc.robot.commands.auton.paths.TwoBall;
 import frc.robot.sensors.Astra;
 import frc.robot.sensors.Limelight;
-import frc.robot.commands.RunShooter;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Hopper;
@@ -145,7 +144,9 @@ public class RobotContainer {
 
         // Operator button LB, toggle shooter run with limelight regression
         new JoystickButton(operatorController, Button.kLeftBumper.value)
-                .toggleWhenPressed(new RunShooter(shooter, limelight));
+                .toggleWhenPressed(new FunctionalCommand(shooter::enable,
+                        () -> shooter.setSetpoint(limelight.calcShooterSpeed()), (interrupted) -> shooter.disable(),
+                        () -> false, shooter, limelight));
 
         // Operator D-Pad North, turn to goal
         new POVButton(operatorController, 0)

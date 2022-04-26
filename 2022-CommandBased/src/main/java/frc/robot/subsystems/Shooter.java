@@ -3,19 +3,23 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.logging.LogGroup;
 import frc.robot.logging.LogProfileBuilder;
 import frc.robot.logging.Logger;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends PIDSubsystem {
     private CANSparkMax primaryMotor = new CANSparkMax(Constants.Shooter.CANIDs.PRIMARY,
             MotorType.kBrushless);
     private CANSparkMax secondaryMotor = new CANSparkMax(Constants.Shooter.CANIDs.SECONDARY,
             MotorType.kBrushless);
     private MotorControllerGroup shooterMotors = new MotorControllerGroup(primaryMotor, secondaryMotor);
+
+    private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Shooter.kS, Constants.Shooter.kV);
 
     private LogGroup logger = new LogGroup(
             new Logger<?>[] {
@@ -26,12 +30,23 @@ public class Shooter extends SubsystemBase {
             });
 
     public Shooter() {
+        super(new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD));
         shooterMotors.setInverted(Constants.Shooter.IS_INVERTED);
     }
 
     @Override
     public void periodic() {
         logger.run();
+    }
+
+    @Override
+    public double getMeasurement() {
+        return getVelocity();
+    }
+
+    @Override
+    public void useOutput(double output, double setpoint) {
+        setSpeedVolts(output + feedforward.calculate(setpoint));
     }
 
     public void setSpeed(double speed) {
@@ -43,7 +58,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     * Resets the Shooter
+     * Resets the shooter
      */
     public void resetEncoders() {
         primaryMotor.getEncoder().setPosition(0);

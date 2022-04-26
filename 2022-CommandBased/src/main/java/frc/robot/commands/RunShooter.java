@@ -1,30 +1,32 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.Shooter;
-import frc.robot.Constants;
 
-public class RunShooter extends PIDCommand {
+public class RunShooter extends CommandBase {
     private Shooter shooter;
+    private Limelight limelight;
 
     public RunShooter(Shooter shooter, Limelight limelight) {
-        super(new PIDController(Constants.Shooter.kP, Constants.Shooter.kI, Constants.Shooter.kD), shooter::getVelocity,
-                limelight::calcShooterSpeed,
-                s -> shooter.setSpeed(s), shooter, limelight);
         this.shooter = shooter;
-        getController().setTolerance(0.5);
+        this.limelight = limelight;
         addRequirements(shooter, limelight);
     }
 
     @Override
     public void initialize() {
+        shooter.enable();
+    }
+
+    @Override
+    public void execute() {
+        shooter.setSetpoint(limelight.calcShooterSpeed());
     }
 
     @Override
     public void end(boolean interrupted) {
-        shooter.setSpeed(0);
+        shooter.disable();
     }
 
     @Override
