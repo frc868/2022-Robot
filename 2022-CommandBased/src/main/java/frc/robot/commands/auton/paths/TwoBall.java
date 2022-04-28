@@ -13,6 +13,10 @@ import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
+/**
+ * A two ball auto not using trajectories. See the auton sheets to visualize
+ * the path.
+ */
 public class TwoBall extends SequentialCommandGroup {
     public TwoBall(Drivetrain drivetrain, Shooter shooter, Intake intake, Hopper hopper, Limelight limelight) {
         addCommands(

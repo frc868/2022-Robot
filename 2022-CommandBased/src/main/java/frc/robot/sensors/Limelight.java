@@ -6,10 +6,16 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+/**
+ * The wrapper for receiving limelight data.
+ * 
+ * @author dr
+ */
 public class Limelight extends SubsystemBase {
     private static NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
     public Limelight() {
+
     }
 
     /**
@@ -67,6 +73,12 @@ public class Limelight extends SubsystemBase {
                 / Math.tan(rad)) / 12;
     }
 
+    /**
+     * Calculates the shooter speed based on the distance we got and a linear
+     * interpolation equation (aka a regression).
+     * 
+     * @return the calculated shooter speed, in RPMs
+     */
     public double calcShooterSpeed() {
         double distance = this.getDistance();
         double calcSpeed = 5017 + (-735 * distance) + (76.8 * Math.pow(distance, 2)) + (-2.4 * Math.pow(distance, 3));

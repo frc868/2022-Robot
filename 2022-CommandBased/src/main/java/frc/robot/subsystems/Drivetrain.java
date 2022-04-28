@@ -108,6 +108,9 @@ public class Drivetrain extends SubsystemBase {
                 rightPrimaryMotor.getEncoder().getVelocity());
     }
 
+    /**
+     * Gets the defined kinematics for the drivetrain.
+     */
     public DifferentialDriveKinematics getKinematics() {
         return kinematics;
     }

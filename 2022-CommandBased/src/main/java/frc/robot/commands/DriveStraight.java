@@ -9,6 +9,9 @@ import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 
+/**
+ * Drives a specified distance (in m) straight, using a PID loop.
+ */
 public class DriveStraight extends PIDCommand {
     private final Drivetrain drivetrain;
 
@@ -29,15 +32,12 @@ public class DriveStraight extends PIDCommand {
         getController().setTolerance(0.01);
     }
 
-    // Called just before this Command runs the first time
     @Override
     public void initialize() {
-        // Get everything in a safe starting state.
         this.drivetrain.resetEncoders();
         super.initialize();
     }
 
-    // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
         return getController().atSetpoint();

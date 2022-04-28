@@ -6,6 +6,12 @@ import frc.robot.sensors.Astra;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.Constants;
 
+/**
+ * Turns to the nearest ball of our alliance color using the camera and a PID
+ * loop.
+ * 
+ * @author dr
+ */
 public class TurnToBall extends PIDCommand {
     private final Drivetrain drivetrain;
 

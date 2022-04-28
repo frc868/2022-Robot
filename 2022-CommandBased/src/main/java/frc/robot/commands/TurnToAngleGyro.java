@@ -5,6 +5,11 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.Constants;
 
+/**
+ * Turns to a certain gyro angle using a PID loop.
+ * 
+ * @author dr
+ */
 public class TurnToAngleGyro extends PIDCommand {
     private final Drivetrain drivetrain;
 

@@ -4,6 +4,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.Shooter;
 
+/**
+ * Runs the shooter. Now that the shooter is a PIDSubsystem, all that needs to
+ * happen is to run the {@code enable()} method.
+ */
 public class RunShooter extends CommandBase {
     private Shooter shooter;
     private Limelight limelight;

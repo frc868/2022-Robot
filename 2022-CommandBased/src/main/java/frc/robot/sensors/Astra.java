@@ -39,12 +39,11 @@ public class Astra extends SubsystemBase {
      */
     public double getTx(int ball_number) {
         NetworkTableEntry tx = table.getEntry("tx");
-        double[] out = { 0.0 };
-        double[] arr = tx.getDoubleArray(out);
+        double[] arr = tx.getDoubleArray(new double[] { 0.0 }); // 0.0 default if value doesn't exist
         if (arr.length > 0) {
             return arr[0];
         } else {
-            return 0;
+            return 0.0;
         }
     }
 
@@ -59,7 +58,12 @@ public class Astra extends SubsystemBase {
      */
     public double getTy(int ball_number) {
         NetworkTableEntry ty = table.getEntry("ty");
-        return ty.getDoubleArray(new double[1])[0];
+        double[] arr = ty.getDoubleArray(new double[] { 0.0 }); // 0.0 default if value doesn't exist
+        if (arr.length > 0) {
+            return arr[0];
+        } else {
+            return 0.0;
+        }
     }
 
     /**
@@ -74,6 +78,11 @@ public class Astra extends SubsystemBase {
      */
     public double getTd(int ball_number) {
         NetworkTableEntry td = table.getEntry("td");
-        return td.getDoubleArray(new double[1])[0];
+        double[] arr = td.getDoubleArray(new double[] { 0.0 }); // 0.0 default if value doesn't exist
+        if (arr.length > 0) {
+            return arr[0];
+        } else {
+            return 0.0;
+        }
     }
 }

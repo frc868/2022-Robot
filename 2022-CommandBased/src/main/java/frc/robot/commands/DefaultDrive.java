@@ -6,6 +6,12 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
+/**
+ * The default tank drive. This could be defined as an inline command, but I
+ * chose to define it as a class for verbosity.
+ * 
+ * @author dr
+ */
 public class DefaultDrive extends CommandBase {
     private Drivetrain drivetrain;
     private DoubleSupplier leftSpeed, rightSpeed;

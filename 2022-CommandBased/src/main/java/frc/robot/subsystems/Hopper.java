@@ -30,6 +30,9 @@ public class Hopper extends SubsystemBase {
                             LogProfileBuilder.buildDoubleSolenoidLogItems(gatekeepers))
             });
 
+    /**
+     * Constructs the hopper object.
+     */
     public Hopper() {
         motor.setInverted(Constants.Hopper.IS_INVERTED);
     }
@@ -39,26 +42,44 @@ public class Hopper extends SubsystemBase {
         logger.run();
     }
 
+    /**
+     * Sets the gatekeepers to the "in" position (non-blocking).
+     */
     public void gatekeepersIn() {
         gatekeepers.set(DoubleSolenoid.Value.kForward);
     }
 
+    /**
+     * Sets the gatekeepers to the "out" position (blocking).
+     */
     public void gatekeepersOut() {
         gatekeepers.set(DoubleSolenoid.Value.kReverse);
     }
 
+    /**
+     * Toggles the gatekeepers.
+     */
     public void toggleGatekeepers() {
         gatekeepers.toggle();
     }
 
+    /**
+     * Runs the hopper motor at full power.
+     */
     public void runMotor() {
         motor.set(1);
     }
 
+    /**
+     * Runs the hopper motor in reverse at full power.
+     */
     public void reverseMotor() {
         motor.set(-1);
     }
 
+    /**
+     * Stops the motor.
+     */
     public void stopMotor() {
         motor.set(0);
     }

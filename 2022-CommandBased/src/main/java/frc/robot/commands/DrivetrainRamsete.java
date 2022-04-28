@@ -8,6 +8,12 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
+/**
+ * Drives the drivetrain using a RAMSETE controller. Accepts a trajectory to
+ * follow as input.
+ * 
+ * @author dr
+ */
 public class DrivetrainRamsete extends RamseteCommand {
     public DrivetrainRamsete(Trajectory trajectory, Drivetrain drivetrain) {
         super(

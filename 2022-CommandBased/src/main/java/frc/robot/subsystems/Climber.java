@@ -23,22 +23,26 @@ public class Climber extends SubsystemBase {
      * The primary climber motor.
      */
     private CANSparkMax primaryMotor = new CANSparkMax(Constants.Climber.CANIDs.PRIMARY, MotorType.kBrushless);
+
     /**
      * The secondary climber motor.
      */
     private CANSparkMax secondaryMotor = new CANSparkMax(Constants.Climber.CANIDs.SECONDARY, MotorType.kBrushless);
+
     /**
      * The double solenoid for the second stage of the climber
      */
     private DoubleSolenoid climberSecondStage = new DoubleSolenoid(PneumaticsModuleType.REVPH,
             Constants.Climber.Solenoids.CLIMBER_2ND_STAGE_CHANNEL_1,
             Constants.Climber.Solenoids.CLIMBER_2ND_STAGE_CHANNEL_2);
+
     /**
      * The lock for the climber.
      */
     private DoubleSolenoid climberLocks = new DoubleSolenoid(PneumaticsModuleType.REVPH,
             Constants.Climber.Solenoids.CLIMBER_LOCK_CHANNEL_1,
             Constants.Climber.Solenoids.CLIMBER_LOCK_CHANNEL_2);
+
     /**
      * The motor controller group containing both of the climber motors.
      */

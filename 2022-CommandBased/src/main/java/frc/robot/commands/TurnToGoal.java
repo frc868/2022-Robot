@@ -6,6 +6,12 @@ import frc.robot.Constants;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.Drivetrain;
 
+/**
+ * Turns to the goal using a PID loop. (NOTE: it may be useful to set a timeout
+ * on this command to prevent autos getting stuck at this phase.)
+ * 
+ * @author dr
+ */
 public class TurnToGoal extends PIDCommand {
     private final Drivetrain drivetrain;
 

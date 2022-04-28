@@ -16,6 +16,10 @@ import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
+/**
+ * A three ball auto not using trajectories. See the auton sheets to visualize
+ * the path.
+ */
 public class ThreeBall extends SequentialCommandGroup {
     public ThreeBall(Drivetrain drivetrain, Shooter shooter, Intake intake, Hopper hopper, Limelight limelight,
             Astra astra) {
