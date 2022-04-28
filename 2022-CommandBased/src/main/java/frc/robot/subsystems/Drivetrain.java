@@ -10,6 +10,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.Sendable;
@@ -43,6 +44,7 @@ public class Drivetrain extends SubsystemBase {
     private DifferentialDrive drive = new DifferentialDrive(leftMotors, rightMotors);
     private AHRS navx = new AHRS(SerialPort.Port.kMXP);
 
+    private DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Constants.Drivetrain.TRACK_WIDTH);
     private DifferentialDriveOdometry odometry;
     private Field2d field = new Field2d();
 
@@ -104,6 +106,10 @@ public class Drivetrain extends SubsystemBase {
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(leftPrimaryMotor.getEncoder().getVelocity(),
                 rightPrimaryMotor.getEncoder().getVelocity());
+    }
+
+    public DifferentialDriveKinematics getKinematics() {
+        return kinematics;
     }
 
     /**

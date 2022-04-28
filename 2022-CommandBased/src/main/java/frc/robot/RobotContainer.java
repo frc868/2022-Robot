@@ -79,13 +79,13 @@ public class RobotContainer {
                 new TrajectoryConfig(
                         Constants.Auton.MAX_VELOCITY,
                         Constants.Auton.MAX_ACCELERATION)
-                                .setKinematics(Constants.Drivetrain.KINEMATICS)
+                                .setKinematics(drivetrain.getKinematics())
                                 .addConstraint(new DifferentialDriveVoltageConstraint(
                                         new SimpleMotorFeedforward(
                                                 Constants.Drivetrain.kS,
                                                 Constants.Drivetrain.kV,
                                                 Constants.Drivetrain.kA),
-                                        Constants.Drivetrain.KINEMATICS,
+                                        drivetrain.getKinematics(),
                                         10)));
 
         SmartDashboard.putData(new DrivetrainRamsete(testTrajectory, drivetrain));
