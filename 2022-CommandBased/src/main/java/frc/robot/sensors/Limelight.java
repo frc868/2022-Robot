@@ -90,7 +90,7 @@ public class Limelight extends SubsystemBase {
      * 
      * @param value the value to set the ledMode to (true is on, false is off).
      */
-    public void setLight(boolean value) {
+    public void enableLight(boolean value) {
         // https://docs.limelightvision.io/en/latest/getting_started.html#basic-programming
         table.getEntry("ledMode").setNumber(value ? 3 : 1);
     }
@@ -107,13 +107,29 @@ public class Limelight extends SubsystemBase {
         table.getEntry("camMode").setNumber(value ? 0 : 1);
     }
 
-    public void shootMode() {
-        setLight(true);
+    /**
+     * Sets the limelight into shoot mode (enabling camera and vision processing)
+     */
+    public void setShootMode() {
+        enableLight(true);
         enableVision(true);
     }
 
-    public void driverMode() {
-        setLight(false);
+    /**
+     * Sets the limelight into driver assist mode (disabling camera and vision
+     * processing)
+     */
+    public void setDriverMode() {
+        enableLight(false);
         enableVision(false);
+    }
+
+    /**
+     * Check if the limelight has a target.
+     * 
+     * @return true if it has a target, false if not
+     */
+    public boolean hasTarget() {
+        return getTv() == 1.0;
     }
 }
