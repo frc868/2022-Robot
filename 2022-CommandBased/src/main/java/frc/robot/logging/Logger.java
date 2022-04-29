@@ -20,9 +20,9 @@ public class Logger<T> {
     public T obj;
     /**
      * The name of the subsystem to log under (the naming convention in SD is
-     * SmartDashboard/<subsystem>/<device_name>/<value_name>).
+     * SmartDashboard/{subsystem}/{device_name}/{value_name}).
      */
-    private String subsystem;
+    protected String subsystem;
     /**
      * The name of the device to log.
      */
@@ -47,6 +47,41 @@ public class Logger<T> {
         this.subsystem = subsystem;
         this.deviceName = deviceName;
         this.values = values;
+    }
+
+    /**
+     * Constructs a Logger object (without a subsystem, only use if setting the
+     * subsystem through LogGroup).
+     * 
+     * @param obj        the object to log values for
+     * @param deviceName the name of the device
+     * @param values     the list of values to log (can be created manually or
+     *                   through {@link LogProfileBuilder})
+     */
+    public Logger(T obj, String deviceName, LogItem<?>[] values) {
+        this.obj = obj;
+        this.subsystem = "Not set";
+        this.deviceName = deviceName;
+        this.values = values;
+    }
+
+    /**
+     * A more minimal constructor so {@link SendableLogger} can work better. This is
+     * protected so that it can only be used by subclasses (like
+     * {@link SendableLogger}).
+     * 
+     * @param obj       the (Sendable) object to log values for
+     * @param subsystem the name of the subsystem
+     */
+    protected Logger(T obj, String subsystem) {
+        this.obj = obj;
+        this.subsystem = subsystem;
+        this.deviceName = "";
+        this.values = new LogItem<?>[] {}; // an empty array so that run() doesn't fail if this is used incorrectly
+    }
+
+    public void setSubsystem(String subsystem) {
+        this.subsystem = subsystem;
     }
 
     /**

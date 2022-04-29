@@ -29,6 +29,8 @@ import frc.robot.commands.auton.paths.FourBall;
 import frc.robot.commands.auton.paths.LeaveTarmac;
 import frc.robot.commands.auton.paths.ThreeBall;
 import frc.robot.commands.auton.paths.TwoBall;
+import frc.robot.logging.LogGroup;
+import frc.robot.logging.SendableLogger;
 import frc.robot.sensors.Astra;
 import frc.robot.sensors.Limelight;
 import frc.robot.subsystems.Climber;
@@ -56,6 +58,31 @@ public class RobotContainer {
     XboxController driverController = new XboxController(OI.DRIVER_PORT);
     XboxController operatorController = new XboxController(OI.OPERATOR_PORT);
     SendableChooser<Command> chooser = new SendableChooser<>();
+    LogGroup commandViewer = new LogGroup(
+            new SendableLogger[] {
+                    new SendableLogger("Commands", "Intake Up", new InstantCommand(intake::setUp, intake)),
+                    new SendableLogger("Commands", "Intake Down", new InstantCommand(intake::setDown, intake)),
+                    new SendableLogger("Commands", "Extend Climber Locks",
+                            new InstantCommand(climber::extendLock, climber)),
+                    new SendableLogger("Commands", "Retract Climber Locks",
+                            new InstantCommand(climber::retractLock, climber)),
+                    new SendableLogger("Commands", "Extend Climber Stage 2",
+                            new InstantCommand(climber::extendSecondStage, climber)),
+                    new SendableLogger("Commands", "Retract Climber Stage 2",
+                            new InstantCommand(climber::retractSecondStage, climber)),
+                    new SendableLogger("Commands", "Run Hopper",
+                            new StartEndCommand(hopper::runMotor, hopper::stopMotor, hopper)),
+                    new SendableLogger("Commands", "Run Intake",
+                            new StartEndCommand(intake::runMotors, intake::stop, intake)),
+                    new SendableLogger("Commands", "Gatekeepers In",
+                            new InstantCommand(hopper::gatekeepersIn, hopper)),
+                    new SendableLogger("Commands", "Gatekeepers Out",
+                            new InstantCommand(hopper::gatekeepersOut, hopper)),
+                    new SendableLogger("Commands", "Run Shooter", new RunShooter(shooter, limelight)),
+                    new SendableLogger("Commands", "Run Shooter Locked Speed", new RunShooter(shooter, limelight)),
+                    new SendableLogger("Commands", "Turn To Goal", new TurnToGoal(drivetrain, limelight)),
+                    new SendableLogger("Commands", "Turn To Ball", new TurnToBall(drivetrain, astra)),
+            });
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -72,7 +99,11 @@ public class RobotContainer {
                 }, climber));
         configureButtonBindings();
         configureAutonChooser();
+        commandViewer.run(); // this only needs to be run once since Sendables are put on SmartDashboard
+                             // declaratively (that is, they only need to be added once and don't need to be
+                             // updated to work).
 
+        // Ignore everything here, this is just a test to put on SmartDashboard
         Trajectory testTrajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(0, 0, new Rotation2d(0)),
                 List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
@@ -88,7 +119,6 @@ public class RobotContainer {
                                                 Constants.Drivetrain.kA),
                                         drivetrain.getKinematics(),
                                         10)));
-
         SmartDashboard.putData(new DrivetrainRamsete(testTrajectory, drivetrain));
     }
 
