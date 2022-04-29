@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.OI;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DrivetrainRamsete;
+import frc.robot.commands.RunShooter;
 import frc.robot.commands.TurnToBall;
 import frc.robot.commands.TurnToGoal;
 import frc.robot.commands.auton.paths.FiveBall;
@@ -144,9 +145,7 @@ public class RobotContainer {
 
         // Operator button LB, toggle shooter run with limelight regression
         new JoystickButton(operatorController, Button.kLeftBumper.value)
-                .toggleWhenPressed(new FunctionalCommand(shooter::enable,
-                        () -> shooter.setSetpoint(limelight.calcShooterSpeed()), (interrupted) -> shooter.disable(),
-                        () -> false, shooter, limelight));
+                .toggleWhenPressed(new RunShooter(shooter, limelight));
 
         // Operator D-Pad North, turn to goal
         new POVButton(operatorController, 0)
