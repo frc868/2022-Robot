@@ -84,4 +84,36 @@ public class Limelight extends SubsystemBase {
         double calcSpeed = 5017 + (-735 * distance) + (76.8 * Math.pow(distance, 2)) + (-2.4 * Math.pow(distance, 3));
         return calcSpeed;
     }
+
+    /**
+     * Sets the ledMode on the Limelight.
+     * 
+     * @param value the value to set the ledMode to (true is on, false is off).
+     */
+    public void setLight(boolean value) {
+        // https://docs.limelightvision.io/en/latest/getting_started.html#basic-programming
+        table.getEntry("ledMode").setNumber(value ? 3 : 1);
+    }
+
+    /**
+     * Sets the camMode on the Limelight. Setting this to false will increase the
+     * exposure for use as a driver camera.
+     * 
+     * @param value the value to set the camMode to (true for vision, false for
+     *              driver camera)
+     */
+    public void enableVision(boolean value) {
+        // https://docs.limelightvision.io/en/latest/getting_started.html#basic-programming
+        table.getEntry("camMode").setNumber(value ? 0 : 1);
+    }
+
+    public void shootMode() {
+        setLight(true);
+        enableVision(true);
+    }
+
+    public void driverMode() {
+        setLight(false);
+        enableVision(false);
+    }
 }

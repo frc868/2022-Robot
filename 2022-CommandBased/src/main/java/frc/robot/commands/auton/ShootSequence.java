@@ -18,12 +18,14 @@ import frc.robot.subsystems.Shooter;
 public class ShootSequence extends SequentialCommandGroup {
     public ShootSequence(Drivetrain drivetrain, Shooter shooter, Limelight limelight, Hopper hopper) {
         addCommands(
+                new InstantCommand(limelight::shootMode),
                 new InstantCommand(shooter::enable),
                 new TurnToGoal(drivetrain, limelight),
                 new InstantCommand(hopper::gatekeepersIn),
                 new RunCommand(hopper::runMotor, hopper).withTimeout(1.5),
                 new InstantCommand(hopper::gatekeepersOut),
-                new InstantCommand(shooter::disable));
+                new InstantCommand(shooter::disable),
+                new InstantCommand(limelight::driverMode));
 
     }
 }
