@@ -13,6 +13,13 @@ public class LogGroup {
         this.loggers = loggers;
     }
 
+    public LogGroup(String subsystem, Logger<?>[] loggers) {
+        this.loggers = loggers;
+        for (Logger<?> logger : loggers) {
+            logger.setSubsystem(subsystem);
+        }
+    }
+
     public void run() {
         for (Logger<?> logger : loggers) {
             logger.run();

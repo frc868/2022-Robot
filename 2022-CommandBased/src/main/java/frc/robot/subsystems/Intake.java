@@ -18,11 +18,11 @@ public class Intake extends SubsystemBase {
             PneumaticsModuleType.REVPH,
             Constants.Intake.Solenoids.INTAKE_CHANNEL_1,
             Constants.Intake.Solenoids.INTAKE_CHANNEL_2);
-    private LogGroup logger = new LogGroup(
+    private LogGroup logger = new LogGroup("Intake",
             new Logger<?>[] {
-                    new Logger<CANSparkMax>(motor, "Intake", "Motor",
+                    new Logger<CANSparkMax>(motor, "Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(motor)),
-                    new Logger<DoubleSolenoid>(solenoid, "Intake", "Gatekeepers",
+                    new Logger<DoubleSolenoid>(solenoid, "Gatekeepers",
                             LogProfileBuilder.buildDoubleSolenoidLogItems(solenoid)),
             });
 

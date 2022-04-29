@@ -48,15 +48,15 @@ public class Climber extends SubsystemBase {
      */
     private MotorControllerGroup climberMotors = new MotorControllerGroup(primaryMotor, secondaryMotor);
 
-    private LogGroup logger = new LogGroup(
+    private LogGroup logger = new LogGroup("Climber",
             new Logger<?>[] {
-                    new Logger<CANSparkMax>(primaryMotor, "Climber", "Primary Motor",
+                    new Logger<CANSparkMax>(primaryMotor, "Primary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(primaryMotor)),
-                    new Logger<CANSparkMax>(secondaryMotor, "Climber", "Secondary Motor",
+                    new Logger<CANSparkMax>(secondaryMotor, "Secondary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(secondaryMotor)),
-                    new Logger<DoubleSolenoid>(climberSecondStage, "Climber", "Second Stage",
+                    new Logger<DoubleSolenoid>(climberSecondStage, "Second Stage",
                             LogProfileBuilder.buildDoubleSolenoidLogItems(climberSecondStage)),
-                    new Logger<DoubleSolenoid>(climberLocks, "Climber", "Locks",
+                    new Logger<DoubleSolenoid>(climberLocks, "Locks",
                             LogProfileBuilder.buildDoubleSolenoidLogItems(climberLocks))
             });
 

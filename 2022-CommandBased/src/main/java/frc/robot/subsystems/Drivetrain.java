@@ -48,19 +48,19 @@ public class Drivetrain extends SubsystemBase {
     private DifferentialDriveOdometry odometry;
     private Field2d field = new Field2d();
 
-    private LogGroup logger = new LogGroup(
+    private LogGroup logger = new LogGroup("Drivetrain",
             new Logger<?>[] {
-                    new Logger<CANSparkMax>(leftPrimaryMotor, "Drivetrain", "Left Primary Motor",
+                    new Logger<CANSparkMax>(leftPrimaryMotor, "Left Primary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(leftPrimaryMotor)),
-                    new Logger<CANSparkMax>(leftSecondaryMotor, "Drivetrain", "Left Secondary Motor",
+                    new Logger<CANSparkMax>(leftSecondaryMotor, "Left Secondary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(leftSecondaryMotor)),
-                    new Logger<CANSparkMax>(rightPrimaryMotor, "Drivetrain", "Right Primary Motor",
+                    new Logger<CANSparkMax>(rightPrimaryMotor, "Right Primary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(rightPrimaryMotor)),
-                    new Logger<CANSparkMax>(rightSecondaryMotor, "Drivetrain", "Right Secondary Motor",
+                    new Logger<CANSparkMax>(rightSecondaryMotor, "Right Secondary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(rightSecondaryMotor)),
-                    new Logger<AHRS>(navx, "Drivetrain", "NavX",
+                    new Logger<AHRS>(navx, "NavX",
                             LogProfileBuilder.buildNavXLogItems(navx)),
-                    new Logger<Field2d>(field, "Drivetrain", "Field",
+                    new Logger<Field2d>(field, "Field",
                             new LogItem<?>[] {
                                     new LogItem<Sendable>(LogType.DATA, "Field", () -> field)
                             })

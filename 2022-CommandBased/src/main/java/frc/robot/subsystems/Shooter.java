@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.logging.LogGroup;
 import frc.robot.logging.LogProfileBuilder;
+import frc.robot.logging.LogType;
 import frc.robot.logging.Logger;
+import frc.robot.logging.SingleItemLogger;
 
 public class Shooter extends PIDSubsystem {
     private CANSparkMax primaryMotor = new CANSparkMax(Constants.Shooter.CANIDs.PRIMARY,
@@ -21,12 +23,15 @@ public class Shooter extends PIDSubsystem {
 
     private SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(Constants.Shooter.kS, Constants.Shooter.kV);
 
-    private LogGroup logger = new LogGroup(
+    private LogGroup logger = new LogGroup("Shooter",
             new Logger<?>[] {
-                    new Logger<CANSparkMax>(primaryMotor, "Hopper", "Motor",
+                    new Logger<CANSparkMax>(primaryMotor, "Primary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(primaryMotor)),
-                    new Logger<CANSparkMax>(primaryMotor, "Hopper", "Motor",
+                    new Logger<CANSparkMax>(secondaryMotor, "Secondary Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(secondaryMotor)),
+                    new SingleItemLogger<Double>(LogType.NUMBER, "PID Setpoint", this::getSetpoint),
+                    new SingleItemLogger<Double>(LogType.NUMBER, "PID Measurement", this::getMeasurement),
+                    new SingleItemLogger<Double>(LogType.NUMBER, "Velocity", this::getVelocity)
             });
 
     public Shooter() {

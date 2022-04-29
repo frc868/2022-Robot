@@ -68,7 +68,7 @@ public class Logger<T> {
     /**
      * A more minimal constructor so {@link SendableLogger} can work better. This is
      * protected so that it can only be used by subclasses (like
-     * {@link SendableLogger}).
+     * {@link SendableLogger})
      * 
      * @param obj       the (Sendable) object to log values for
      * @param subsystem the name of the subsystem

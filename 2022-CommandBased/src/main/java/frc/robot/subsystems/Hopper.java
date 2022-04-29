@@ -22,11 +22,11 @@ public class Hopper extends SubsystemBase {
             Constants.Hopper.Solenoids.GATEKEEPER_CHANNEL_2,
             Constants.Hopper.Solenoids.GATEKEEPER_CHANNEL_1);
 
-    private LogGroup logger = new LogGroup(
+    private LogGroup logger = new LogGroup("Hopper",
             new Logger<?>[] {
-                    new Logger<CANSparkMax>(motor, "Hopper", "Motor",
+                    new Logger<CANSparkMax>(motor, "Motor",
                             LogProfileBuilder.buildCANSparkMaxLogItems(motor)),
-                    new Logger<DoubleSolenoid>(gatekeepers, "Hopper", "Gatekeepers",
+                    new Logger<DoubleSolenoid>(gatekeepers, "Gatekeepers",
                             LogProfileBuilder.buildDoubleSolenoidLogItems(gatekeepers))
             });
 
