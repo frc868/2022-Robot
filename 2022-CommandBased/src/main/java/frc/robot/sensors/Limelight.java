@@ -110,7 +110,7 @@ public class Limelight extends SubsystemBase {
     /**
      * Sets the limelight into shoot mode (enabling camera and vision processing)
      */
-    public void setShootMode() {
+    public void setShootingMode() {
         enableLight(true);
         enableVision(true);
     }
@@ -119,7 +119,7 @@ public class Limelight extends SubsystemBase {
      * Sets the limelight into driver assist mode (disabling camera and vision
      * processing)
      */
-    public void setDriverMode() {
+    public void setDriverAssistMode() {
         enableLight(false);
         enableVision(false);
     }
