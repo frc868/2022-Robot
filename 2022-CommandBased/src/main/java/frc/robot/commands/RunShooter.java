@@ -15,7 +15,7 @@ public class RunShooter extends CommandBase {
     public RunShooter(Shooter shooter, Limelight limelight) {
         this.shooter = shooter;
         this.limelight = limelight;
-        addRequirements(shooter, limelight);
+        addRequirements(shooter);
     }
 
     @Override

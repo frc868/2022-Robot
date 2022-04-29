@@ -23,11 +23,11 @@ public class ShootSequence extends SequentialCommandGroup {
                 new InstantCommand(limelight::setShootingMode),
                 new ParallelCommandGroup(
                         new RunShooterLockedSpeed(shooter, limelight),
-                        new SequentialCommandGroup(new InstantCommand(shooter::enable),
+                        new SequentialCommandGroup(
                                 new TurnToGoal(drivetrain, limelight),
-                                new InstantCommand(hopper::gatekeepersIn),
+                                new InstantCommand(hopper::gatekeepersIn, hopper),
                                 new RunCommand(hopper::runMotor, hopper).withTimeout(1.5),
-                                new InstantCommand(hopper::gatekeepersOut))),
+                                new InstantCommand(hopper::gatekeepersOut, hopper))),
                 new InstantCommand(limelight::setDriverAssistMode));
 
     }

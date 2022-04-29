@@ -19,7 +19,7 @@ public class RunShooterLockedSpeed extends CommandBase {
     public RunShooterLockedSpeed(Shooter shooter, Limelight limelight) {
         this.shooter = shooter;
         this.limelight = limelight;
-        addRequirements(shooter, limelight);
+        addRequirements(shooter);
     }
 
     @Override
