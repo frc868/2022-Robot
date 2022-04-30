@@ -3,6 +3,12 @@ package frc.robot.logging;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Basically a SingleItemLogger but it uses sendables. Useful for putting
+ * anything Sendable like a Field2d, PIDController, or a motor controller.
+ * 
+ * @author dr
+ */
 public class SendableLogger extends Logger<Sendable> {
     private String key;
     private Sendable sendable;
